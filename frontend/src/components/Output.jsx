@@ -1,42 +1,55 @@
 import React, { useRef } from "react";
 
 function Output(props) {
-  const outputRef = useRef(' ')
+  const outputRef = useRef(" ");
   const baseURL = "https://emkc.org/api/v2/piston/execute"; //post
 
   async function exec() {
-    console.log("Lets code");
-    console.log(props.code);
+    // console.log("Lets code");
+    // console.log(props.code);
 
-    const response = await fetch(baseURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        language: "js",
-        version: "18.15.0",
-        files: [
-          {
-            name: "my_cool_code.js",
-            content: props.code
-          }
-        ]
-      })
-    });
+    
 
-    const data = await response.json();
-    outputRef.current.innerHTML = data.run.stdout || data.run.stderr
-    console.log(data);
+    try {
+      const response = await fetch(baseURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language: "js",
+          version: "18.15.0",
+          files: [
+            {
+              name: "my_cool_code.js",
+              content: props.code,
+            },
+          ],
+          stdin: "",
+          args: [],
+          compile_timeout: 10000,
+          run_timeout: 3000,
+        }),
+      });
+
+      const data = await response.json();
+      outputRef.current.innerHTML = data.run.stderr || data.run.stdout;
+      console.log(data);
+
+    } catch (error) {
+      alert("an error occurred, please try again later");
+    }
   }
 
   return (
-    <div>
+    <div className="outputBox">
       Output
       <button className="executeButton" onClick={() => exec()}>
         Run Code
       </button>
-      <pre className="outputBox" ref={outputRef} >Your output here</pre>
+      <pre  ref={outputRef}>
+        Your output here
+      </pre>
     </div>
   );
 }
