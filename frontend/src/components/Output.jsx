@@ -18,8 +18,12 @@ function Output(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          language: "js",
-          version: "18.15.0",
+          language: "c",
+          version: "10.2.0",
+
+          aliases: ["gcc"],
+          runtime: "gcc",
+
           files: [
             {
               name: "my_cool_code.js",
@@ -36,7 +40,6 @@ function Output(props) {
       const data = await response.json();
       outputRef.current.innerHTML = data.run.stderr || data.run.stdout;
       console.log(data);
-
     } catch (error) {
       alert("an error occurred, please try again later");
     }
@@ -48,9 +51,7 @@ function Output(props) {
       <button className="executeButton" onClick={() => exec()}>
         Run Code
       </button>
-      <pre  ref={outputRef}>
-        Your output here
-      </pre>
+      <pre ref={outputRef}>Your output here</pre>
     </div>
   );
 }

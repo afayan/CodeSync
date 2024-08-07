@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { response } from 'express'
 import bodyparser from 'json-body-parser'
 import dotenv from 'dotenv'
 import {GoogleGenerativeAI} from '@google/generative-ai'
@@ -35,8 +35,13 @@ app.use(bodyparser)
 
 
 app.post('/api/aihelp',(req, res)=>{
+
+    try {
+        
     console.log(req.body.code);
     
+    const language = "c"
+
     // res.send("I can hear You")
 
     async function run() {
@@ -45,7 +50,7 @@ app.post('/api/aihelp',(req, res)=>{
       
         //prompt to send to AI
 
-        const prompt = "Can you help me with this javascript code? Dont tell me the answer, just tell me where I could be wrong in the code. If it is correct pls tell me so: " + req.body.code;
+        const prompt = "Can you help me with this "+ language  +" code? Dont tell me the answer, just tell me where I could be wrong in the code. If it is correct pls tell me so: " + req.body.code;
       
         const result = await model.generateContent(prompt);
         const response = await result.response;
@@ -57,6 +62,11 @@ app.post('/api/aihelp',(req, res)=>{
     }
       
     run();
+
+} catch (error) {
+    console.log(error);
+    res.json({response : "An error occured in the server"})  
+}
 })
 
 

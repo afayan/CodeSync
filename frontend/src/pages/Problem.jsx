@@ -55,8 +55,8 @@ function Problem() {
         <Editor
           height="90vh"
           width={"100vh"}
-          defaultLanguage="javascript"
-          defaultValue="console.log('Hello JS')"
+          defaultLanguage="c"
+          defaultValue="//start coding"
           value={value}
           onChange={(value, e) => setValue((e1) => value)}
           className="editor"
