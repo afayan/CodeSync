@@ -2,6 +2,23 @@ import express from 'express'
 import bodyparser from 'json-body-parser'
 import dotenv from 'dotenv'
 import {GoogleGenerativeAI} from '@google/generative-ai'
+import OpenAI from "openai";
+
+// const openai = new OpenAI();
+
+// async function main() {
+//     const completion = await openai.chat.completions.create({
+//       messages: [{ role: "system", content: "You are a helpful assistant." }],
+//       model: "gpt-4o-mini",
+//     });
+  
+//     console.log(completion.choices[0]);
+//   }
+  
+//   main();
+
+
+
 // const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 dotenv.config()
@@ -26,7 +43,6 @@ app.post('/api/aihelp',(req, res)=>{
         // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
       
-
         //prompt to send to AI
 
         const prompt = "Can you help me with this javascript code? Dont tell me the answer, just tell me where I could be wrong in the code. If it is correct pls tell me so: " + req.body.code;
@@ -41,7 +57,6 @@ app.post('/api/aihelp',(req, res)=>{
     }
       
     run();
-
 })
 
 

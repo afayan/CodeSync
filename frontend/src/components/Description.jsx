@@ -1,11 +1,15 @@
 import { useRef, useState } from "react";
 import '../../src/App.css'
+import React from 'react'
+import {createRoot} from 'react-dom/client'
+import Markdown from 'react-markdown'
 
 function Description(props) {
 
     // const [window, setWindow] = useState('d')   // options : d = description, a = AI chatbox
     const [showDesc, setDesc] = useState(true)
     const [showAI, setAI] = useState(false)
+    const [responseFromAI, setRFA] = useState('')
     const AIresponse = useRef('')
 
     function toggle(windowName) {
@@ -47,7 +51,8 @@ function Description(props) {
         const aiMessage = await res.json();
         // console.log(typeof aiMessage.response);
 
-        AIresponse.current.innerHTML = aiMessage.response;     
+        AIresponse.current.textContent = aiMessage.response;
+        setRFA(aiMessage.response)     
     }
 
 // } catch (error) {
@@ -63,7 +68,9 @@ function Description(props) {
 
             {showDesc && <div className="descTab">
                 <h1>Desc</h1>
+                
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae numquam ullam, sequi eaque deserunt velit ipsa, praesentium laudantium, exercitationem odio harum repellat inventore placeat adipisci eveniet. Similique repudiandae ut dignissimos!</p>
+                {/* {createRoot(document.body).render(<Markdown>{AIresponse.current.innerHTML}</Markdown>)} */}
             </div>}
 
             {showAI && 
@@ -72,6 +79,10 @@ function Description(props) {
                 <button onClick={()=>askai()}>Ask AI</button>
                 <pre className="airesp" ref={AIresponse}>
                     Use AI to help yourself with your code
+                    
+                {/* <Markdown >
+                    {responseFromAI}
+                </Markdown> */}
                 </pre>
             </div>
             }

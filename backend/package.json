@@ -16,6 +16,7 @@
     "express": "^4.19.2",
     "json-body-parser": "^1.0.2",
     "mysql2": "^3.11.0",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "openai": "^4.54.0"
   }
 }

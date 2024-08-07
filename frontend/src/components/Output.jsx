@@ -4,12 +4,13 @@ function Output(props) {
   const outputRef = useRef(" ");
   const baseURL = "https://emkc.org/api/v2/piston/execute"; //post
 
+  async function check() {
+    //function to check if the code is correct or not
+  }
+
   async function exec() {
     // console.log("Lets code");
     // console.log(props.code);
-
-    
-
     try {
       const response = await fetch(baseURL, {
         method: "POST",
