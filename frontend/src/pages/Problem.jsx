@@ -12,7 +12,25 @@ function Problem() {
   //if test cases are true, send req to backend and update
   // => solved
 
-  const [value, setValue] = useState("");
+  const defValue = `//start coding
+
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        printf("Usage: %s <number>\n", argv[0]);
+        return 1;
+    }
+
+    // Convert the argument from a string to an integer
+    int no = atoi(argv[1]);
+
+    printf("Number is %d\n", no);
+
+    return 0;
+}`
+
+  const [value, setValue] = useState(defValue);
   const editorRef = useRef("");
   const [solved, setSolved] = useState(false)
   const [testcases, setTestcases] = useState([])
@@ -56,7 +74,7 @@ function Problem() {
           height="90vh"
           width={"100vh"}
           defaultLanguage="c"
-          defaultValue="//start coding"
+          defaultValue={defValue}
           value={value}
           onChange={(value, e) => setValue((e1) => value)}
           className="editor"

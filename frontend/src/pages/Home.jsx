@@ -6,7 +6,11 @@ function Home() {
         <>
         <h1>Home</h1>
 
+        <div style={{display:"flex", flexDirection:"column"}}>
+
         <Link to={'/problem'}>Code Editor</Link>
+        <Link to={'/Add'}>Add problem</Link>
+        </div>
         </>
     );
 }

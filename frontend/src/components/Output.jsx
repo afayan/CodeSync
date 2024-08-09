@@ -26,12 +26,12 @@ function Output(props) {
 
           files: [
             {
-              name: "my_cool_code.js",
+              name: "my_cool_code.c",
               content: props.code,
             },
           ],
           stdin: "",
-          args: [],
+          args: [36727, 89],
           compile_timeout: 10000,
           run_timeout: 3000,
         }),
