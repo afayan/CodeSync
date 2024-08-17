@@ -4,4 +4,18 @@ use codesync;
 
 create table questions(q_id int primary key auto_increment,qname varchar(500), description text, defcode text, checkBy varchar(100), funcname varchar(100));
 
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| q_id        | int          | NO   | PRI | NULL    | auto_increment |
+| qname       | varchar(500) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| defcode     | text         | YES  |     | NULL    |                |
+| checkBy     | varchar(100) | YES  |     | NULL    |                |
+| funcname    | varchar(100) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+
+
+
 create table testcases(t_id int primary key auto_increment, tno int, q_id int, runnercode text, ip varchar(100), iptype varchar(100), op varchar(100), optype varchar(100));
