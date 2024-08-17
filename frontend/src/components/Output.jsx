@@ -4,6 +4,16 @@ function Output(props) {
   const outputRef = useRef(" ");
   const baseURL = "https://emkc.org/api/v2/piston/execute"; //post
 
+  const a = [1,2,11,55]
+
+  const codeRunner = `
+  
+  int main(void) {
+    printf("%d",doSomething(${a[0]},${a[1]}));
+    return 0;
+}
+  `
+
   async function check() {
     //function to check if the code is correct or not
   }
@@ -12,6 +22,13 @@ function Output(props) {
     // console.log("Lets code");
     // console.log(props.code);
     try {
+
+
+      console.log(typeof props.code);
+      const finalCode = props.code + codeRunner;
+      console.log(finalCode);
+      
+      
       const response = await fetch(baseURL, {
         method: "POST",
         headers: {
@@ -27,11 +44,11 @@ function Output(props) {
           files: [
             {
               name: "my_cool_code.c",
-              content: props.code,
+              content: finalCode,
             },
           ],
           stdin: "",
-          args: [36727, 89],
+          args: [],
           compile_timeout: 10000,
           run_timeout: 3000,
         }),
@@ -42,6 +59,8 @@ function Output(props) {
       console.log(data);
     } catch (error) {
       alert("an error occurred, please try again later");
+      console.log(error);
+      
     }
   }
 

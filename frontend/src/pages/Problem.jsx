@@ -16,55 +16,42 @@ function Problem() {
 
 #include <stdio.h>
 
-int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        printf("Usage: %s <number>\n", argv[0]);
-        return 1;
-    }
-
-    // Convert the argument from a string to an integer
-    int no = atoi(argv[1]);
-
-    printf("Number is %d\n", no);
-
-    return 0;
-}`
+int doSomething(int n1,int n2){
+    return n1 + n2;
+}`;
 
   const [value, setValue] = useState(defValue);
   const editorRef = useRef("");
-  const [solved, setSolved] = useState(false)
-  const [testcases, setTestcases] = useState([])
+  const [solved, setSolved] = useState(false);
+  const [testcases, setTestcases] = useState([]);
 
-
-  useEffect(()=>{
-
+  useEffect(() => {
     //dummy values. Actual should be called from backend
-    setSolved(false)
+    setSolved(false);
     setTestcases([
-        {
-            value: 3,
-            ans: 9
-        },
-        {
-            value: 7,
-            ans: 49
-        },
-        {
-            value: 12,
-            ans: 144
-        },
-        {
-            value: 34,
-            ans: 1156
-        }
-    ])
-  },[])
+      {
+        value: 3,
+        ans: 9,
+      },
+      {
+        value: 7,
+        ans: 49,
+      },
+      {
+        value: 12,
+        ans: 144,
+      },
+      {
+        value: 34,
+        ans: 1156,
+      },
+    ]);
+  }, []);
 
   function checkTestCases() {
     console.log("Check test cases");
     console.log(testcases);
   }
-
 
   // console.log(value);
   return (
@@ -83,7 +70,7 @@ int main(int argc, char *argv[]) {
 
       <Output checkTestCases={checkTestCases()} code={value} />
 
-      <Description value = {value}/>
+      <Description value={value} />
     </div>
   );
 }

@@ -55,3 +55,20 @@ body{
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+
+.addQuestionForm{
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+    padding: 10px;
+}
+
+.addQuestionText{
+    margin: 3px;
+}
+
+.testCases{
+    display: flex;
+    flex-direction: column;
+    border: solid 2px; 
+}
