@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import '../../src/App.css'
 import React from 'react'
 import {createRoot} from 'react-dom/client'
@@ -11,6 +11,21 @@ function Description(props) {
     const [showAI, setAI] = useState(false)
     const [responseFromAI, setRFA] = useState('')
     const AIresponse = useRef('')
+    const [qname, setQname] = useState('loading...')
+    const [description, setDescription] = useState('')
+
+
+    useEffect(()=>{
+        if (props.problemData[0]) {
+            const arr = props.problemData[0]
+            console.log(arr);
+            
+            setQname(arr.qname)
+            setDescription(arr.description)
+
+        }
+    })
+
 
     function toggle(windowName) {
 
@@ -38,7 +53,7 @@ function Description(props) {
             code : props.value
         }
 
-        const res = await fetch('api/aihelp', {
+        const res = await fetch('/api/aihelp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,9 +82,9 @@ function Description(props) {
             </div>
 
             {showDesc && <div className="descTab">
-                <h1>Desc</h1>
+                <h1>{qname}</h1>
                 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae numquam ullam, sequi eaque deserunt velit ipsa, praesentium laudantium, exercitationem odio harum repellat inventore placeat adipisci eveniet. Similique repudiandae ut dignissimos!</p>
+                <p>{description}</p>
                 {/* {createRoot(document.body).render(<Markdown>{AIresponse.current.innerHTML}</Markdown>)} */}
             </div>}
 

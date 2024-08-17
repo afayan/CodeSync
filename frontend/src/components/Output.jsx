@@ -16,6 +16,23 @@ function Output(props) {
 
   async function check() {
     //function to check if the code is correct or not
+
+    const checkData = {}
+    checkData.usercode = props.code
+    checkData.qid = props.qid
+
+    console.log(checkData);
+
+    const response = await fetch('/api/checktc', {
+      method : 'post',
+      headers : {
+        'Content-Type': 'application/json'
+      },
+      body : JSON.stringify(checkData)
+    })
+
+    const data = await response.json()
+    console.log(data);  
   }
 
   async function exec() {
@@ -64,6 +81,18 @@ function Output(props) {
     }
   }
 
+  if (props.checkBy == 'testcase') {
+    //if check by testcase
+    return(
+      <div className="outputBox">
+        <h1>Testcase</h1>
+        <button onClick={()=>check()}>check by Testcases</button>
+      </div>
+    );
+
+  }
+
+  //else if check by ai, terminal visible
   return (
     <div className="outputBox">
       Output

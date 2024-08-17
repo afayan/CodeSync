@@ -28,8 +28,7 @@ function ProblemList() {
       {problist.map((problem)=>{
 
         //to continue
-
-        return <Link to={`/problem:${problem.q_id}`} key={problem.q_id}>
+        return <Link to={'/problem/'+problem.q_id} key={problem.q_id}>
             {problem.qname}
              </Link>;
       })}

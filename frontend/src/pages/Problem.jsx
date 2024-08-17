@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import Output from "../components/Output";
 import Description from "../components/Description";
+import { useParams } from "react-router-dom";
 
 function Problem() {
   //description, usecase
@@ -12,40 +13,41 @@ function Problem() {
   //if test cases are true, send req to backend and update
   // => solved
 
+  const qid = useParams().qid
+
+  console.log(qid);
+  
+
+
   const defValue = `//start coding
 
-#include <stdio.h>
+      #include <stdio.h>
 
-int doSomething(int n1,int n2){
-    return n1 + n2;
-}`;
+      int doSomething(int n1,int n2){
+          return n1 + n2;
+      }`;
 
   const [value, setValue] = useState(defValue);
   const editorRef = useRef("");
   const [solved, setSolved] = useState(false);
   const [testcases, setTestcases] = useState([]);
+  const [problemData, setProbData] = useState([])
+  const [checkBy, setCheckBy] = useState('')
+  // const [q_id, setQid] = useState(-1)
 
   useEffect(() => {
     //dummy values. Actual should be called from backend
-    setSolved(false);
-    setTestcases([
-      {
-        value: 3,
-        ans: 9,
-      },
-      {
-        value: 7,
-        ans: 49,
-      },
-      {
-        value: 12,
-        ans: 144,
-      },
-      {
-        value: 34,
-        ans: 1156,
-      },
-    ]);
+    
+    async function getProblemInfo() {
+      const response = await fetch('/api/getprobleminfo/'+qid)
+      const data = await response.json()
+      setProbData(data)
+      setValue(data[0].defcode)
+      setCheckBy(data[0].checkBy)
+    }
+
+    getProblemInfo()
+    
   }, []);
 
   function checkTestCases() {
@@ -68,9 +70,9 @@ int doSomething(int n1,int n2){
         />
       </div>
 
-      <Output checkTestCases={checkTestCases()} code={value} />
+      <Output qid = {qid} checkBy = {checkBy} checkTestCases={checkTestCases()} code={value} />
 
-      <Description value={value} />
+      <Description value={value} problemData = {problemData} setValue = {setValue}/>
     </div>
   );
 }

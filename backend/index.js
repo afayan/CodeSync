@@ -211,6 +211,46 @@ app.get('/api/getProblemList' , (req, res)=>{
 })
 
 
+app.get('/api/getprobleminfo/:qid', (req, res)=>{
+
+    const qid = req.params.qid
+
+    console.log(qid);
+
+    const q = "select * from questions where q_id = ? ;"
+
+    db.query(q, [qid], (err, result)=>{
+        if (err) {
+            throw err
+        }
+
+        console.log(result);
+        res.json(result)
+    })
+    
+    
+})
+
+app.post('/api/checktc', (req, res)=>{
+
+    console.log(req.body.usercode);
+
+    let usercode = req.body.usercode
+
+    db.query('select * from testcases where q_id = ? ;',[req.body.qid], (err, result)=>{
+        if (err) {
+            throw err
+        }
+
+        console.log(result);
+        
+    })
+    
+
+    res.json({resp : "check"})
+})
+
+
 app.listen(port, ()=>{
     console.log("App is listening at port "+port);
 })
