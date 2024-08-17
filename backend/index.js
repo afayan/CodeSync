@@ -70,6 +70,27 @@ app.post('/api/aihelp',(req, res)=>{
 })
 
 
+app.post('/api/submitquestion', (req, res)=>{
+    //submit question
+
+    try {
+        
+        const questionData = req.body
+        //console.log(questionData);
+
+        const testcases = questionData.testcases
+        console.log(testcases);
+        
+        
+        res.json({resp : "submitted question"})
+
+    } catch (error) {
+        console.log(error);
+        res.json({resp: "An error occurred in server"})
+    }
+})
+
+
 app.listen(port, ()=>{
     console.log("App is listening at port "+port);
 })
