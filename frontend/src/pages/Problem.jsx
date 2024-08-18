@@ -33,6 +33,7 @@ function Problem() {
   const [testcases, setTestcases] = useState([]);
   const [problemData, setProbData] = useState([])
   const [checkBy, setCheckBy] = useState('')
+  
   // const [q_id, setQid] = useState(-1)
 
   useEffect(() => {
@@ -46,7 +47,15 @@ function Problem() {
       setCheckBy(data[0].checkBy)
     }
 
+    async function getTestcases() {
+      const response = await fetch('/api/getTestcases/'+qid)
+      const data = await response.json()
+      console.log(data);
+      setTestcases(data)
+    }
+
     getProblemInfo()
+    getTestcases()
     
   }, []);
 
@@ -70,7 +79,7 @@ function Problem() {
         />
       </div>
 
-      <Output qid = {qid} checkBy = {checkBy} checkTestCases={checkTestCases()} code={value} />
+      <Output testcases = {testcases} qid = {qid} checkBy = {checkBy} checkTestCases={checkTestCases()} code={value} />
 
       <Description value={value} problemData = {problemData} setValue = {setValue}/>
     </div>

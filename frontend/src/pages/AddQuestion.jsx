@@ -74,6 +74,17 @@ function AddQuestion() {
           placeholder="Problem Name"
           ref={qname}
         />
+
+      <select name="problemDomain" id="">
+        <option value="">Choose problem type</option>
+        <option value="arrays">Arrays</option>
+        <option value="stack">Stack</option>
+        <option value="queue">Queue</option>
+        <option value="linkedlist">Linked List</option>
+        <option value="tree">Trees</option>
+        <option value="qraph">Graph</option>
+      </select>
+
         <textarea
           name=""
           className="addQuestionText"

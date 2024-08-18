@@ -106,10 +106,18 @@ function Output(props) {
       <div className="outputBox">
         <button onClick={()=>setTR("T")}>Testcase</button>
         <button onClick={()=>setTR("R")}>Result</button>
-        <button onClick={()=>check()}>Submit</button>
+        <button onClick={()=>check()}>Run</button>
 
-      {TR == 'T' ?  <div>
+      {TR == 'T' ?  <div className="testcaseContainer">
         <h1>Testcases</h1>
+        <div className="testcaseRow">
+
+        {props.testcases.map((tc)=>{
+          return <div className="testcases" key={tc.t_id}>
+           {tc.ip}
+          </div>
+        })}
+        </div>
       
       </div> : 
       <div>

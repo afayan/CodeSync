@@ -303,7 +303,6 @@ app.post('/api/checktc', async (req, res) => {
             else if (data.run.stdout != testc.op ) {
 
                 your_output = data.run.stdout
-
                 return false
             }
             return true;
@@ -373,6 +372,20 @@ app.post('/api/tcvalid',async (req, res)=>{
     
 
     res.json(remark)
+})
+
+
+app.get('/api/getTestcases/:qid', (req, res)=>{
+    const qid = req.params.qid
+
+    db.query('select * from testcases where q_id = ?' , [qid], (err, result)=>{
+        if (err) {
+            res.json({"error":err})
+            return
+        }
+
+        res.json(result)
+    })
 })
 
 app.listen(port, ()=>{
