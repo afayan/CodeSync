@@ -7,7 +7,7 @@ function AddQuestion() {
   const [testCases, setTestcases] = useState([]); //array to store testcases
   const [defaultCode, setDefCode] = useState('//enter your default code here \n #include<stdio.h>')  //default code of question
   const [funcName , setFuncName] = useState() //function name
-
+  const [answerCode , setAnsCode] = useState('//enter your solution code here \n #include<stdio.h>') //solution
 
   //form inputs
   const qname = useRef(0)
@@ -41,6 +41,7 @@ function AddQuestion() {
 
     questionData.testcases = testCases
     questionData.funcName = funcName
+    questionData.solution = answerCode
 
     console.log(questionData);
 
@@ -82,11 +83,21 @@ function AddQuestion() {
           ref={desc}
         ></textarea>
 
+        <h2>Default code which user will see</h2>
         <Editor width={'60%'}
         height={'20vh'}
         defaultLanguage="c"
         value={defaultCode}
         onChange={(value, e)=> {setDefCode(c=>value)}}
+        />
+
+
+        <h2>Solution</h2>
+        <Editor width={'60%'}
+        height={'20vh'}
+        defaultLanguage="c"
+        value={answerCode}
+        onChange={(value, e)=> {setAnsCode(c=>value)}}
         />
 
         <div className="addQuestion">
@@ -104,7 +115,7 @@ function AddQuestion() {
         <button onClick={saveQuestion}>Submit question</button>
 
         {tc && <input type="text" placeholder="Enter the function name" onChange={(e)=>{setFuncName(e.target.value)}}></input> }
-        {tc && <AddTestCase tcIndex = {tcIndex} setTCIndex = {setTCIndex} funcName={funcName} setTestcases={setTestcases} />}
+        {tc && <AddTestCase tcIndex = {tcIndex} setTCIndex = {setTCIndex} funcName={funcName} answerCode = {answerCode} setTestcases={setTestcases} />}
 
         <div className="tcRoll">
           {
@@ -134,12 +145,19 @@ function AddQuestion() {
 export default AddQuestion;
 
 function AddTestCase(props) {
-    const [code, setCode] = useState(""); //code for running testcase
+
+
+    const defaultRunnerCode = `int main(void){
+    //print the output by calling your function
+}`
+
+    const [code, setCode] = useState(defaultRunnerCode); //code for running testcase
     const [saved, isSaved] = useState(false);
     const opType = useRef(0)
     const op = useRef(0)
     const ip = useRef(0)
     const ipType = useRef(0)
+    const [remark , setRemark] = useState('')
     var testCaseInfo = {};
 
         function savetestCase() {
@@ -165,7 +183,41 @@ function AddTestCase(props) {
             props.setTestcases(arr => [...arr, testCaseInfo]);
             isSaved(true);
             props.setTCIndex(c=>c+1)
-            setCode('')
+            setCode(defaultRunnerCode)
+        }
+
+        async function checkTcValidity() {
+          //check if testcase is valid or not
+          const fcode = props.answerCode + "\n" + code
+          console.log(fcode);
+          setRemark('...')
+
+          var c = {}
+          c.op = op.current.value
+          c.code = fcode
+
+          console.log(c);
+          
+
+          const res = await fetch('/api/tcvalid', {
+            method: 'post',
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(c)
+          })
+
+          const data = await res.json()
+
+          if (data.error) {
+            setRemark(data.error)
+          }
+
+          else{
+
+            setRemark(r=>data.status)
+          }
+          console.log(data); 
         }
 
         return (
@@ -198,6 +250,8 @@ function AddTestCase(props) {
                 onChange={(value, e) => setCode((e1) => value)}
             />
             <button onClick={savetestCase}>save</button>
+            <button onClick={checkTcValidity}>check testcase</button>
+            <h2>{remark}</h2>
             {saved && <button>Delete</button>}
             </div>
         );

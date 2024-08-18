@@ -3,6 +3,8 @@ create database codesync;
 use codesync;
 
 create table questions(q_id int primary key auto_increment,qname varchar(500), description text, defcode text, checkBy varchar(100), funcname varchar(100));
+alter table questions add column solution text;
+
 
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |

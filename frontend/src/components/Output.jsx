@@ -1,8 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 function Output(props) {
   const outputRef = useRef(" ");
+  const [status , setStatus] = useState('')
+  const [error , setError] = useState('')
   const baseURL = "https://emkc.org/api/v2/piston/execute"; //post
+  const [TR , setTR] = useState('T')  //toggle testcase or result
+  const [wInput ,setWrongIp] = useState()
+  const [expectedIP, setEOP] = useState()
+  const [yInput , setYIP] = useState()
 
   const a = [1,2,11,55]
 
@@ -17,6 +23,7 @@ function Output(props) {
   async function check() {
     //function to check if the code is correct or not
 
+    setError('')
     const checkData = {}
     checkData.usercode = props.code
     checkData.qid = props.qid
@@ -31,8 +38,20 @@ function Output(props) {
       body : JSON.stringify(checkData)
     })
 
-    const data = await response.json()
-    console.log(data);  
+    const data = await response.json()  
+    console.log(data);
+
+    if (data.error) {
+      setError(data.error)
+    }
+    
+    setStatus(s => data.remark)
+    setTR('R')
+
+    setEOP(data.expected_output)
+    setWrongIp(data.input)
+    setYIP(data.your_output)
+
   }
 
   async function exec() {
@@ -85,8 +104,26 @@ function Output(props) {
     //if check by testcase
     return(
       <div className="outputBox">
-        <h1>Testcase</h1>
-        <button onClick={()=>check()}>check by Testcases</button>
+        <button onClick={()=>setTR("T")}>Testcase</button>
+        <button onClick={()=>setTR("R")}>Result</button>
+        <button onClick={()=>check()}>Submit</button>
+
+      {TR == 'T' ?  <div>
+        <h1>Testcases</h1>
+      
+      </div> : 
+      <div>
+        <h1>Result</h1>
+        <h4>input : {wInput}</h4>
+        <h4>{status}</h4>
+        <p>{error}</p>
+        <p>Your Output : {yInput}</p>
+        <p>Expected : {expectedIP}</p>
+      </div>
+      
+      }
+     
+
       </div>
     );
 

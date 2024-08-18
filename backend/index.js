@@ -41,6 +41,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const app = express()
 const port = 5000
+const baseURLGlobal = "https://emkc.org/api/v2/piston/execute"
 
 app.use(bodyparser)
 
@@ -108,8 +109,8 @@ app.post('/api/submitquestion', (req, res)=>{
         //   }
 
         //first add data to questions table
-        const questionQuery = `insert into questions(qname, description, defcode, checkBy, funcname) values ( ?, ?, ?, ?, ?);`;
-        const qValuesArray = [questionData.qname, questionData.desc, questionData.defaultCode, questionData.checkBy, questionData.funcName]
+        const questionQuery = `insert into questions(qname, description, defcode, checkBy, funcname, solution) values ( ?, ?, ?, ?, ?, ?);`;
+        const qValuesArray = [questionData.qname, questionData.desc, questionData.defaultCode, questionData.checkBy, questionData.funcName, questionData.solution]
         
         db.query(questionQuery, qValuesArray, (err, result)=>{
 
@@ -231,25 +232,148 @@ app.get('/api/getprobleminfo/:qid', (req, res)=>{
     
 })
 
-app.post('/api/checktc', (req, res)=>{
+app.post('/api/checktc', async (req, res) => {
 
     console.log(req.body.usercode);
 
-    let usercode = req.body.usercode
+    let error = ''
+    let wrong_input = ''
+    let your_output = ''
+    let expected_output = ''
+    let usercode = req.body.usercode;
 
-    db.query('select * from testcases where q_id = ? ;',[req.body.qid], (err, result)=>{
-        if (err) {
-            throw err
-        }
+    try {
+        const result = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM testcases WHERE q_id = ? ;', [req.body.qid], (err, result) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(result);
+            });
+        });
 
         console.log(result);
-        
-    })
+
+        const baseURL = "https://emkc.org/api/v2/piston/execute"; // post
+
+        let status = true;
+
+        async function testQuestion(testc) {
+            const response = await fetch(baseURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    language: "c",
+                    version: "10.2.0",
+                    aliases: ["gcc"],
+                    runtime: "gcc",
+                    files: [
+                        {
+                            name: "my_cool_code.c",
+                            content: usercode + testc.runnercode,
+                        },
+                    ],
+                    stdin: "",
+                    args: [],
+                    compile_timeout: 10000,
+                    run_timeout: 3000,
+                }),
+            });
+
+            const data = await response.json();
+            // console.log('\n' + usercode + testc.runnercode);
+            console.log(data);
+
+            console.log("code op "+data.run.stdout);
+            console.log("\ndesired "+testc.op);
+            
+            
+
+            if (data.run.stderr) {
+                //error aaya
+                console.log(data.run.stderr);
+                error = data.run.stderr;
+                
+                status = false;
+                return false;
+            }
+
+            else if (data.run.stdout != testc.op ) {
+
+                your_output = data.run.stdout
+
+                return false
+            }
+            return true;
+
+            //function ends
+        }
+
+        // Iterate over each test case with a 300ms delay
+        for (const testc of result) {
+            const isSuccess = await testQuestion(testc);
+            if (!isSuccess) {
+                res.json({ remark: "wrong" , error : error, input : testc.ip, expected_output: testc.op , your_output : your_output});
+                return;
+            }
+            await new Promise(resolve => setTimeout(resolve, 300));
+        }
+
+        res.json({ remark: "correct" });
+
+    } catch (error) {
+        console.error("Error during database query or execution:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+app.post('/api/tcvalid',async (req, res)=>{
+    console.log(req.body);
+
+    const response = await fetch(baseURLGlobal, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            language: "c",
+            version: "10.2.0",
+            aliases: ["gcc"],
+            runtime: "gcc",
+            files: [
+                {
+                    name: "my_cool_code.c",
+                    content:req.body.code,
+                },
+            ],
+            stdin: "",
+            args: [],
+            compile_timeout: 10000,
+            run_timeout: 3000,
+        }),
+    });
+
+    const data = await response.json();
+
+    const remark = {}
+    remark.status = 'invalid'
+
+    if (data.run.stderr) {
+        remark.error = data.run.stderr
+    }
+
+    else if (data.run.stdout == req.body.op) {
+        remark.status = 'valid'
+    }
+
+    console.log(data);
     
 
-    res.json({resp : "check"})
+    res.json(remark)
 })
-
 
 app.listen(port, ()=>{
     console.log("App is listening at port "+port);
