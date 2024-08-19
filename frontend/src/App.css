@@ -72,3 +72,11 @@ body{
     flex-direction: column;
     border: solid 2px; 
 }
+.questionButtons{
+    background-color: aqua;
+    text-decoration: none;
+    padding: 12px;
+    display: block;
+    margin: 10px;
+    color: black;
+}

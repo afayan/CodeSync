@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Problem from "./pages/Problem";
 import AddQuestion from "./pages/AddQuestion";
 import ProblemList from "./pages/ProblemList";
+import AdminRoadmap from "./pages/AdminRoadmap";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/problem/:qid" element={<Problem />} />
         <Route path="/Add" element={<AddQuestion/> } />
         <Route path="/Problems" element={<ProblemList/> } />
+        <Route path="/adminroadmap" element = {<AdminRoadmap/>}/>
       </Routes>
     </>
   );

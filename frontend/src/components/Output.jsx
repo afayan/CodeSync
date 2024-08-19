@@ -52,6 +52,27 @@ function Output(props) {
     setWrongIp(data.input)
     setYIP(data.your_output)
 
+    if (data.remark == 'correct') {
+      props.setSolved(true)
+
+
+      const resp = await fetch('/api/solved', {
+        method : 'post',
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+          userid : props.userid,
+          qid : props.qid,
+        })
+      })
+
+
+      const solvedStatus = await resp.json()
+      console.log(solvedStatus);
+      
+    }
+
   }
 
   async function exec() {

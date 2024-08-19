@@ -83,7 +83,7 @@ function Description(props) {
 
             {showDesc && <div className="descTab">
                 <h1>{qname}</h1>
-                
+                <p>{props.solved ? "solved" : "unsolved"}</p>
                 <p>{description}</p>
                 {/* {createRoot(document.body).render(<Markdown>{AIresponse.current.innerHTML}</Markdown>)} */}
             </div>}

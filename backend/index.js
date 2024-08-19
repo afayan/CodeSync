@@ -109,8 +109,8 @@ app.post('/api/submitquestion', (req, res)=>{
         //   }
 
         //first add data to questions table
-        const questionQuery = `insert into questions(qname, description, defcode, checkBy, funcname, solution) values ( ?, ?, ?, ?, ?, ?);`;
-        const qValuesArray = [questionData.qname, questionData.desc, questionData.defaultCode, questionData.checkBy, questionData.funcName, questionData.solution]
+        const questionQuery = `insert into questions(qname, description, defcode, checkBy, funcname, solution, qtype) values ( ?, ?, ?, ?, ?, ?, ?);`;
+        const qValuesArray = [questionData.qname, questionData.desc, questionData.defaultCode, questionData.checkBy, questionData.funcName, questionData.solution, questionData.qtype]
         
         db.query(questionQuery, qValuesArray, (err, result)=>{
 
@@ -385,6 +385,21 @@ app.get('/api/getTestcases/:qid', (req, res)=>{
         }
 
         res.json(result)
+    })
+})
+
+app.post('/api/solved', (req , res)=>{
+
+    const userid = req.body.userid
+    const qid = req.body.qid
+
+    db.query("insert into solved(q_id, user_id) values (? , ?);", [qid, userid], (err, result)=>{
+        if (err) {
+            res.json({"error":err})
+            return
+        }
+
+        res.json({"status": "added"})
     })
 })
 

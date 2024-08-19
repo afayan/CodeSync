@@ -18,6 +18,14 @@ function ProblemList() {
         getProbList()
     }, [])
 
+    function sortedProblist(data) {
+      
+      data.forEach(element => {
+        
+      });
+
+    }
+
 
     console.log(problist);
     
@@ -28,7 +36,7 @@ function ProblemList() {
       {problist.map((problem)=>{
 
         //to continue
-        return <Link to={'/problem/'+problem.q_id} key={problem.q_id}>
+        return <Link className='questionButtons' to={'/problem/'+problem.q_id} key={problem.q_id}>
             {problem.qname}
              </Link>;
       })}

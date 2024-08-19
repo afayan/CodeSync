@@ -33,6 +33,7 @@ function Problem() {
   const [testcases, setTestcases] = useState([]);
   const [problemData, setProbData] = useState([])
   const [checkBy, setCheckBy] = useState('')
+  const [userid, setUserId] = useState(1)
   
   // const [q_id, setQid] = useState(-1)
 
@@ -54,15 +55,16 @@ function Problem() {
       setTestcases(data)
     }
 
+    async function checkSolved() {
+      //to do
+    }
+
     getProblemInfo()
     getTestcases()
     
   }, []);
 
-  function checkTestCases() {
-    console.log("Check test cases");
-    console.log(testcases);
-  }
+
 
   // console.log(value);
   return (
@@ -79,9 +81,9 @@ function Problem() {
         />
       </div>
 
-      <Output testcases = {testcases} qid = {qid} checkBy = {checkBy} checkTestCases={checkTestCases()} code={value} />
+      <Output userid = {userid} setSolved = {setSolved} testcases = {testcases} qid = {qid} checkBy = {checkBy} code={value} />
 
-      <Description value={value} problemData = {problemData} setValue = {setValue}/>
+      <Description solved = {solved} value={value} problemData = {problemData} setValue = {setValue}/>
     </div>
   );
 }

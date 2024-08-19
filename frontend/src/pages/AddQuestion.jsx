@@ -12,6 +12,7 @@ function AddQuestion() {
   //form inputs
   const qname = useRef(0)
   const desc = useRef(0)
+  const qtype = useRef(0)
 
 
   // console.log(funcName);
@@ -42,6 +43,7 @@ function AddQuestion() {
     questionData.testcases = testCases
     questionData.funcName = funcName
     questionData.solution = answerCode
+    questionData.qtype = qtype.current.value
 
     console.log(questionData);
 
@@ -75,9 +77,10 @@ function AddQuestion() {
           ref={qname}
         />
 
-      <select name="problemDomain" id="">
+      <select name="problemDomain" ref={qtype} id="">
         <option value="">Choose problem type</option>
-        <option value="arrays">Arrays</option>
+        <option value="array">Arrays</option>
+        <option value="string">Strings</option>
         <option value="stack">Stack</option>
         <option value="queue">Queue</option>
         <option value="linkedlist">Linked List</option>
