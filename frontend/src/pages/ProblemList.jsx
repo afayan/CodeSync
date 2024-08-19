@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 function ProblemList() {
 
     const [problist, setProbList] = useState([])
+    const [solvedList , setSolvedList] = useState([])
 
     useEffect(()=>{
         async function getProbList() {
@@ -15,16 +16,21 @@ function ProblemList() {
             setProbList(data)
         }
 
+        async function getSolvedList() {
+
+          //dummy user id
+            const userid = 2
+
+            const resp = await fetch('/api/getSolvedProblems/'+userid)
+            const data = await resp.json()
+
+            console.log(data);
+            setSolvedList(data.quids)
+        }
+
         getProbList()
+        getSolvedList()
     }, [])
-
-    function sortedProblist(data) {
-      
-      data.forEach(element => {
-        
-      });
-
-    }
 
 
     console.log(problist);
@@ -37,7 +43,7 @@ function ProblemList() {
 
         //to continue
         return <Link className='questionButtons' to={'/problem/'+problem.q_id} key={problem.q_id}>
-            {problem.qname}
+            {problem.qname} -- {problem.qtype}  <br /> {solvedList.includes(problem.q_id)? "solved" : "" }
              </Link>;
       })}
     </div>

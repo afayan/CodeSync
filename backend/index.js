@@ -50,7 +50,7 @@ app.post('/api/aihelp',(req, res)=>{
 
     try {
         
-    console.log(req.body.code);
+    // console.log(req.body.code);
     
     const language = "c"
 
@@ -68,7 +68,7 @@ app.post('/api/aihelp',(req, res)=>{
         const response = await result.response;
         const text = response.text();
 
-        console.log(text);
+        // console.log(text);
 
         res.json({response : text})
     }
@@ -118,7 +118,7 @@ app.post('/api/submitquestion', (req, res)=>{
             if(err){
                 throw err
             }
-            console.log(result);
+            // console.log(result);
         })
 
         
@@ -136,7 +136,7 @@ app.post('/api/submitquestion', (req, res)=>{
                //insert into testcase db
 
                const testcases = questionData.testcases;
-               console.log(testcases);
+            //    console.log(testcases);
 
 // +------------+--------------+------+-----+---------+----------------+
 // | Field      | Type         | Null | Key | Default | Extra          |
@@ -199,7 +199,7 @@ app.post('/api/submitquestion', (req, res)=>{
 })
 
 app.get('/api/getProblemList' , (req, res)=>{
-    const q = "select q_id, qname from questions;"
+    const q = "select q_id, qname, qtype from questions;"
 
     db.query(q, [], (err, resp)=>{
         if (err) {
@@ -473,6 +473,34 @@ try{
     console.log(error);
     res.json({response : "An error occured in the server"})  
 }
+})
+
+app.get('/api/getSolvedProblems/:userid',async (req , res)=>{
+
+    const userid =  req.params.userid
+    console.log(userid);
+
+    
+    db.query('select * from solved where user_id = ?', [userid], (err , result)=>{
+        if (err) {
+            res.json({error : err})
+        }
+
+        console.log(result);
+        
+        const finalQids = []
+
+        result.forEach((el)=>{
+            finalQids.push(el.q_id)
+            
+        })
+
+        console.log(finalQids);
+        
+        res.json({quids : finalQids})
+        
+    })
+    
 })
 
 app.listen(port, ()=>{
