@@ -22,7 +22,7 @@ function Description(props) {
             
             setQname(arr.qname)
             setDescription(arr.description)
-
+            props.setDesc1(arr.description)
         }
     })
 

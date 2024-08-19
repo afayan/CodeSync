@@ -75,6 +75,42 @@ function Output(props) {
 
   }
 
+
+  async function checkByAI() {
+    //function to check problem with AI
+
+
+    console.log(props.desc1);
+
+    const dataToCheckByAI = {
+      code : props.code,
+      //userid, code, qid
+      desc : props.desc1,
+      userid : props.userid,
+      qid : props.qid,
+    }
+    
+    const resp = await fetch('/api/checkbyai', {
+      method : 'post',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify(dataToCheckByAI)
+    })
+    
+    const aiResult = await resp.json()
+
+    console.log(aiResult);
+    
+    console.log(aiResult.response);
+    
+
+    if (aiResult.response.includes('pass')) {
+      props.setSolved(true)
+    }
+    
+  }
+
   async function exec() {
     // console.log("Lets code");
     // console.log(props.code);
@@ -82,7 +118,7 @@ function Output(props) {
 
 
       console.log(typeof props.code);
-      const finalCode = props.code + codeRunner;
+      const finalCode = props.code;
       console.log(finalCode);
       
       
@@ -164,6 +200,10 @@ function Output(props) {
       Output
       <button className="executeButton" onClick={() => exec()}>
         Run Code
+      </button>
+
+      <button className="executeButton" onClick={()=>checkByAI()}>
+        Check
       </button>
       <pre ref={outputRef}>Your output here</pre>
     </div>

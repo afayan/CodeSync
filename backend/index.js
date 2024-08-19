@@ -403,6 +403,78 @@ app.post('/api/solved', (req , res)=>{
     })
 })
 
+app.post('/api/checksolved' , (req, res)=>{
+    const userid = req.body.userid
+    const qid = req.body.qid
+
+    console.log(req.body);
+    
+
+    db.query("select * from solved where q_id = ? and user_id = ? ;", [qid, userid], (err, result)=>{
+        if (err) {
+            res.json({"error":err})
+            return
+        }
+
+        if (result.length === 0) {
+            res.json({'status':false})
+            return
+        }
+        res.json({"status": true})
+    })
+})
+
+app.post('/api/checkbyai',(req, res)=>{
+    console.log(req.body);
+
+    const desc = req.body.desc
+    const code = req.body.code
+
+
+    const prompt = `You are an instructor who will check a user written code. If the user written code is correct and should execute, just say 'pass' . Else if there is any minor or major mistake, say 'fail'.  
+    here is the question 
+    ${desc}
+    Here is the code wriitten by user : ${code}`
+
+try{
+    async function run() {
+        // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+      
+        //prompt to send to AI
+      
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
+
+        console.log(text);
+
+
+        if (text.includes('pass')) {
+            
+            const userid = req.body.userid
+            const qid = req.body.qid
+        
+            db.query("insert into solved(q_id, user_id) values (? , ?);", [qid, userid], (err, result)=>{
+                if (err) {
+                    res.json({"error":err})
+                    return
+                }
+                console.log("added to db");
+                
+            })
+        }
+        res.json({response : text})
+    }
+      
+    run();
+
+} catch (error) {
+    console.log(error);
+    res.json({response : "An error occured in the server"})  
+}
+})
+
 app.listen(port, ()=>{
     console.log("App is listening at port "+port);
 })

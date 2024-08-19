@@ -33,7 +33,8 @@ function Problem() {
   const [testcases, setTestcases] = useState([]);
   const [problemData, setProbData] = useState([])
   const [checkBy, setCheckBy] = useState('')
-  const [userid, setUserId] = useState(1)
+  const [userid, setUserId] = useState(2)
+  const [desc1, setDesc1] = useState('')
   
   // const [q_id, setQid] = useState(-1)
 
@@ -57,10 +58,27 @@ function Problem() {
 
     async function checkSolved() {
       //to do
+      const resp = await fetch('/api/checksolved', {
+        method:'post',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          'userid' : userid,
+          'qid' : qid
+        })
+      })
+
+
+      const data = await resp.json()
+
+      setSolved(data.status)
+      console.log(data);
     }
 
     getProblemInfo()
     getTestcases()
+    checkSolved()
     
   }, []);
 
@@ -81,9 +99,9 @@ function Problem() {
         />
       </div>
 
-      <Output userid = {userid} setSolved = {setSolved} testcases = {testcases} qid = {qid} checkBy = {checkBy} code={value} />
+      <Output desc1 = {desc1}  userid = {userid} setSolved = {setSolved} testcases = {testcases} qid = {qid} checkBy = {checkBy} code={value} />
 
-      <Description solved = {solved} value={value} problemData = {problemData} setValue = {setValue}/>
+      <Description setDesc1 = {setDesc1} solved = {solved} value={value} problemData = {problemData} setValue = {setValue}/>
     </div>
   );
 }
