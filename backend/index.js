@@ -198,10 +198,18 @@ app.post('/api/submitquestion', (req, res)=>{
     }
 })
 
-app.get('/api/getProblemList' , (req, res)=>{
-    const q = "select q_id, qname, qtype from questions;"
+app.get('/api/getProblemList/:type' , (req, res)=>{
+    const type = req.params.type
+    console.log(type);
+    
+    let q = "select q_id, qname, qtype from questions where qtype = ?;"
 
-    db.query(q, [], (err, resp)=>{
+
+    if (type == 'all') {
+        q = "select q_id, qname, qtype from questions;"
+    }
+
+    db.query(q, [type], (err, resp)=>{
         if (err) {
             throw err
         }

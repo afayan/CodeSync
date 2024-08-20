@@ -19,7 +19,7 @@ function App() {
         <Route path={"/"} element={<Home />} />
         <Route path="/problem/:qid" element={<Problem />} />
         <Route path="/Add" element={<AddQuestion/> } />
-        <Route path="/Problems" element={<ProblemList/> } />
+        <Route path="/problems/:type" element={<ProblemList/> } />
         <Route path="/adminroadmap" element = {<AdminRoadmap/>}/>
       </Routes>
     </>

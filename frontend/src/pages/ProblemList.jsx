@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function ProblemList() {
+
+  const type = useParams().type
+  console.log(type);
+  
 
     const [problist, setProbList] = useState([])
     const [solvedList , setSolvedList] = useState([])
@@ -10,7 +14,7 @@ function ProblemList() {
         async function getProbList() {
             console.log("Getting problem list...");
             
-            const response = await fetch('api/getProblemList')
+            const response = await fetch('/api/getProblemList/'+type)
             const data = await response.json()
 
             setProbList(data)

@@ -10,8 +10,17 @@ function Home() {
         <div style={{display:"flex", flexDirection:"column"}}>
         <Link to={'/problem'}>Code Editor</Link>
         <Link to={'/Add'}>Add problem</Link>
-        <Link to={'/problems'} >Problems</Link>
+        <Link to={'/problems/all'} >Problems</Link>
         <Link to={'/adminroadmap'}>Admin Roadmap</Link>
+
+
+        <h1>Problems</h1>
+        <Link to={'/problems/array'}>Array</Link>
+        <Link to={'/problems/stack'}>Stack</Link>
+        <Link to={'/problems/queue'}>Queue</Link>
+        <Link to={'/problems/linkedlist'}>Linked List</Link>
+        <Link to={'/problems/tree'}>Tree</Link>
+        <Link to={'/problems/graph'}>Graph</Link>
         </div>
         </>
     );
