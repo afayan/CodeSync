@@ -8,10 +8,8 @@ function Home() {
         <h1>Home</h1>
 
         <div style={{display:"flex", flexDirection:"column"}}>
-        <Link to={'/problem'}>Code Editor</Link>
         <Link to={'/Add'}>Add problem</Link>
         <Link to={'/problems/all'} >Problems</Link>
-        <Link to={'/adminroadmap'}>Admin Roadmap</Link>
 
 
         <h1>Problems</h1>

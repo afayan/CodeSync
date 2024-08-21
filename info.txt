@@ -20,3 +20,44 @@ alter table questions add column qtype varchar(200);
 create table testcases(t_id int primary key auto_increment, tno int, q_id int, runnercode text, ip varchar(100), iptype varchar(100), op varchar(100), optype varchar(100));
 
 create table solved(sol_id int primary key auto_increment, q_id int , user_id int);
+
+
+databases:
+
+questions
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| q_id        | int          | NO   | PRI | NULL    | auto_increment |
+| qname       | varchar(500) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| defcode     | text         | YES  |     | NULL    |                |
+| checkBy     | varchar(100) | YES  |     | NULL    |                |
+| funcname    | varchar(100) | YES  |     | NULL    |                |
+| solution    | text         | YES  |     | NULL    |                |
+| qtype       | varchar(200) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+
+solved
++---------+------+------+-----+---------+----------------+
+| Field   | Type | Null | Key | Default | Extra          |
++---------+------+------+-----+---------+----------------+
+| sol_id  | int  | NO   | PRI | NULL    | auto_increment |
+| q_id    | int  | YES  |     | NULL    |                |
+| user_id | int  | YES  |     | NULL    |                |
++---------+------+------+-----+---------+----------------+
+
+testcases
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| t_id       | int          | NO   | PRI | NULL    | auto_increment |
+| tno        | int          | YES  |     | NULL    |                |
+| q_id       | int          | YES  |     | NULL    |                |
+| runnercode | text         | YES  |     | NULL    |                |
+| ip         | varchar(100) | YES  |     | NULL    |                |
+| iptype     | varchar(100) | YES  |     | NULL    |                |
+| op         | varchar(100) | YES  |     | NULL    |                |
+| optype     | varchar(100) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
