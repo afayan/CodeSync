@@ -535,9 +535,34 @@ app.post('/api/signup', (req, res)=>{
 
 app.post('/api/login', (req, res)=>{
 
+    let data = [req.body.email , req.body.password]
+
+    console.log(req.body);
     
 
-    res.json({"message": true})
+    let q = "select * from users where email = ? and password = ? ;";
+
+
+    db.query(q, data, (error, response)=>{
+        if (error) {
+            console.log(error);
+            res.json({"message":false})
+        }
+
+        console.log("len is "+ response.length);
+        console.log(response);
+        
+        
+        if (response.length === 0) {
+            res.json({"message": false})
+        }  
+        else{
+            res.json({"message": true})
+
+        }
+        
+    })
+
 })
 
 app.listen(port, ()=>{

@@ -1,42 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function DummyLogin() {
 
-  const [email, setEmail] = useState()
-  const [password , setPassword] = useState()
+
+  const navigate = useNavigate()
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
   async function login() {
-    
-    const response = await fetch('/api/login', {
-      method : 'post',
-      headers : {
-          "Content-type" : 'application/json'
+    const response = await fetch("/api/login", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
       },
-      body : JSON.stringify({
-          email : email,
-          password : password
-      })
-  })
+      body: JSON.stringify({
+        email: email,
+        password: password
+      }),
+    });
 
-  const data = await response.json()
-  console.log(data);
-    
+    const data = await response.json();
+    console.log(data);
+
+    data.message ? navigate('/') : alert("wrong credentials")
   }
-
-
 
   return (
     <div>
-        <div className="codesyncforms">
-            <h1>Login</h1>
-            <input type="text" placeholder='name'/>
-            <input type="email" placeholder='email'/>
+      <div className="codesyncforms">
+        <h1>Login</h1>
+        <input type="email" onChange={(e)=>setEmail(n => e.target.value)} placeholder="email" />
+        <input type="text" onChange={(e)=>setPassword(n => e.target.value)} placeholder="password" />
 
-            <button onClick={login}>Login</button>
-        </div>
-
+        <button onClick={login}>Login</button>
+      </div>
     </div>
-  )
+  );
 }
 
-export default DummyLogin
+export default DummyLogin;
