@@ -8,19 +8,22 @@ import Problem from "./pages/Problem";
 import AddQuestion from "./pages/AddQuestion";
 import ProblemList from "./pages/ProblemList";
 import AdminRoadmap from "./pages/AdminRoadmap";
+import DummyLogin from "./pages/DummyLogin";
+import DummySignup from "./pages/DummySignup";
 
 function App() {
-
-  const userid = 1
+  const userid = 1;
 
   return (
     <>
       <Routes>
+        <Route path="/login" element={<DummyLogin />} />
+        <Route path="/signup" element={<DummySignup />} />
         <Route path={"/"} element={<Home />} />
         <Route path="/problem/:qid" element={<Problem />} />
-        <Route path="/Add" element={<AddQuestion/> } />
-        <Route path="/problems/:type" element={<ProblemList/> } />
-        <Route path="/adminroadmap" element = {<AdminRoadmap/>}/>
+        <Route path="/Add" element={<AddQuestion />} />
+        <Route path="/problems/:type" element={<ProblemList />} />
+        <Route path="/adminroadmap" element={<AdminRoadmap />} />
       </Routes>
     </>
   );

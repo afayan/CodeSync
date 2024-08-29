@@ -80,3 +80,11 @@ body{
     margin: 10px;
     color: black;
 }
+
+.codesyncforms{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    background-color: antiquewhite;
+    padding: 10px;
+}

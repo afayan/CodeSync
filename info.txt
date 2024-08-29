@@ -61,3 +61,7 @@ testcases
 | op         | varchar(100) | YES  |     | NULL    |                |
 | optype     | varchar(100) | YES  |     | NULL    |                |
 +------------+--------------+------+-----+---------+----------------+
+
+
+create table users(username varchar(100), email varchar(200), password varchar(1000), role varchar(100));
+

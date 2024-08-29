@@ -511,6 +511,35 @@ app.get('/api/getSolvedProblems/:userid',async (req , res)=>{
     
 })
 
+
+app.post('/api/signup', (req, res)=>{
+
+    console.log(req.body);
+    
+    let data = [req.body.name , req.body.email , req.body.password]
+
+    let q = "insert into users(username , email, password) values (? , ? , ?) ; "
+
+
+    db.query(q, data, (error, response)=>{
+        if (error) {
+            console.log(error);
+            res.json({"message":"failure"})
+        }
+
+        console.log(response);
+        res.json({"message": "success"})
+        
+    })
+})
+
+app.post('/api/login', (req, res)=>{
+
+    
+
+    res.json({"message": true})
+})
+
 app.listen(port, ()=>{
     console.log("App is listening at port "+port);
 })
