@@ -24,7 +24,6 @@ body{
 
 .editorBox{
     border: solid 1px;
-    padding: 20px;
     right: 0px;
     margin: 10px;
     position: absolute;
@@ -34,20 +33,26 @@ body{
     padding-left: 20px;
     position: absolute;
     z-index: 9;
-    background-color: aqua;
+    background-color: rgb(59, 59, 59);
     height: max-content;
-    width: 60%;
+    width: 56%;
     right: 0px;
     bottom: 0px;
+    color: white;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: scroll;
 }
 
 .descriptionBox{
-    background-color: antiquewhite;
+    background-color: rgb(43, 43, 43);
     position: absolute;
     padding: 20px;
     top: 0px;
     bottom: 0px;
-    width: 30%;
+    width: 40%;
+    color: white;
+    overflow: scroll;
 }
 
 .airesp{
@@ -87,4 +92,9 @@ body{
     width: 50%;
     background-color: antiquewhite;
     padding: 10px;
+}
+
+.resultWindow{
+    border-style: solid;
+    border-width: 5px;
 }

@@ -89,13 +89,14 @@ function Problem() {
     <div className="problemContainer">
       <div className="editorBox">
         <Editor
-          height="90vh"
-          width={"100vh"}
+          height="80vh"
+          width={"106vh"}
           defaultLanguage="c"
           defaultValue={defValue}
           value={value}
           onChange={(value, e) => setValue((e1) => value)}
           className="editor"
+          theme="vs-dark"
         />
       </div>
 

@@ -60,6 +60,8 @@ function AddQuestion() {
 
     const data = await resp.json()
     console.log(data);
+
+    alert('question submitted suscessfully')
   }
 
 

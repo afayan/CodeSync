@@ -33,7 +33,6 @@ function DummyLogin() {
         <h1>Login</h1>
         <input type="email" onChange={(e)=>setEmail(n => e.target.value)} placeholder="email" />
         <input type="text" onChange={(e)=>setPassword(n => e.target.value)} placeholder="password" />
-
         <button onClick={login}>Login</button>
       </div>
     </div>

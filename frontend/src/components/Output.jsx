@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 function Output(props) {
   const outputRef = useRef(" ");
@@ -9,16 +9,12 @@ function Output(props) {
   const [wInput ,setWrongIp] = useState()
   const [expectedIP, setEOP] = useState()
   const [yInput , setYIP] = useState()
+  const [resultBoxColor , setRBC] = useState('white')
+  const [aicheckRemark , setAIcheckRemark] = useState('')
+  const [output2, setOP2] = useState('Your op here')
 
   const a = [1,2,11,55]
 
-  const codeRunner = `
-  
-  int main(void) {
-    printf("%d",doSomething(${a[0]},${a[1]}));
-    return 0;
-}
-  `
 
   async function check() {
     //function to check if the code is correct or not
@@ -28,7 +24,7 @@ function Output(props) {
     checkData.usercode = props.code
     checkData.qid = props.qid
 
-    console.log(checkData);
+    // console.log(checkData);
 
     const response = await fetch('/api/checktc', {
       method : 'post',
@@ -39,7 +35,9 @@ function Output(props) {
     })
 
     const data = await response.json()  
-    console.log(data);
+    console.log(data.remark);
+
+    data.remark === 'correct' ? setRBC('lightgreen') : setRBC('red')
 
     if (data.error) {
       setError(data.error)
@@ -103,17 +101,30 @@ function Output(props) {
     console.log(aiResult);
     
     console.log(aiResult.response);
-    
+    setAIcheckRemark(aiResult.response)
 
     if (aiResult.response.includes('pass')) {
       props.setSolved(true)
+      setRBC('lightgreen')
+      console.log("RBC IS "+resultBoxColor);
+      
     }
-    
+
+    else{
+
+      setRBC('red')
+      console.log(resultBoxColor);
+      
+    }
+
+    setTR('R')
   }
 
   async function exec() {
     // console.log("Lets code");
     // console.log(props.code);
+
+    setTR('T')
     try {
 
 
@@ -148,8 +159,12 @@ function Output(props) {
       });
 
       const data = await response.json();
-      outputRef.current.innerHTML = data.run.stderr || data.run.stdout;
-      console.log(data);
+      let o  = data.run.stderr || data.run.stdout;
+      setOP2(o)
+      // console.log(data);
+
+      console.log(data.remark);
+      
     } catch (error) {
       alert("an error occurred, please try again later");
       console.log(error);
@@ -177,7 +192,7 @@ function Output(props) {
         </div>
       
       </div> : 
-      <div>
+      <div className="resultWindow" style={{"borderColor": resultBoxColor }} >
         <h1>Result</h1>
         <h4>input : {wInput}</h4>
         <h4>{status}</h4>
@@ -203,9 +218,21 @@ function Output(props) {
       </button>
 
       <button className="executeButton" onClick={()=>checkByAI()}>
-        Check
+        submit
       </button>
-      <pre ref={outputRef}>Your output here</pre>
+
+      <button onClick={()=>setTR("R")}>Result</button>
+
+      {
+        TR === 'R' ? <div  className="resultWindow" style={{'borderColor' : resultBoxColor }}>
+          {aicheckRemark} 
+        </div> : <div>
+          <pre >{output2}</pre>
+        </div>
+      }
+
+   
+
     </div>
   );
 }
