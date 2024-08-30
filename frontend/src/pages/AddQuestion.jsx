@@ -99,7 +99,7 @@ function AddQuestion() {
           ref={desc}
         ></textarea>
 
-        <h2>Default code which user will see</h2>
+        <h4>Default code which user will see</h4>
         <Editor width={'60%'}
         height={'20vh'}
         defaultLanguage="c"
@@ -108,7 +108,7 @@ function AddQuestion() {
         />
 
 
-        <h2>Solution</h2>
+        <h4>Solution</h4>
         <Editor width={'60%'}
         height={'20vh'}
         defaultLanguage="c"
@@ -116,7 +116,8 @@ function AddQuestion() {
         onChange={(value, e)=> {setAnsCode(c=>value)}}
         />
 
-        <div className="addQuestion">
+        <h4>Checking method</h4>
+        <div className="selectCheckType">
           <span className="radioButtonSpan">
             <label>check Using AI</label>
             <input type="radio" name="chackingType" id="" onClick={()=>{showTC(false)}} />
@@ -128,23 +129,25 @@ function AddQuestion() {
           </span>
         </div>
         
-        <button onClick={saveQuestion}>Submit question</button>
+        <button className="submitQuestion" onClick={saveQuestion}>Submit question</button>
 
-        {tc && <input type="text" placeholder="Enter the function name" onChange={(e)=>{setFuncName(e.target.value)}}></input> }
+        {tc && <span> <h4>Enter the name of the function</h4>  <input type="text" placeholder="Enter the function name" onChange={(e)=>{setFuncName(e.target.value)}}></input>  </span>  }
         {tc && <AddTestCase tcIndex = {tcIndex} setTCIndex = {setTCIndex} funcName={funcName} answerCode = {answerCode} setTestcases={setTestcases} />}
 
-        <div className="tcRoll">
+        {tc && 
+        
+          <div className="tcRoll">
+          <p>Testcases: </p>
           {
             testCases.map((tc)=>{
               return(
-                <div key={tc.no}>
-
+                <div className="tcs" key={tc.no}>
                   <ul>
-                  <li>{tc.ip}</li>
-                  <li>{tc.ipType}</li>
-                  <li>{tc.op}</li>
+                  <li>Input : {tc.ip}</li>
+                  <li>Input Type: {tc.ipType}</li>
+                  <li>Expected Output: {tc.op}</li>
                   </ul>
-                  <button
+                  <button className="deletetc"
                   onClick={()=>deleteTestCase(tc.no)}
                   >Delete testcase</button>
                 </div>
@@ -152,6 +155,9 @@ function AddQuestion() {
             })
           }
         </div>
+        
+        }
+        
 
       </div>
     </>
@@ -238,7 +244,8 @@ function AddTestCase(props) {
 
         return (
             <div className="testCases">
-            <h3>Testcase</h3>
+            <h3>Add Testcase</h3>
+            <p>Input (To be displayed)</p>
             <input type="text" placeholder="input (to be displayed in testcase" ref={ip}/>
             <select type="text" placeholder="ip type" ref={ipType}>
               <option value="string">String</option>
@@ -249,6 +256,7 @@ function AddTestCase(props) {
               <option value="struct">struct</option>  
             </select>
             <br />
+            <p>Expected output</p>
             <textarea type="text" placeholder="desired output" ref={op}/>
             <select name="optype" id="optype" ref={opType}>
               <option value="string">String</option>
@@ -259,15 +267,17 @@ function AddTestCase(props) {
               <option value="struct">struct</option>
             </select>
             <br />
+            <p>Driver code (int main function) </p>
             <Editor
                 defaultLanguage="c"
                 height={"20vh"}
                 value={code}
                 onChange={(value, e) => setCode((e1) => value)}
             />
-            <button onClick={savetestCase}>save</button>
             <button onClick={checkTcValidity}>check testcase</button>
-            <h2>{remark}</h2>
+            <button onClick={savetestCase}>save</button>
+            <p>Output</p>
+            <p>{remark}</p>
             {saved && <button>Delete</button>}
             </div>
         );

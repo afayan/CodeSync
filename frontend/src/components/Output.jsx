@@ -176,23 +176,23 @@ function Output(props) {
     //if check by testcase
     return(
       <div className="outputBox">
-        <button onClick={()=>setTR("T")}>Testcase</button>
-        <button onClick={()=>setTR("R")}>Result</button>
-        <button onClick={()=>check()}>Run</button>
+        <button className="executeButton" onClick={()=>setTR("T")}>Testcase</button>
+        <button className="executeButton" onClick={()=>setTR("R")}>Result</button>
+        <button className="executeButton" onClick={()=>check()}>Run</button>
 
       {TR == 'T' ?  <div className="testcaseContainer">
-        <h1>Testcases</h1>
+        <h2> Testcases</h2>
         <div className="testcaseRow">
 
         {props.testcases.map((tc)=>{
-          return <div className="testcases" key={tc.t_id}>
+          return <div className="tcTerminal" key={tc.t_id}>
            {tc.ip}
           </div>
         })}
         </div>
       
       </div> : 
-      <div className="resultWindow" style={{"borderColor": resultBoxColor }} >
+      <div className="resultWindow" style={{"borderColor": resultBoxColor , 'color': resultBoxColor  }} >
         <h1>Result</h1>
         <h4>input : {wInput}</h4>
         <h4>{status}</h4>
@@ -212,7 +212,7 @@ function Output(props) {
   //else if check by ai, terminal visible
   return (
     <div className="outputBox">
-      Output
+      
       <button className="executeButton" onClick={() => exec()}>
         Run Code
       </button>
@@ -221,10 +221,10 @@ function Output(props) {
         submit
       </button>
 
-      <button onClick={()=>setTR("R")}>Result</button>
+      <button className="executeButton" onClick={()=>setTR("R")}>Result</button>
 
       {
-        TR === 'R' ? <div  className="resultWindow" style={{'borderColor' : resultBoxColor }}>
+        TR === 'R' ? <div  className="resultWindow" style={{'borderColor' : resultBoxColor , 'color': resultBoxColor }}>
           {aicheckRemark} 
         </div> : <div>
           <pre >{output2}</pre>

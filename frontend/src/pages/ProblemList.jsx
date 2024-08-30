@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
+import { SiTicktick } from "react-icons/si";
+
 
 function ProblemList() {
 
-  const type = useParams().type
-  console.log(type);
+    const type = useParams().type
+    console.log(type);
   
-
     const [problist, setProbList] = useState([])
     const [solvedList , setSolvedList] = useState([])
 
@@ -24,7 +25,6 @@ function ProblemList() {
 
           //dummy user id
             const userid = 2
-
             const resp = await fetch('/api/getSolvedProblems/'+userid)
             const data = await resp.json()
 
@@ -47,7 +47,7 @@ function ProblemList() {
 
         //to continue
         return <Link className='questionButtons' to={'/problem/'+problem.q_id} key={problem.q_id}>
-            {problem.qname} -- {problem.qtype}  <br /> {solvedList.includes(problem.q_id)? "solved" : "" }
+            {problem.qname} -- {problem.qtype}   {solvedList.includes(problem.q_id)? <SiTicktick  style={{'color':"lightgreen"}} /> : "" }
              </Link>;
       })}
     </div>

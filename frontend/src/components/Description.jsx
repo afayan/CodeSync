@@ -68,9 +68,9 @@ function Description(props) {
 
   return (
     <div className="descriptionBox">
-      <div className="descriptionButtons">
-        <button onClick={() => toggle("d")}>Desc</button>
-        <button onClick={() => toggle("a")}>AI</button>
+      <div className="descButtonContainer">
+        <button className="descToggleButtons" onClick={() => toggle("d")}>Desc</button>
+        <button className="descToggleButtons" onClick={() => toggle("a")}>AI</button>
       </div>
 
       {showDesc && (
