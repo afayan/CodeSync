@@ -42,7 +42,7 @@ function DummyLogin() {
       <div className="codesyncforms">
         <h1>Login</h1>
         <input type="email" onChange={(e)=>setEmail(n => e.target.value)} placeholder="email" />
-        <input type="text" onChange={(e)=>setPassword(n => e.target.value)} placeholder="password" />
+        <input type="password" onChange={(e)=>setPassword(n => e.target.value)} placeholder="password" />
         <button onClick={login}>Login</button>
         <Link to={'/signup'} >Sign Up</Link>
       </div>

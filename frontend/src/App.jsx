@@ -10,6 +10,7 @@ import ProblemList from "./pages/ProblemList";
 import AdminRoadmap from "./pages/AdminRoadmap";
 import DummyLogin from "./pages/DummyLogin";
 import DummySignup from "./pages/DummySignup";
+import LeaderBoard from "./pages/LeaderBoard";
 
 function App() {
   const userid = 1;
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Add" element={<AddQuestion />} />
         <Route path="/problems/:type" element={<ProblemList />} />
         <Route path="/adminroadmap" element={<AdminRoadmap />} />
+        <Route path="/leaderboard" element={<LeaderBoard/>}/>
       </Routes>
     </>
   );

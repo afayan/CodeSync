@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { SiTicktick } from "react-icons/si";
 
 function ProblemList() {
@@ -9,6 +9,8 @@ function ProblemList() {
   const [problist, setProbList] = useState([]);
   const [solvedList, setSolvedList] = useState([]);
   const [isLogged, setLogged] = useState(true)
+  const navigate = useNavigate()
+
 
   useEffect(() => {
 
@@ -19,6 +21,7 @@ function ProblemList() {
 
       else{
         setLogged(false) 
+        // navigate('../../login')
      }
     }
 
@@ -51,8 +54,13 @@ function ProblemList() {
       setSolvedList(data.quids);
 
     }
+    else{
+      const navigate = useNavigate()
+      alert("not logged in")
+    }
     }
 
+    checkLogged()
     getProbList();
     getSolvedList();
   }, []);
@@ -63,7 +71,7 @@ function ProblemList() {
 
   return (
     <div>
-      {isLogged && <p>Please login</p> }
+      {!isLogged && <p>Please login</p> }
       <h1>Problem List</h1>
       {problist.map((problem) => {
         //to continue

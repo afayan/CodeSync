@@ -154,3 +154,21 @@ body{
     border: solid 1px;
     color: white;
 }
+
+.lbnames{
+    background-color: rgb(102, 102, 102);
+    margin: 10px;
+    padding: 10px;
+}
+
+.leaderRoll :nth-child(1){
+    background-color: rgb(227, 204, 72);
+}
+
+.leaderRoll :nth-child(2){
+    background-color: rgb(180, 180, 180);
+}
+
+.leaderRoll :nth-child(3){
+    background-color: rgb(163, 114, 67);
+}

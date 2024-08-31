@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Home() {
 
     const [username, setUserName] = useState('nobody')
+    const [islogged, setLogged] = useState(true)
     const navigate = useNavigate()
 
 
@@ -21,11 +22,8 @@ function Home() {
 
         async function getDetails() {
             
-       
-
         console.log(localStorage.getItem('auth'));
         
-
         const resp = await fetch('/api/getUserInfo', {
             method: 'post',
             headers: {
@@ -42,31 +40,39 @@ function Home() {
 
         const data = await resp.json()
         console.log(data);
-        setUserName(data.data.username)
+        setUserName( "Hello "+ data.data.username + "!")
     }
 
     if (checkLogged()) {  
         getDetails()
     }
-    }, [])
+
+    else{
+        setUserName('Welcome to CodeSync!')
+    }
+    }, [islogged])
 
     function logout() {
         // localStorage.setItem('auth', ' ')
-        // navigate('/login')   
+        // navigate('/login')  
+        
+        localStorage.removeItem('auth')
 
         console.log("Imma logout");
-        
+        setLogged(false)
     }
 
     return(
         <>
-        <h1>Hello {username}</h1>
+        <h1>{username}</h1>
+        {!islogged && <p>Pls login to start coding!</p> }
 
-        <button onClick={logout()}>Logout</button>
+        <button onClick={()=>logout()}>Logout</button>
 
-        <div style={{display:"flex", flexDirection:"column"}}>
+        <div style={{display:"flex", flexDirection:"column", color:"white"}}>
         <Link to={'/Add'}>Add problem</Link>
         <Link to={'/problems/all'} >Problems</Link>
+        <Link to={'/leaderboard'}>LeaderBoard</Link>
 
 
         <h1>Problems</h1>
@@ -82,4 +88,3 @@ function Home() {
 }
 
 export default Home
-

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import Output from "../components/Output";
 import Description from "../components/Description";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Problem() {
   //description, usecase
@@ -35,11 +35,23 @@ function Problem() {
   const [checkBy, setCheckBy] = useState('')
   const [userid, setUserId] = useState(0)
   const [desc1, setDesc1] = useState('')
+  const [logged, islogged] = useState(true)
   
   // const [q_id, setQid] = useState(-1)
 
   useEffect(() => {
-    //dummy values. Actual should be called from backend
+
+   function checkLogged(){
+    if (localStorage.getItem('auth')) {
+      console.log("logged in");
+    }
+    else{
+      const navigate = useNavigate()
+      navigate('../../login')
+    }
+
+   }
+
     
     async function getProblemInfo() {
       const response = await fetch('/api/getprobleminfo/'+qid)
@@ -80,6 +92,8 @@ function Problem() {
       console.log(data);
     }
 
+
+    checkLogged()
     getProblemInfo()
     getTestcases()
     checkSolved()

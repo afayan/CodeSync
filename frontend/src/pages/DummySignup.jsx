@@ -36,6 +36,7 @@ function DummySignup() {
         const data = await response.json()
         console.log(data);
         
+        alert("account created! Sign in to start")
     }
 
   return (
