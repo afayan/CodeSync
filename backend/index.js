@@ -3,6 +3,7 @@ import bodyparser from 'json-body-parser'
 import dotenv from 'dotenv'
 import mysql2 from 'mysql2'
 import {GoogleGenerativeAI} from '@google/generative-ai'
+import jwt from 'jsonwebtoken'
 import OpenAI from "openai";
 
 // const openai = new OpenAI();
@@ -25,7 +26,7 @@ import OpenAI from "openai";
 // configure env files
 dotenv.config()
 
-
+const jwtKey = 'aanv'
 //configure mysql database
 const db = mysql2.createConnection({
     host: "localhost",
@@ -411,8 +412,8 @@ app.post('/api/solved', (req , res)=>{
     })
 })
 
-app.post('/api/checksolved' , (req, res)=>{
-    const userid = req.body.userid
+app.post('/api/checksolved' , authenticateUser, (req, res)=>{
+    const userid = req.user.userid
     const qid = req.body.qid
 
     console.log(req.body);
@@ -425,7 +426,7 @@ app.post('/api/checksolved' , (req, res)=>{
         }
 
         if (result.length === 0) {
-            res.json({'status':false})
+            res.json({'status':false, 'userid' : userid})
             return
         }
         res.json({"status": true})
@@ -483,9 +484,9 @@ try{
 }
 })
 
-app.get('/api/getSolvedProblems/:userid',async (req , res)=>{
+app.post('/api/getSolvedProblems',authenticateUser, async (req , res)=>{
 
-    const userid =  req.params.userid
+    const userid =  req.user.userid
     console.log(userid);
 
     
@@ -533,15 +534,16 @@ app.post('/api/signup', (req, res)=>{
     })
 })
 
-app.post('/api/login', (req, res)=>{
+app.post('/api/login', async (req, res)=>{
 
     let data = [req.body.email , req.body.password]
 
     console.log(req.body);
     
 
-    let q = "select * from users where email = ? and password = ? ;";
+    //check database
 
+    let q = "select * from users where email = ? and password = ? ;";
 
     db.query(q, data, (error, response)=>{
         if (error) {
@@ -549,20 +551,61 @@ app.post('/api/login', (req, res)=>{
             res.json({"message":false})
         }
 
-        console.log("len is "+ response.length);
-        console.log(response);
+        // console.log("len is "+ response.length);
+        // console.log(response);
         
         
         if (response.length === 0) {
             res.json({"message": false})
+           
         }  
         else{
-            res.json({"message": true})
 
-        }
-        
+            //user is authenticated
+            const username = response[0].username
+            const userid = response[0].userid
+
+            const tokenData = {
+                username : username,
+                userid : userid
+            }
+            
+            console.log(tokenData);
+
+            const accessToken =  jwt.sign(tokenData, 'aanv')
+            
+            res.json({"message": true, accessToken : accessToken})
+         
+        }    
     })
+})
 
+function authenticateUser(req, res, next) {
+
+    // const authToken = req.body.authToken
+    const authHeader = req.headers['authorization']
+
+    
+    const authToken = authHeader.split(' ')[1]
+    
+    console.log("Auth token is "+authToken);
+    
+
+    if (authToken) {
+        jwt.verify(authToken, jwtKey, (error, user)=>{
+           if (error) return res.sendStatus(401)
+
+            req.user = user
+            next()
+        })
+    }
+    
+}
+
+app.post('/api/getUserInfo',authenticateUser, (req, res)=>{
+    console.log(req.user);
+    
+    res.json({data : req.user})
 })
 
 app.listen(port, ()=>{

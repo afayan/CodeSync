@@ -1,11 +1,68 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
 
+    const [username, setUserName] = useState('nobody')
+    const navigate = useNavigate()
+
+
+    useEffect(()=>{
+
+        function checkLogged() {
+            if(localStorage.getItem('auth')){
+              return true
+            }
+      
+            else{
+              return false
+            }
+          }
+
+        async function getDetails() {
+            
+       
+
+        console.log(localStorage.getItem('auth'));
+        
+
+        const resp = await fetch('/api/getUserInfo', {
+            method: 'post',
+            headers: {
+                'Content-type' : 'application/json',
+                'authorization' : "Bearer "+localStorage.getItem("auth")
+            },
+            body : JSON.stringify(
+                {
+                    authToken: localStorage.getItem("auth")
+                }
+            )
+        })
+
+
+        const data = await resp.json()
+        console.log(data);
+        setUserName(data.data.username)
+    }
+
+    if (checkLogged()) {  
+        getDetails()
+    }
+    }, [])
+
+    function logout() {
+        // localStorage.setItem('auth', ' ')
+        // navigate('/login')   
+
+        console.log("Imma logout");
+        
+    }
+
     return(
         <>
-        <h1>Home</h1>
+        <h1>Hello {username}</h1>
+
+        <button onClick={logout()}>Logout</button>
 
         <div style={{display:"flex", flexDirection:"column"}}>
         <Link to={'/Add'}>Add problem</Link>

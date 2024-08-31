@@ -33,7 +33,7 @@ function Problem() {
   const [testcases, setTestcases] = useState([]);
   const [problemData, setProbData] = useState([])
   const [checkBy, setCheckBy] = useState('')
-  const [userid, setUserId] = useState(2)
+  const [userid, setUserId] = useState(0)
   const [desc1, setDesc1] = useState('')
   
   // const [q_id, setQid] = useState(-1)
@@ -61,10 +61,13 @@ function Problem() {
       const resp = await fetch('/api/checksolved', {
         method:'post',
         headers:{
-          'Content-Type':'application/json'
+          'Content-Type':'application/json',
+          'authorization' : "Bearer "+localStorage.getItem("auth")
+          
         },
         body: JSON.stringify({
-          'userid' : userid,
+          authToken: localStorage.getItem("auth"),
+          // 'userid' : userid,
           'qid' : qid
         })
       })
@@ -73,6 +76,7 @@ function Problem() {
       const data = await resp.json()
 
       setSolved(data.status)
+      setUserId(data.userid)
       console.log(data);
     }
 

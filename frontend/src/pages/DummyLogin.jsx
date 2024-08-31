@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function DummyLogin() {
 
@@ -24,7 +24,17 @@ function DummyLogin() {
     const data = await response.json();
     console.log(data);
 
-    data.message ? navigate('/') : alert("wrong credentials")
+    // data.message ? navigate('/') : alert("wrong credentials")
+ 
+    if (data.message) {
+      localStorage.setItem('auth', data.accessToken)
+      alert('yoo')
+      navigate('/')
+    }
+    else{
+      alert('wrong credentials')
+    }
+
   }
 
   return (
@@ -34,6 +44,7 @@ function DummyLogin() {
         <input type="email" onChange={(e)=>setEmail(n => e.target.value)} placeholder="email" />
         <input type="text" onChange={(e)=>setPassword(n => e.target.value)} placeholder="password" />
         <button onClick={login}>Login</button>
+        <Link to={'/signup'} >Sign Up</Link>
       </div>
     </div>
   );

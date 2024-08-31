@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function DummySignup() {
 
@@ -46,6 +47,7 @@ function DummySignup() {
             <input type="password"  onChange={(e)=>setPassword(n => e.target.value)} placeholder='password'/>
             <input type="password" onChange={(e)=>setConfPass(n => e.target.value)}  placeholder='confirm password'/>
             <button onClick={signup}>Create account</button>
+            <Link to={'/login'} >Log in</Link>
         </div>
     </div>
   )
