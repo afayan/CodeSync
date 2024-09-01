@@ -63,5 +63,23 @@ testcases
 +------------+--------------+------+-----+---------+----------------+
 
 
-create table users(username varchar(100), email varchar(200), password varchar(1000), role varchar(100));
+create table users(userid int primary key auto_increment, username varchar(100), email varchar(200), password varchar(1000), role varchar(100));
 
++----------+---------------+------+-----+---------+----------------+
+| Field    | Type          | Null | Key | Default | Extra          |
++----------+---------------+------+-----+---------+----------------+
+| username | varchar(100)  | YES  |     | NULL    |                |
+| email    | varchar(200)  | YES  |     | NULL    |                |
+| password | varchar(1000) | YES  |     | NULL    |                |
+| userid   | int           | NO   | PRI | NULL    | auto_increment |
+| role     | varchar(100)  | YES  |     | user    |                |
++----------+---------------+------+-----+---------+----------------+
+
+CREATE TABLE users (
+    username VARCHAR(100) DEFAULT NULL,
+    email VARCHAR(200) DEFAULT NULL,
+    password VARCHAR(1000) DEFAULT NULL,
+    userid INT NOT NULL AUTO_INCREMENT,
+    role VARCHAR(100) DEFAULT 'user',
+    PRIMARY KEY (userid)
+);

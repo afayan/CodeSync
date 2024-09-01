@@ -76,12 +76,12 @@ function Home() {
 
 
         <h1>Problems</h1>
-        <Link to={'/problems/array'}>Array</Link>
-        <Link to={'/problems/stack'}>Stack</Link>
-        <Link to={'/problems/queue'}>Queue</Link>
-        <Link to={'/problems/linkedlist'}>Linked List</Link>
-        <Link to={'/problems/tree'}>Tree</Link>
-        <Link to={'/problems/graph'}>Graph</Link>
+        <Link className="homepagebuttons" to={'/problems/array'}>Array</Link>
+        <Link className="homepagebuttons" to={'/problems/stack'}>Stack</Link>
+        <Link className="homepagebuttons" to={'/problems/queue'}>Queue</Link>
+        <Link className="homepagebuttons" to={'/problems/linkedlist'}>Linked List</Link>
+        <Link className="homepagebuttons" to={'/problems/tree'}>Tree</Link>
+        <Link className="homepagebuttons" to={'/problems/graph'}>Graph</Link>
         </div>
         </>
     );
