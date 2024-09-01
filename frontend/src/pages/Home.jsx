@@ -4,14 +4,25 @@ import { Link, useNavigate } from "react-router-dom";
 function Home() {
 
     const [username, setUserName] = useState('nobody')
-    const [islogged, setLogged] = useState(true)
+    const [islogged, setLogged] = useState(false)
     const navigate = useNavigate()
+
+
+    useEffect(()=>{
+        if (localStorage.getItem('auth')) {
+            setLogged(true)
+        }
+        else{
+            setLogged(false)
+        }
+    },[])
 
 
     useEffect(()=>{
 
         function checkLogged() {
             if(localStorage.getItem('auth')){
+            
               return true
             }
       
@@ -67,9 +78,12 @@ function Home() {
         <h1>{username}</h1>
         {!islogged && <p>Pls login to start coding!</p> }
 
-        <button onClick={()=>logout()}>Logout</button>
+       {islogged &&  <button onClick={()=>logout()}>Logout</button>}
+       {!islogged && <button onClick={()=>navigate('/logsign')}>Sign in</button>}
+
 
         <div style={{display:"flex", flexDirection:"column", color:"white"}}>
+        <h1>HomePage (Unofficial)</h1>
         <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
         <Link className="homepagebuttons" to={'/problems/all'} >Problems</Link>
         <Link className="homepagebuttons" to={'/leaderboard'}>LeaderBoard</Link>

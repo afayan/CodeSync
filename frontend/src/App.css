@@ -190,3 +190,29 @@ body{
     padding: 10px;
     color: azure;
 }
+
+.terminal{
+    background-color: black;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: scroll;
+    border-radius: 8px;
+}
+
+.aibutton{
+    padding: 10px;
+    background-color: blueviolet;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.airesponseTab{
+    background-color: rgb(109, 101, 109);
+    padding: 5px;
+    margin: 2px;
+    margin-top: 20px;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+}

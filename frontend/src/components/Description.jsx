@@ -87,8 +87,8 @@ function Description(props) {
       {showAI && (
         <div className="aiTab">
           <h1>AI</h1>
-          <button onClick={() => askai()}>Ask AI</button>
-          <Markdown>
+          <button className="aibutton" onClick={() => askai()}>Ask AI</button>
+          <Markdown className="airesponseTab">
             {responseFromAI}
           </Markdown>
         </div>

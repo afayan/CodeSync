@@ -202,8 +202,6 @@ function Output(props) {
       </div>
       
       }
-     
-
       </div>
     );
 
@@ -227,7 +225,7 @@ function Output(props) {
         TR === 'R' ? <div  className="resultWindow" style={{'borderColor' : resultBoxColor , 'color': resultBoxColor }}>
           {aicheckRemark} 
         </div> : <div>
-          <pre >{output2}</pre>
+          <pre className="terminal">{output2}</pre>
         </div>
       }
 

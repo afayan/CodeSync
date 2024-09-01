@@ -34,7 +34,6 @@ export const Loginsignup = () => {
      
         if (data.message) {
           localStorage.setItem('auth', data.accessToken)
-          alert('yoo')
           navigate('/')
         }
         else{
