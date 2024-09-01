@@ -1,11 +1,12 @@
-import "./Contact.css"
+import "./Contact.css";
 
 const Contact = () => {
   return (
+    
     <section className="contact-section">
-        <div className="contact-tagline">
-            <h2 id="contact">Lets Get in Touch</h2>
-            <p>We are just a click away! Whether you have a question, feedback, or just want to say hello, we would love to hear from you. Lets create something amazing together.</p>
+        <div className="contact-title">
+            <h2 id="contact">Get in Touch with Us</h2>
+            <p>We’re excited to hear from you! Whether you have questions, feedback, or just want to connect, drop us a message and let’s create something amazing together.</p>
         </div>
         <div className="contact-form">
             <form>
@@ -23,11 +24,9 @@ const Contact = () => {
                 </div>
                 <button type="submit" className="sub-button">Send Message</button>
             </form>
-
-            
         </div>
     </section>
-);
+  );
 }
 
-export default Contact
+export default Contact;

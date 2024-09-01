@@ -1,49 +1,66 @@
 .objectives-section {
     padding: 50px;
     text-align: center;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
 }
 
 .objectives-title {
     font-size: 2.5rem;
     margin-bottom: 40px;
-    color: #ffffff;
+    color: #ffffff; 
+    font-family: 'Roboto', sans-serif;
 }
 
 .objectives-content {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    gap: 20px;
 }
 
 .objective-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, rgba(60, 60, 90, 0.5), rgba(30, 30, 60, 0.5)), url('');
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
     width: 250px;
-    margin: px;
-    padding: 20px;
+    padding: 40px;
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .objective-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5); 
 }
 
 .objective-icon {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 20px;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
     stroke-width: 2.5;
+    color: #ffffff; 
+    transition: color 0.3s ease;
+}
+
+.objective-card:hover .objective-icon {
+    color: #3498db; 
 }
 
 .objective-heading {
-    font-size: 1.5rem;
-    color: #000000;
+    font-size: 1.6rem;
     margin-bottom: 10px;
 }
 
 .objective-description {
     font-size: 1rem;
-    color: #000000;
+    color: #ffffff; 
+}
+
+@media (max-width: 768px) {
+    .objectives-content {
+        flex-direction: column;
+        align-items: center;
+    }
 }
