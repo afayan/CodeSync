@@ -11,7 +11,7 @@ function Output(props) {
   const [yInput , setYIP] = useState()
   const [resultBoxColor , setRBC] = useState('white')
   const [aicheckRemark , setAIcheckRemark] = useState('')
-  const [output2, setOP2] = useState('Your op here')
+  const [output2, setOP2] = useState('Your output here')
 
   const a = [1,2,11,55]
 

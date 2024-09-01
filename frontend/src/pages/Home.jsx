@@ -70,9 +70,9 @@ function Home() {
         <button onClick={()=>logout()}>Logout</button>
 
         <div style={{display:"flex", flexDirection:"column", color:"white"}}>
-        <Link to={'/Add'}>Add problem</Link>
-        <Link to={'/problems/all'} >Problems</Link>
-        <Link to={'/leaderboard'}>LeaderBoard</Link>
+        <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
+        <Link className="homepagebuttons" to={'/problems/all'} >Problems</Link>
+        <Link className="homepagebuttons" to={'/leaderboard'}>LeaderBoard</Link>
 
 
         <h1>Problems</h1>

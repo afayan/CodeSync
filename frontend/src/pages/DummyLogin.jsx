@@ -34,7 +34,6 @@ function DummyLogin() {
     else{
       alert('wrong credentials')
     }
-
   }
 
   return (

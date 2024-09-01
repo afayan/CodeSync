@@ -20,6 +20,11 @@ function DummySignup() {
         //validate the form
         //send data to database after validation
 
+        if (confP != password) {
+            alert("passwords do not match")
+            return false
+        }
+
 
         const response = await fetch('/api/signup', {
             method : 'post',

@@ -71,7 +71,7 @@ function ProblemList() {
 
   return (
     <div>
-      {!isLogged && <p>Please login</p> }
+      {!isLogged && <p className="warning">Please login to start coding!</p> }
       <h1>Problem List</h1>
       {problist.map((problem) => {
         //to continue
