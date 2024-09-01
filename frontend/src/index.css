@@ -1,0 +1,17 @@
+:root {
+    font-family: system-ui , Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+  
+    color-scheme: light dark;
+    color: white;
+    background-color: #302e2e88;
+  
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 10px;
+  }
