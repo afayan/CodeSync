@@ -8,6 +8,7 @@ import ProblemList from "./pages/ProblemList";
 import AdminRoadmap from "./pages/AdminRoadmap";
 import LeaderBoard from "./pages/LeaderBoard";
 import { Loginsignup } from "./pages/Loginsignup";
+import LandingPage from "./pages/LandingPage";
 
 
 function App() {

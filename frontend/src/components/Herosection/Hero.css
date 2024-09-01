@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
-  background: linear-gradient(135deg, rgba(60, 60, 90, 0.5), rgba(30, 30, 60, 0.5)), url('');
+  background: linear-gradient(135deg, rgba(60, 60, 90, 0.5), rgba(30, 30, 60, 0.5)), url('path/to/your/background.jpg');
   background-size: cover;
   background-position: center;
   color: #fff;
@@ -86,7 +86,7 @@
 }
 
 .button:hover {
-  color: rgb(0, 0, 0); 
+  color: rgb(0, 0, 0); /* Previous text color on hover */
 }
 
 .button:active {

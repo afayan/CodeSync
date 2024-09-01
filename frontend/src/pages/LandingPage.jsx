@@ -1,21 +1,30 @@
+import './Landing.css';
+import Navbar from '../components/Navbar/Navbar';
+import Hero from '../components/Herosection/Hero';
+import Objectives from '../components/Objectives/Objectives';
+import Contact from '../components/Contactus/Contact';
+import Footer from '../components/Footer/Footer';
 
-import './App.css'
-import Navbar from './Components/Navbar/Navbar'
-import Hero from './Components/Herosection/Hero'
-import Objectives from './Components/Objectives/Objectives'
-import Contact from './Components/Contactus/Contact'
-import Footer from './Components/Footer/Footer'
-
-function App() {
+function LandingPage() {
   return (
     <>
-      <Navbar/>
-      <Hero/>
-      <Objectives/>
-      <Contact/>
-      <Footer/>
+      <div className="fade-in">
+        <Navbar />
+      </div>
+      <div className="fade-in">
+        <Hero />
+      </div>
+      <div className="fade-in">
+        <Objectives />
+      </div>
+      <div className="fade-in">
+        <Contact />
+      </div>
+      <div className="fade-in">
+        <Footer />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default LandingPage;

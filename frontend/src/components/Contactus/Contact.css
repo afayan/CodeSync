@@ -25,14 +25,14 @@
 }
 
 .contact-form {
-    background: linear-gradient(135deg, rgba(60, 60, 90, 0.5), rgba(30, 30, 60, 0.5)), url('');
+    background: linear-gradient(135deg, rgba(60, 60, 90, 0.5), rgba(30, 30, 60, 0.5)), url('path/to/your/background.jpg');
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     padding: 30px;
     max-width: 50%;
     width: 100%;
     height: auto;
-    transition: transform 0.7s ease, box-shadow 0.1s ease; 
+    transition: transform 0.7s ease, box-shadow 0.1s ease; /* Reduced transition effect */
 }
 
 .contact-form:hover {
@@ -65,7 +65,7 @@
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: #c4bebe; 
+    color: #c4bebe; /* Placeholder text color */
 }
 
 .form-group input:focus,
@@ -75,14 +75,14 @@
 }
 
 .sub-button {
-    --color: #ffffff; 
+    --color: #ffffff; /* Primary button color */
     padding: 0.8em 1.7em;
     background-color: transparent;
     border-radius: .3em;
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: .5s; 
+    transition: .5s; /* Reduced transition effect */
     font-weight: 500;
     font-size: 17px;
     border: 1px solid var(--color);
