@@ -10,14 +10,14 @@ const Navbar = () => {
                 </div>
                 <div className="nav-items">
                     <ul>
-                        <li><a href="#">Problems</a></li>
+                        <li><a href="http://localhost:5173/home">Problems</a></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="#contact">Contact Us</a></li>
                     </ul>
                 </div>
                 <div className="auth-buttons">
-                    <button className="button">Login</button>
-                    <button className="button">SignUp</button>
+                    <a href="http://localhost:5173/logsign"><button className="button">Login</button></a>
+                    <a href="http://localhost:5173/logsign"><button className="button">SignUp</button></a>
                 </div>
             </div>
         </div>

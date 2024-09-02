@@ -34,7 +34,7 @@ export const Loginsignup = () => {
      
         if (data.message) {
           localStorage.setItem('auth', data.accessToken)
-          navigate('/')
+          navigate('/home')
         }
         else{
           alert('wrong credentials')

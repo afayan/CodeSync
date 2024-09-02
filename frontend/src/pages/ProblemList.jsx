@@ -83,7 +83,7 @@ function ProblemList() {
           >
             {problem.qname} -- {problem.qtype}{" "}
             {solvedList.includes(problem.q_id) ? (
-              <SiTicktick style={{ color: "lightgreen" }} />
+              <SiTicktick color="green"/>
             ) : (
               ""
             )}
