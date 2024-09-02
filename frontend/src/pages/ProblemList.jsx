@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SiTicktick } from "react-icons/si";
+import { CircleCheckBig } from "lucide-react";
 
 function ProblemList() {
   const type = useParams().type;
@@ -83,7 +84,7 @@ function ProblemList() {
           >
             {problem.qname} -- {problem.qtype}{" "}
             {solvedList.includes(problem.q_id) ? (
-              <SiTicktick color="green"/>
+              <SiTicktick id="tick" style={{'color':'lightgreen'}}/>
             ) : (
               ""
             )}

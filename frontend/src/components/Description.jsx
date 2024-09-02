@@ -60,6 +60,9 @@ function Description(props) {
 
     // AIresponse.current.textContent = aiMessage.response;
     setRFA(aiMessage.response);
+
+    console.log(responseFromAI);
+    
   }
 
   // } catch (error) {

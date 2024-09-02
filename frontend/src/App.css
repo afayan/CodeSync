@@ -210,9 +210,9 @@ body{
 
 .airesponseTab{
     background-color: rgb(109, 101, 109);
-    padding: 5px;
     margin: 2px;
     margin-top: 20px;
     border-radius: 10px;
     color: rgb(255, 255, 255);
+    height: max-content;
 }

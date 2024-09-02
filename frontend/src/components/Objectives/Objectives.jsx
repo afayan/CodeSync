@@ -1,7 +1,9 @@
 
 
-import { Target, Lightbulb, Users, Settings } from 'lucide-react';
+import { Target, Lightbulb, Users, Settings, CodeXml, BookOpenCheck } from 'lucide-react';
 import './Objectives.css';
+import { SiGooglegemini  } from "react-icons/si";
+
 
 const Objectives = () => {
     return (
@@ -9,24 +11,25 @@ const Objectives = () => {
             <h2 className="objectives-title" id='obj'>Our Objectives</h2>
             <div className="objectives-content">
                 <div className="objective-card">
-                    <Target/>
-                    <h3 className="objective-heading">Clear Focus</h3>
-                    <p className="objective-description">Maintain a sharp focus on our goals to ensure that every step we take aligns with our mission and values.</p>
-                </div>
-                <div className="objective-card">
-                    <Lightbulb/>
-                    <h3 className="objective-heading">Innovation</h3>
-                    <p className="objective-description">Continuously innovate to stay ahead of the curve and provide cutting-edge solutions to our users.</p>
+                <SiGooglegemini />
+
+                    <h3 className="objective-heading">AI-Guided Learning</h3>
+                    <p className="objective-description">Empower your coding journey with our AI-driven features like "Ask Doubts to AI" and "Check Code Using AI," designed to offer personalized, teacher-like support.</p>
                 </div>
                 <div className="objective-card">
                     <Users/>
-                    <h3 className="objective-heading">User Engagement</h3>
-                    <p className="objective-description">Engage with our users effectively to understand their needs and build a community around our product.</p>
+                    <h3 className="objective-heading">User Friendliness</h3>
+                    <p className="objective-description">Start coding with no prior experience on any other platform. Write code however you want, we'll handle the rest!</p>
                 </div>
                 <div className="objective-card">
-                    <Settings/>
-                    <h3 className="objective-heading">Operational Excellence</h3>
-                    <p className="objective-description">Strive for operational excellence to deliver consistent and reliable service across all platforms.</p>
+                    <CodeXml/>
+                    <h3 className="objective-heading">Fast & Efficient Execution</h3>
+                    <p className="objective-description">Leverage the power of the Piston API, the fastest code execution engine, to run your code seamlessly and efficiently.</p>
+                </div>
+                <div className="objective-card">
+                    <BookOpenCheck/>
+                    <h3 className="objective-heading">Career-Focused Learning</h3>
+                    <p className="objective-description">Access a curated set of DSA questions and C programming exercises tailored to align with your academic curriculum, helping you excel in your studies and career.</p>
                 </div>
             </div>
         </section>
