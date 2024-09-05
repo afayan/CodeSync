@@ -17,7 +17,6 @@ function App() {
   return (
     <>
       <Routes>
-
         <Route path={"/home"} element={<Home />} />
         <Route path="/problem/:qid" element={<Problem />} />
         <Route path="/Add" element={<AddQuestion />} />

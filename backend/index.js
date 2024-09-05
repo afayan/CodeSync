@@ -63,7 +63,11 @@ app.post('/api/aihelp',(req, res)=>{
       
         //prompt to send to AI
 
-        const prompt = "Can you help me with this "+ language  +" code? Dont tell me the answer, just tell me where I could be wrong in the code. If it is correct pls tell me so: " + req.body.code;
+        const prompt = `"Can you help me with this ${language}  code? Dont tell me the answer, just tell me where I could be wrong in the code. If it is correct pls tell me so: ${req.body.code}
+        
+        here is the problem description:
+        ${req.body.description}
+        `;
       
         const result = await model.generateContent(prompt);
         const response = await result.response;

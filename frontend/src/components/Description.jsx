@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "../../src/App.css";
 import React from "react";
-import { createRoot } from "react-dom/client";
 import Markdown from "react-markdown";
 import { SiTicktick } from "react-icons/si";
 
@@ -46,6 +45,7 @@ function Description(props) {
 
     const dataToSendToAI = {
       code: props.value,
+      description : description
     };
 
     const res = await fetch("/api/aihelp", {
@@ -79,7 +79,7 @@ function Description(props) {
       {showDesc && (
         <div className="descTab">
           <h1>{qname}</h1>
-          <p>{props.solved ? <SiTicktick style={{'color':"lightgreen"}}/> : "unsolved"}</p>
+          <p>{props.solved ? <SiTicktick/> : "unsolved"}</p>
           <Markdown>{description}</Markdown>
           {/* <p>{description}</p> */}
 
