@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 function Profile() {
 
@@ -104,6 +104,9 @@ function Profile() {
       </div>
 
  {isAdmin && <div className="rightcolumn">
+
+        <h2>Add problem</h2>
+        <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
         <h2>Search user</h2>
         <input type="text" onChange={(e)=>setSearch(e.target.value)} />
         <button onClick={searchUser}>Search</button>

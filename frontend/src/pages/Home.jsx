@@ -81,7 +81,6 @@ async function getDetails() {
         <div style={{display:"flex", flexDirection:"column", color:"white"}}>
         <h1>Dashboard (Unofficial)</h1>
         <Link className="homepagebuttons" to={'/profile'}>Profile</Link>
-        <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
         <Link className="homepagebuttons" to={'/problems/all'} >Problems</Link>
         <Link className="homepagebuttons" to={'/leaderboard'}>LeaderBoard</Link>
 
