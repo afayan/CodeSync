@@ -20,7 +20,7 @@ function Home() {
 
     useEffect(()=>{
 
-        function checkLogged() {
+    function checkLogged() {
             if(localStorage.getItem('auth')){
             
               return true
@@ -31,7 +31,7 @@ function Home() {
             }
           }
 
-        async function getDetails() {
+async function getDetails() {
             
         console.log(localStorage.getItem('auth'));
         
@@ -63,12 +63,8 @@ function Home() {
     }
     }, [islogged])
 
-    function logout() {
-        // localStorage.setItem('auth', ' ')
-        // navigate('/login')  
-        
+    function logout() {        
         localStorage.removeItem('auth')
-
         console.log("Imma logout");
         setLogged(false)
     }
@@ -84,10 +80,10 @@ function Home() {
 
         <div style={{display:"flex", flexDirection:"column", color:"white"}}>
         <h1>Dashboard (Unofficial)</h1>
+        <Link className="homepagebuttons" to={'/profile'}>Profile</Link>
         <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
         <Link className="homepagebuttons" to={'/problems/all'} >Problems</Link>
         <Link className="homepagebuttons" to={'/leaderboard'}>LeaderBoard</Link>
-
 
         <h1>Problems</h1>
         <Link className="homepagebuttons" to={'/problems/array'}>Array</Link>

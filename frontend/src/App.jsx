@@ -9,6 +9,7 @@ import AdminRoadmap from "./pages/AdminRoadmap";
 import LeaderBoard from "./pages/LeaderBoard";
 import { Loginsignup } from "./pages/Loginsignup";
 import LandingPage from "./pages/LandingPage";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="profile" element={<Profile/>} ></Route>
         <Route path={"/home"} element={<Home />} />
         <Route path="/problem/:qid" element={<Problem />} />
         <Route path="/Add" element={<AddQuestion />} />

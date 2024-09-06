@@ -63,7 +63,7 @@ app.post('/api/aihelp',(req, res)=>{
       
         //prompt to send to AI
 
-        const prompt = `"Can you help me with this ${language}  code? Dont tell me the answer, just tell me where I could be wrong in the code. If it is correct pls tell me so: ${req.body.code}
+        const prompt = `"Can you help me with this ${language} code? Dont tell me the answer, just tell me where I could be wrong in the code. If it is correct pls tell me so: ${req.body.code}
         
         here is the problem description:
         ${req.body.description}
@@ -568,10 +568,12 @@ app.post('/api/login', async (req, res)=>{
             //user is authenticated
             const username = response[0].username
             const userid = response[0].userid
+            const role = response[0].role
 
             const tokenData = {
                 username : username,
-                userid : userid
+                userid : userid,
+                role : role  
             }
             
             console.log(tokenData);
@@ -599,18 +601,14 @@ app.get('/api/getleaders', authenticateUser, (req, res)=>{
 function authenticateUser(req, res, next) {
 
     // const authToken = req.body.authToken
-    const authHeader = req.headers['authorization']
-
-    
+    const authHeader = req.headers['authorization'] 
     const authToken = authHeader.split(' ')[1]
-    
     console.log("Auth token is "+authToken);
     
 
     if (authToken) {
         jwt.verify(authToken, jwtKey, (error, user)=>{
            if (error) return res.sendStatus(401)
-
             req.user = user
             next()
         })
@@ -622,6 +620,34 @@ app.post('/api/getUserInfo',authenticateUser, (req, res)=>{
     console.log(req.user);
     
     res.json({data : req.user})
+})
+
+app.post('/api/searchUser', (req, res)=>{
+
+    const {query, userid} = req.body
+    
+    const q = "select username, userid, role from users where username = ?;"
+    db.query(q, [query], (err, result)=>{
+        if (err) {
+            res.status(500)
+        }
+        const newArray = result.filter((person)=>{
+            return person.userid!=userid
+        })
+        console.log(newArray);
+        res.json(newArray)
+    })    
+})
+
+app.post('/api/makeAdmin',authenticateUser, (req, res)=>{
+    console.log("admin");
+    console.log(req.body.id);
+    
+    db.query("update users set role = ? where userid = ?", ["admin", req.body.id], (err, result)=>{
+        if (err) return res.json({staus : false})
+        res.json({status : true})
+    })
+        
 })
 
 app.listen(port, ()=>{

@@ -1,7 +1,46 @@
+import { useEffect, useState } from "react"
 import "./Navbar.css"
 import { Link } from "react-router-dom"
 
 const Navbar = () => {
+
+    const [islogged, setLogged] = useState(0)
+    const [username , setUsername] = useState('')
+  
+   
+  
+    useEffect(()=>{
+        async function checkLogged() {
+            if (localStorage.getItem('auth')) {
+                setLogged(true)
+                console.log(localStorage.getItem('auth'));
+    
+                const resp = await fetch('/api/getUserInfo', {
+                    method: 'post',
+                    headers: {
+                        'Content-type' : 'application/json',
+                        'authorization' : "Bearer "+localStorage.getItem("auth")
+                    },
+                    body : JSON.stringify({})
+                })
+
+                const data = await resp.json()
+                console.log(data);
+
+                setUsername(data.data.username)
+                
+            }
+    
+            else{
+                setLogged(false)
+            }
+        }
+  
+        checkLogged()}
+  
+    ,[])
+
+
   return (
     <>
         <div className="navbar" id="Navbar">
@@ -17,8 +56,10 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="auth-buttons">
-                    <Link to={'/logsign'}><button className="button">Login</button></Link>
-                    <Link to={'/logsign'}><button className="button">SignUp</button></Link>
+                { !islogged && <Link to={'/logsign'}><button className="button">Login</button></Link> }
+                { !islogged && <Link to={'/logsign'}><button className="button">SignUp</button></Link>}  
+
+                {islogged && <Link to={'/profile'}>Hello {username}</Link> }
                 </div>
             </div>
         </div>

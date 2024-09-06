@@ -4,6 +4,7 @@ import Hero from '../components/Herosection/Hero';
 import Objectives from '../components/Objectives/Objectives';
 import Contact from '../components/Contactus/Contact';
 import Footer from '../components/Footer/Footer';
+import { useState, useEffect } from 'react';
 
 function LandingPage() {
   return (
