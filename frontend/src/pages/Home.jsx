@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar/Navbar";
 
 function Home() {
 
@@ -51,7 +52,7 @@ async function getDetails() {
 
         const data = await resp.json()
         console.log(data);
-        setUserName( "Hello "+ data.data.username + "!")
+        setUserName( data.data.username + "'s dashboard")
     }
 
     if (checkLogged()) {  
@@ -71,15 +72,14 @@ async function getDetails() {
 
     return(
         <>
+        <Navbar/>
         <h1>{username}</h1>
         {!islogged && <p>Pls login to start coding!</p> }
 
-       {islogged &&  <button onClick={()=>logout()}>Logout</button>}
        {!islogged && <button onClick={()=>navigate('/logsign')}>Sign in</button>}
 
 
         <div style={{display:"flex", flexDirection:"column", color:"white"}}>
-        <h1>Dashboard (Unofficial)</h1>
         <Link className="homepagebuttons" to={'/profile'}>Profile</Link>
         <Link className="homepagebuttons" to={'/problems/all'} >Problems</Link>
         <Link className="homepagebuttons" to={'/leaderboard'}>LeaderBoard</Link>

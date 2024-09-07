@@ -10,6 +10,7 @@ function Profile() {
   const [isAdmin, setadmin] = useState(false)
   const [search, setSearch] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const [currentTab, setCurrentTab] = useState('p')  //profile info, admin settings, logout 
   const navigate = useNavigate()
 
  
@@ -96,19 +97,22 @@ function Profile() {
   }
 
   return (
-    <div>
-      <h1>Profile</h1>
+
+    <>
+    <h1>Profile</h1>
+    <div className='profilepage'>
       <div className="sidebar">
+        <button onClick={()=>setCurrentTab('p')}>Profile</button>
+        {isAdmin && <button onClick={()=>setCurrentTab('a')}>Admin</button>}
         <button onClick={()=>LogOut()}>Logout</button>
-        {isAdmin && <button>Admin</button>}
       </div>
 
- {isAdmin && <div className="rightcolumn">
+ {currentTab === 'a' && <div className="rightcolumn">
 
         <h2>Add problem</h2>
         <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
-        <h2>Search user</h2>
-        <input type="text" onChange={(e)=>setSearch(e.target.value)} />
+        <h2>Make admin</h2>
+        <input type="text" placeholder='enter username' onChange={(e)=>setSearch(e.target.value)} />
         <button onClick={searchUser}>Search</button>
 
         <div className="namesearchresults">
@@ -124,8 +128,18 @@ function Profile() {
         </div>
       </div>}
 
+      {
+        currentTab === 'p' && <div className='rightcolumn'>
+          <h1>My profile</h1>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, obcaecati odit provident explicabo accusamus dicta laborum minus aperiam quas earum!</p>
+        </div>
+      }
+
 
     </div>
+
+    </>
+
   )
 }
 

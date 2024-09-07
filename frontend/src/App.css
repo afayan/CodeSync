@@ -3,7 +3,7 @@
 body{
     margin: 0px;
     background-color: rgb(59, 59, 59);
-
+    
 }
 
 *{
@@ -215,4 +215,21 @@ body{
     border-radius: 10px;
     color: rgb(255, 255, 255);
     height: max-content;
+}
+
+.sidebar{
+    padding: 10px;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.profilepage{
+    display: flex;
+}
+
+.rightcolumn{
+    padding: 30px;
+    padding-top: 0px;
 }

@@ -25,22 +25,19 @@ function Description(props) {
 
   function toggle(windowName) {
     //toggle the AI window and Desc window
-
     if (windowName == "d") {
       setDesc(true);
       setAI(false);
     } else if (windowName == "a") {
       setAI(true);
       setDesc(false);
-    }
-  }
+    }}
 
   // try {
 
   async function askai() {
     //get code
     //fetch
-
     console.log(props.value);
 
     const dataToSendToAI = {

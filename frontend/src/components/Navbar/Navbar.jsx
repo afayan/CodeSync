@@ -46,11 +46,11 @@ const Navbar = () => {
         <div className="navbar" id="Navbar">
             <div className="navdiv">
                 <div className="logo">
-                    <a href="#">CodeSync</a>
+                    <Link to={'/'}>CodeSync</Link>
                 </div>
                 <div className="nav-items">
                     <ul>
-                        <li><Link to={'/home'}>Problems</Link></li>
+                        <li><Link to={'/home'}>Dashboard</Link></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="#contact">Contact Us</a></li>
                     </ul>

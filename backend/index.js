@@ -650,6 +650,13 @@ app.post('/api/makeAdmin',authenticateUser, (req, res)=>{
         
 })
 
+app.get('/api/getprofileInfo', authenticateUser, (req, res)=>{
+    //no of solved
+    //total questions
+    //username
+    
+})
+
 app.listen(port, ()=>{
     console.log("App is listening at port "+port);
 })
