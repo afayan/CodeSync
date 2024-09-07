@@ -121,7 +121,7 @@ function Problem() {
 
       <Output desc1 = {desc1}  userid = {userid} setSolved = {setSolved} testcases = {testcases} qid = {qid} checkBy = {checkBy} code={value} />
 
-      <Description setDesc1 = {setDesc1} solved = {solved} value={value} problemData = {problemData} setValue = {setValue}/>
+      <Description setDesc1 = {setDesc1} solved = {solved} value={value} problemData = {problemData} setValue = {setValue} />
     </div>
   );
 }

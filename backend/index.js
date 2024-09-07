@@ -603,7 +603,7 @@ function authenticateUser(req, res, next) {
     // const authToken = req.body.authToken
     const authHeader = req.headers['authorization'] 
     const authToken = authHeader.split(' ')[1]
-    console.log("Auth token is "+authToken);
+    // console.log("Auth token is "+authToken);
     
 
     if (authToken) {
@@ -617,7 +617,7 @@ function authenticateUser(req, res, next) {
 }
 
 app.post('/api/getUserInfo',authenticateUser, (req, res)=>{
-    console.log(req.user);
+    // console.log(req.user);
     
     res.json({data : req.user})
 })
@@ -654,6 +654,20 @@ app.get('/api/getprofileInfo', authenticateUser, (req, res)=>{
     //no of solved
     //total questions
     //username
+
+    // res.json({message:"Hello"})
+    // console.log(req.user.userid);
+    
+    // return
+
+     const q = "select u.username, (select count(*) from solved s where s.user_id = ?) as solved, (select count(q.q_id) from questions q) as total from users u where userid = ?;"
+
+    db.query(q, [req.user.userid, req.user.userid], (err, result)=>{
+        if (err) return res.status(500)
+            console.log(result);
+            
+        res.json(result)
+    })
     
 })
 

@@ -168,7 +168,6 @@ function Output(props) {
     } catch (error) {
       alert("an error occurred, please try again later");
       console.log(error);
-      
     }
   }
 

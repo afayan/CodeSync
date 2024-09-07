@@ -9,10 +9,10 @@ const Footer = () => {
                     <h2>CodeSync</h2>
                 </div>
                 <div className="footer-links">
-                    <ul>
-                        <li><a href="#Navbar">Home</a></li>
-                        <li><a href="#obj">About</a></li>
-                        <li><a href="#name">Contact</a></li>
+                    <ul className='navul'>
+                        <li className='navli'><a href="#Navbar">Home</a></li>
+                        <li className='navli'><a href="#obj">About</a></li>
+                        <li className='navli'><a href="#name">Contact</a></li>
                     </ul>
                 </div>
                 <div className="footer-social">

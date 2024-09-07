@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import "../../src/App.css";
 import React from "react";
 import Markdown from "react-markdown";
-import { SiTicktick } from "react-icons/si";
+import { SiTicktick  } from "react-icons/si";
+import { FaArrowAltCircleDown } from "react-icons/fa";
+
 
 function Description(props) {
   // const [window, setWindow] = useState('d')   // options : d = description, a = AI chatbox
@@ -39,6 +41,7 @@ function Description(props) {
     //get code
     //fetch
     console.log(props.value);
+    setRFA("Generating response...")
 
     const dataToSendToAI = {
       code: props.value,
@@ -76,7 +79,7 @@ function Description(props) {
       {showDesc && (
         <div className="descTab">
           <h1>{qname}</h1>
-          <p>{props.solved ? <SiTicktick/> : "unsolved"}</p>
+          <p>{props.solved ? <SiTicktick color="lightgreen"/> : "unsolved"}</p>
           <Markdown>{description}</Markdown>
           {/* <p>{description}</p> */}
 

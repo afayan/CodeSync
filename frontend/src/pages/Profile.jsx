@@ -11,6 +11,7 @@ function Profile() {
   const [search, setSearch] = useState('')
   const [searchResults, setSearchResults] = useState([])
   const [currentTab, setCurrentTab] = useState('p')  //profile info, admin settings, logout 
+  const [profileInfo, setProfileInfo] = useState({})
   const navigate = useNavigate()
 
  
@@ -19,7 +20,7 @@ function Profile() {
       async function checkLogged() {
           if (localStorage.getItem('auth')) {
               setLogged(true)
-              console.log(localStorage.getItem('auth'));
+              // console.log(localStorage.getItem('auth'));
   
               const resp = await fetch('/api/getUserInfo', {
                   method: 'post',
@@ -31,7 +32,7 @@ function Profile() {
               })
 
               const data = await resp.json()
-              console.log(data);
+              // console.log(data);
 
               setUsername(data.data.username)
               setUserid(data.data.userid)
@@ -46,9 +47,23 @@ function Profile() {
           }
       }
 
-      checkLogged()}
+      async function getProfileInfo() {
+        const resp = await fetch('/api/getprofileInfo', {
+          headers:{
+            'authorization' : "Bearer "+localStorage.getItem("auth")
+          }
+        })
+        const data = await resp.json()
+        console.log("Profile data is", data); 
+        setProfileInfo(data[0])        
+      }
 
+      checkLogged()
+      getProfileInfo()
+    }
   ,[])
+
+  
 
   function LogOut() {
     localStorage.removeItem('auth')
@@ -131,7 +146,16 @@ function Profile() {
       {
         currentTab === 'p' && <div className='rightcolumn'>
           <h1>My profile</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, obcaecati odit provident explicabo accusamus dicta laborum minus aperiam quas earum!</p>
+          {profileInfo.username ? 
+          <div>
+            <p>username: {profileInfo.username}</p>
+            <h3>Solved : {profileInfo.solved}/{profileInfo.total}</h3>
+            <p>Success rate: {Math.round((profileInfo.solved/profileInfo.total)*100)}%</p>
+          </div> :
+          <p>
+            loading
+          </p> 
+        }
         </div>
       }
 

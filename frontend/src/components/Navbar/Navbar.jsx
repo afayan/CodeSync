@@ -49,10 +49,10 @@ const Navbar = () => {
                     <Link to={'/'}>CodeSync</Link>
                 </div>
                 <div className="nav-items">
-                    <ul>
-                        <li><Link to={'/home'}>Dashboard</Link></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
+                    <ul className="navul">
+                        <li className="navli"><Link to={'/home'}>Dashboard</Link></li>
+                        <li className="navli"><a href="#">About Us</a></li>
+                        <li className="navli"><a href="#contact">Contact Us</a></li>
                     </ul>
                 </div>
                 <div className="auth-buttons">
