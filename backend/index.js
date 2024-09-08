@@ -592,7 +592,14 @@ app.get('/api/getleaders', authenticateUser, (req, res)=>{
     db.query('select u.username, s.user_id, count(distinct s.q_id) as question_count from solved s join users u on s.user_id = u.userid group by u.userid order by question_count desc;', [], (err, response)=>{
         if(err) return res.status(400)
 
-        res.json(response)
+
+
+        const data = {}
+        data.leaders = response
+        data.me = req.user.userid
+        console.log(data);
+        
+        res.json(data)
         
     })
 

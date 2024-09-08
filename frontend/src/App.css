@@ -173,6 +173,12 @@ body{
     background-color: rgb(163, 114, 67);
 }
 
+.leaderRoll{
+    border: 3px solid lightgreen;
+    border-radius: 10px;
+    margin: 20px;
+}
+
 .homepagebuttons{
     color: black;
     text-decoration: none;
@@ -254,5 +260,26 @@ body{
     
 }
 
-.language-c{
+
+.highlighted{
+    border: 2px solid rgb(135, 250, 143);
+}
+
+.lb{
+    display: flex;
+    flex-direction: column;
+}
+
+.lbheader{
+    text-align: center;
+    border: 2px solid lightgreen;
+    border-radius: 10px;
+    align-self: center;
+    width: 12em;
+    padding: 6px;
+}
+
+.rank{
+    width: 100px;
+    
 }

@@ -205,7 +205,6 @@ function AddTestCase(props) {
             props.setTestcases(arr => [...arr, testCaseInfo]);
             isSaved(true);
             props.setTCIndex(c=>c+1)
-            setCode(defaultRunnerCode)
         }
 
         async function checkTcValidity() {
@@ -278,7 +277,6 @@ function AddTestCase(props) {
             <button onClick={savetestCase}>save</button>
             <p>Output</p>
             <p>{remark}</p>
-            {saved && <button>Delete</button>}
             </div>
         );
 }
