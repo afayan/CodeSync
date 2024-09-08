@@ -589,7 +589,7 @@ app.post('/api/login', async (req, res)=>{
 
 app.get('/api/getleaders', authenticateUser, (req, res)=>{
     
-    db.query('select u.username, s.user_id, count(s.q_id) as question_count from solved s join users u on s.user_id = u.userid group by u.userid order by question_count desc;', [], (err, response)=>{
+    db.query('select u.username, s.user_id, count(distinct s.q_id) as question_count from solved s join users u on s.user_id = u.userid group by u.userid order by question_count desc;', [], (err, response)=>{
         if(err) return res.status(400)
 
         res.json(response)
@@ -660,7 +660,7 @@ app.get('/api/getprofileInfo', authenticateUser, (req, res)=>{
     
     // return
 
-     const q = "select u.username, (select count(*) from solved s where s.user_id = ?) as solved, (select count(q.q_id) from questions q) as total from users u where userid = ?;"
+     const q = "select u.username, (select count(distinct q_id) from solved s where s.user_id = ?) as solved, (select count(q.q_id) from questions q) as total from users u where userid = ?;"
 
     db.query(q, [req.user.userid, req.user.userid], (err, result)=>{
         if (err) return res.status(500)

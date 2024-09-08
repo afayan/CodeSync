@@ -225,6 +225,13 @@ body{
     overflow-x: scroll;
 }
 
+.descriptionBox pre{
+    background-color: rgb(37, 37, 37);
+    padding: 14px;
+    border-radius: 10px;
+    overflow-x: scroll;
+}
+
 .sidebar{
     padding: 10px;
     background-color: antiquewhite;
