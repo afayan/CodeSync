@@ -686,8 +686,42 @@ app.get('/api/getprofileInfo', authenticateUser, (req, res)=>{
 
 // select subquery.qtype, count(subquery.qtype) as usercount, total.qcount from (select distinct s.q_id, u.username, u.userid, q.qtype from users u left join solved s on u.userid = s.user_id left join questions q on s.q_id = q.q_id where userid = 9) as subquery join (select q.qtype, count(q.qtype) as qcount from questions q group by q.qtype) as total on subquery.qtype = total.qtype group by subquery.qtype, total.qcount;
 
+// SELECT COALESCE(subquery.qtype, total.qtype) AS qtype, 
+//        COUNT(subquery.qtype) AS usercount, 
+//        total.qcount
+// FROM (
+//     SELECT DISTINCT s.q_id, u.userid, q.qtype
+//     FROM users u
+//     LEFT JOIN solved s ON u.userid = s.user_id
+//     LEFT JOIN questions q ON s.q_id = q.q_id
+//     WHERE u.userid = 2
+// ) AS subquery
+// RIGHT JOIN (
+//     SELECT q.qtype, COUNT(q.qtype) AS qcount
+//     FROM questions q
+//     GROUP BY q.qtype
+// ) AS total
+// ON subquery.qtype = total.qtype
+// GROUP BY COALESCE(subquery.qtype, total.qtype), total.qcount;
+
 app.get('/api/getchartinfo', authenticateUser, (req, res)=>{
-    const q =  `select subquery.qtype, count(subquery.qtype) as usercount, total.qcount from (select distinct s.q_id, u.username, u.userid, q.qtype from users u left join solved s on u.userid = s.user_id left join questions q on s.q_id = q.q_id where userid = ?) as subquery join (select q.qtype, count(q.qtype) as qcount from questions q group by q.qtype) as total on subquery.qtype = total.qtype group by subquery.qtype, total.qcount;`
+    const q =  `SELECT COALESCE(subquery.qtype, total.qtype) AS qtype, 
+       COUNT(subquery.qtype) AS usercount, 
+       total.qcount
+FROM (
+    SELECT DISTINCT s.q_id, u.userid, q.qtype
+    FROM users u
+    LEFT JOIN solved s ON u.userid = s.user_id
+    LEFT JOIN questions q ON s.q_id = q.q_id
+    WHERE u.userid = ?
+) AS subquery
+RIGHT JOIN (
+    SELECT q.qtype, COUNT(q.qtype) AS qcount
+    FROM questions q
+    GROUP BY q.qtype
+) AS total
+ON subquery.qtype = total.qtype
+GROUP BY COALESCE(subquery.qtype, total.qtype), total.qcount;`
 
     db.query(q, [req.user.userid], (err, result)=>{
         if(err) return res.status(500)
