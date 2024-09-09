@@ -81,6 +81,7 @@ function AddQuestion() {
 
       <select name="problemDomain" ref={qtype} id="">
         <option value="">Choose problem type</option>
+        <option value="algorithm">Algorithm</option>
         <option value="array">Arrays</option>
         <option value="string">Strings</option>
         <option value="stack">Stack</option>

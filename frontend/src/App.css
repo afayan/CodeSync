@@ -283,3 +283,16 @@ body{
     width: 100px;
     
 }
+
+.dtypeButtons{
+    color: black;
+    padding: 10px;
+    background-color: rgb(195, 140, 140);
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+}
+
+.typrButtonRoll{
+height: 200px;
+}

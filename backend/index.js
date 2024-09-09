@@ -678,6 +678,24 @@ app.get('/api/getprofileInfo', authenticateUser, (req, res)=>{
     
 })
 
+//select distinct s.q_id, u.username,u.userid, q.qtype from users u left join solved s on u.userid = s.user_id left join questions q on s.q_id = q.q_id;
+
+// select qtype, count(qtype) from (select distinct s.q_id, u.username, u.userid, q.qtype from users u left join solved s on u.userid = s.user_id left join questions q on s.q_id = q.q_id) as subquery where userid = 9 group by qtype;
+
+// select qtype, count(qtype) from (select distinct s.q_id, u.username, u.userid, q.qtype from users u left join solved s on u.userid = s.user_id left join questions q on s.q_id = q.q_id) as subquery where userid = 10 group by qtype;
+
+// select subquery.qtype, count(subquery.qtype) as usercount, total.qcount from (select distinct s.q_id, u.username, u.userid, q.qtype from users u left join solved s on u.userid = s.user_id left join questions q on s.q_id = q.q_id where userid = 9) as subquery join (select q.qtype, count(q.qtype) as qcount from questions q group by q.qtype) as total on subquery.qtype = total.qtype group by subquery.qtype, total.qcount;
+
+app.get('/api/getchartinfo', authenticateUser, (req, res)=>{
+    const q =  `select subquery.qtype, count(subquery.qtype) as usercount, total.qcount from (select distinct s.q_id, u.username, u.userid, q.qtype from users u left join solved s on u.userid = s.user_id left join questions q on s.q_id = q.q_id where userid = ?) as subquery join (select q.qtype, count(q.qtype) as qcount from questions q group by q.qtype) as total on subquery.qtype = total.qtype group by subquery.qtype, total.qcount;`
+
+    db.query(q, [req.user.userid], (err, result)=>{
+        if(err) return res.status(500)
+        
+        res.json(result)
+    })
+})
+
 app.listen(port, ()=>{
     console.log("App is listening at port "+port);
 })

@@ -6,6 +6,7 @@ function Home() {
 
     const [username, setUserName] = useState('nobody')
     const [islogged, setLogged] = useState(false)
+    const [chartInfo, setChartInfo] = useState({})
     const navigate = useNavigate()
 
 
@@ -57,18 +58,40 @@ async function getDetails() {
 
     if (checkLogged()) {  
         getDetails()
+        getChartInfo()
     }
 
     else{
         setUserName('Welcome to CodeSync!')
     }
+
+    async function getChartInfo() {
+        console.log("lets get chart info");
+        const res = await fetch('/api/getchartinfo', {
+            headers: {
+                'Content-type' : 'application/json',
+                'authorization' : "Bearer "+localStorage.getItem("auth")
+            },
+        })
+
+        const data = await res.json()
+        console.log(data);
+        
+    }
+
     }, [islogged])
+
+    
 
     function logout() {        
         localStorage.removeItem('auth')
         console.log("Imma logout");
         setLogged(false)
     }
+
+    //info needed for dashboard:
+    //solved, total, solved by each category 
+    
 
     return(
         <>
@@ -85,12 +108,17 @@ async function getDetails() {
         <Link className="homepagebuttons" to={'/leaderboard'}>LeaderBoard</Link>
 
         <h1>Problems</h1>
-        <Link className="homepagebuttons" to={'/problems/array'}>Array</Link>
-        <Link className="homepagebuttons" to={'/problems/stack'}>Stack</Link>
-        <Link className="homepagebuttons" to={'/problems/queue'}>Queue</Link>
-        <Link className="homepagebuttons" to={'/problems/linkedlist'}>Linked List</Link>
-        <Link className="homepagebuttons" to={'/problems/tree'}>Tree</Link>
-        <Link className="homepagebuttons" to={'/problems/graph'}>Graph</Link>
+        <div className="typrButtonRoll">
+
+        <Link className="dtypeButtons" to={'/problems/array'}>Array</Link>
+        <Link className="dtypeButtons" to={'/problems/stack'}>Stack</Link>
+        <Link className="dtypeButtons" to={'/problems/queue'}>Queue</Link>
+        <Link className="dtypeButtons" to={'/problems/linkedlist'}>Linked List</Link>
+        <Link className="dtypeButtons" to={'/problems/tree'}>Tree</Link>
+        <Link className="dtypeButtons" to={'/problems/graph'}>Graph</Link>
+        <Link className="dtypeButtons" to={'/problems/algorithm'}>Algorithm</Link>
+
+        </div>
         </div>
         </>
     );
