@@ -48,7 +48,6 @@ li a {
     text-transform: uppercase;
     display: block;
     padding: 10px;
-    color: white; 
     transition: color 0.3s, transform 0.3s;
 }
 
@@ -114,4 +113,40 @@ li a:hover {
 
 .button:active {
     filter: brightness(.8);
+}
+
+.sidebarNav{
+    display: flex;
+    flex-direction: column;
+    color: black;
+    position: absolute;
+    z-index: 999;
+    right: 0px;
+    background-color: rgb(34, 34, 34);
+}
+
+.sidebarNav ul{
+    color: black;
+    margin: 0px;
+    padding: 20px;
+}
+
+.sidebarNav li{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.menuicon{
+    display: none;
+}
+
+@media screen and (max-width : 800px) {
+    .hideonPhone{
+        display: none;
+    }
+
+    .menuicon{
+        display: block;
+    }
 }

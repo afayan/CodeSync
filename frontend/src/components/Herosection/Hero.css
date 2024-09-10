@@ -3,13 +3,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
-  background: linear-gradient(135deg, rgba(60, 60, 90, 0.5), rgba(30, 30, 60, 0.5)), url('path/to/your/background.jpg');
+  background-image: linear-gradient(rgb(50, 49, 60), rgb(47, 49, 69));
   background-size: cover;
   background-position: center;
   color: #fff;
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  height: 525px;
+  height: max-content;
 }
 
 .catchphrase {
@@ -98,6 +98,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 10px;
 }
 
 .image-placeholder {
@@ -125,12 +126,16 @@
       padding: 1rem;
   }
 
-  .catchphrase, .image-container {
+  .catchphrase {
       max-width: 100%;
       width: 100%;
   }
 
   .catchphrase {
       margin-bottom: 2rem;
+  }
+
+  .hero-image, .image-placeholder{
+    display: none;
   }
 }

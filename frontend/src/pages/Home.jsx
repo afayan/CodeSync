@@ -6,7 +6,7 @@ function Home() {
 
     const [username, setUserName] = useState('nobody')
     const [islogged, setLogged] = useState(false)
-    const [chartInfo, setChartInfo] = useState({})
+    const [chartInfo, setChartInfo] = useState([])
     const navigate = useNavigate()
 
 
@@ -76,6 +76,7 @@ async function getDetails() {
 
         const data = await res.json()
         console.log(data);
+        setChartInfo(data)
         
     }
 
@@ -101,6 +102,7 @@ async function getDetails() {
 
        {!islogged && <button onClick={()=>navigate('/logsign')}>Sign in</button>}
 
+        {islogged && <Statsdiv chartInfo = {chartInfo}/>}
 
         <div style={{display:"flex", flexDirection:"column", color:"white"}}>
         <Link className="homepagebuttons" to={'/profile'}>Profile</Link>
@@ -125,3 +127,26 @@ async function getDetails() {
 }
 
 export default Home
+
+
+function Statsdiv(props) {
+
+    // console.log(props);
+
+        
+        return(
+            <div className="chartSection">
+            <h1>My stats</h1>
+            <div>
+            {props.chartInfo.map((solType)=>{
+                return <div key={solType.qtype}>
+                    <p>{solType.qtype}</p>
+                    <p>solved : {solType.usercount}/{solType.qcount} </p>
+                </div> 
+            })}
+
+            </div>
+            </div>
+        )
+    }
+

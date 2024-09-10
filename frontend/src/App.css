@@ -3,7 +3,7 @@
 body{
     margin: 0px;
     background-color: rgb(59, 59, 59);
-    
+    height: 100vh;
 }
 
 *{
@@ -295,4 +295,18 @@ body{
 
 .typrButtonRoll{
 height: 200px;
+}
+
+.chartSection{
+    position: absolute;
+    right: 10px;
+    width: 50%;
+    top: 80px;
+}
+
+.chartSection div{
+    background-color: antiquewhite;
+    color: black;
+    margin: 10px;
+    width: 200px;
 }
