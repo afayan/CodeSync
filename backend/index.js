@@ -667,7 +667,7 @@ app.get('/api/getprofileInfo', authenticateUser, (req, res)=>{
     
     // return
 
-     const q = "select u.username, (select count(distinct q_id) from solved s where s.user_id = ?) as solved, (select count(q.q_id) from questions q) as total from users u where userid = ?;"
+     const q = "select u.username, u.email, u.role, (select count(distinct q_id) from solved s where s.user_id = ?) as solved, (select count(q.q_id) from questions q) as total from users u where userid = ?;"
 
     db.query(q, [req.user.userid, req.user.userid], (err, result)=>{
         if (err) return res.status(500)

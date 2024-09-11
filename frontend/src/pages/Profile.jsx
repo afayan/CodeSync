@@ -116,7 +116,7 @@ function Profile() {
     <>
     <h1>Profile</h1>
     <div className='profilepage'>
-      <div className="sidebar">
+      <div className="profile-sidebar">
         <button onClick={()=>setCurrentTab('p')}>Profile</button>
         {isAdmin && <button onClick={()=>setCurrentTab('a')}>Admin</button>}
         <button onClick={()=>LogOut()}>Logout</button>
@@ -145,21 +145,29 @@ function Profile() {
 
       {
         currentTab === 'p' && <div className='rightcolumn'>
-          <h1>My profile</h1>
+          <h2>Profile info</h2>
           {profileInfo.username ? 
           <div>
+          
+          <div className='profileInfo'>
             <p>username: {profileInfo.username}</p>
-            <h3>Solved : {profileInfo.solved}/{profileInfo.total}</h3>
-            <p>Success rate: {Math.round((profileInfo.solved/profileInfo.total)*100)}%</p>
-          </div> :
+            <p>email: {profileInfo.email}</p>
+            <p>status: {profileInfo.role}</p>
+          </div> 
+
+          <h2>Account info</h2>
+          <div className="profileInfo">
+            <p>Solved : {profileInfo.solved}/{profileInfo.total}</p>
+            <p>Progress: {Math.round((profileInfo.solved/profileInfo.total)*100)}% completed</p>
+          </div>
+          </div>
+          :
           <p>
             loading
           </p> 
         }
         </div>
       }
-
-
     </div>
 
     </>

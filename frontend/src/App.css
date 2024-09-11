@@ -238,12 +238,21 @@ body{
     overflow-x: scroll;
 }
 
-.sidebar{
+.profile-sidebar{
     padding: 10px;
-    background-color: antiquewhite;
     display: flex;
     flex-direction: column;
     width: 20%;
+}
+
+.profileInfo{
+    background-color: gray;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.profile-sidebar button{
+    padding: 20px;
 }
 
 .profilepage{

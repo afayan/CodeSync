@@ -83,10 +83,10 @@ const Navbar = () => {
             <Link to={"/home"}>Home</Link>
           </li>
           <li>
-            <Link to={"#"}>About us</Link>
+            <Link to={"/"}>About us</Link>
           </li>
           <li>
-            <Link to={"#"}>Contact us</Link>
+            <Link to={"/"}>Contact us</Link>
           </li>
           {islogged && (
             <li>
