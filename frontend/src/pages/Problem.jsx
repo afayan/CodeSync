@@ -4,6 +4,7 @@ import Output from "../components/Output";
 import Description from "../components/Description";
 import { useNavigate, useParams } from "react-router-dom";
 
+
 function Problem() {
   //description, usecase
 
@@ -13,11 +14,11 @@ function Problem() {
   //if test cases are true, send req to backend and update
   // => solved
 
-  const qid = useParams().qid
-
-  console.log(qid);
   
 
+  const qid = useParams().qid;
+
+  console.log(qid);
 
   const defValue = `//start coding
 
@@ -31,77 +32,66 @@ function Problem() {
   const editorRef = useRef("");
   const [solved, setSolved] = useState(false);
   const [testcases, setTestcases] = useState([]);
-  const [problemData, setProbData] = useState([])
-  const [checkBy, setCheckBy] = useState('')
-  const [userid, setUserId] = useState(0)
-  const [desc1, setDesc1] = useState('')
-  const [logged, islogged] = useState(true)
-  const navigate = useNavigate()
+  const [problemData, setProbData] = useState([]);
+  const [checkBy, setCheckBy] = useState("");
+  const [userid, setUserId] = useState(0);
+  const [desc1, setDesc1] = useState("");
+  const [logged, islogged] = useState(true);
+  const navigate = useNavigate();
 
-  
   // const [q_id, setQid] = useState(-1)
 
   useEffect(() => {
-
-   function checkLogged(){
-    if (localStorage.getItem('auth')) {
-      console.log("logged in");
+    function checkLogged() {
+      if (localStorage.getItem("auth")) {
+        console.log("logged in");
+      } else {
+        navigate("../../logsign");
+      }
     }
-    else{
-      navigate('../../logsign')
-    }
 
-   }
-
-    
     async function getProblemInfo() {
-      const response = await fetch('/api/getprobleminfo/'+qid)
-      const data = await response.json()
-      setProbData(data)
-      setValue(data[0].defcode)
-      setCheckBy(data[0].checkBy)
+      const response = await fetch("/api/getprobleminfo/" + qid);
+      const data = await response.json();
+      setProbData(data);
+      setValue(data[0].defcode);
+      setCheckBy(data[0].checkBy);
     }
 
     async function getTestcases() {
-      const response = await fetch('/api/getTestcases/'+qid)
-      const data = await response.json()
+      const response = await fetch("/api/getTestcases/" + qid);
+      const data = await response.json();
       console.log(data);
-      setTestcases(data)
+      setTestcases(data);
     }
 
     async function checkSolved() {
       //to do
-      const resp = await fetch('/api/checksolved', {
-        method:'post',
-        headers:{
-          'Content-Type':'application/json',
-          'authorization' : "Bearer "+localStorage.getItem("auth")
-          
+      const resp = await fetch("/api/checksolved", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: "Bearer " + localStorage.getItem("auth"),
         },
         body: JSON.stringify({
           authToken: localStorage.getItem("auth"),
           // 'userid' : userid,
-          'qid' : qid
-        })
-      })
+          qid: qid,
+        }),
+      });
 
+      const data = await resp.json();
 
-      const data = await resp.json()
-
-      setSolved(data.status)
-      setUserId(data.userid)
+      setSolved(data.status);
+      setUserId(data.userid);
       console.log(data);
     }
 
-
-    checkLogged()
-    getProblemInfo()
-    getTestcases()
-    checkSolved()
-    
+    checkLogged();
+    getProblemInfo();
+    getTestcases();
+    checkSolved();
   }, []);
-
-
 
   // console.log(value);
   return (
@@ -119,9 +109,23 @@ function Problem() {
         />
       </div>
 
-      <Output desc1 = {desc1}  userid = {userid} setSolved = {setSolved} testcases = {testcases} qid = {qid} checkBy = {checkBy} code={value} />
+      <Output
+        desc1={desc1}
+        userid={userid}
+        setSolved={setSolved}
+        testcases={testcases}
+        qid={qid}
+        checkBy={checkBy}
+        code={value}
+      />
 
-      <Description setDesc1 = {setDesc1} solved = {solved} value={value} problemData = {problemData} setValue = {setValue} />
+      <Description
+        setDesc1={setDesc1}
+        solved={solved}
+        value={value}
+        problemData={problemData}
+        setValue={setValue}
+      />
     </div>
   );
 }

@@ -4,15 +4,25 @@ import React from "react";
 import Markdown from "react-markdown";
 import { SiTicktick  } from "react-icons/si";
 import { FaArrowAltCircleDown } from "react-icons/fa";
+import Collab from "./Collab";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000");
 
 
 function Description(props) {
   // const [window, setWindow] = useState('d')   // options : d = description, a = AI chatbox
+
+  socket.on('connect', ()=>{
+    console.log(socket.id);
+  })
+
   const [showDesc, setDesc] = useState(true);
   const [showAI, setAI] = useState(false);
   const [responseFromAI, setRFA] = useState("Use AI to help yourself with your code");
   const [qname, setQname] = useState("loading...");
   const [description, setDescription] = useState("");
+  const [window, setWindow] = useState('d')
 
   useEffect(() => {
     if (props.problemData[0]) {
@@ -27,13 +37,8 @@ function Description(props) {
 
   function toggle(windowName) {
     //toggle the AI window and Desc window
-    if (windowName == "d") {
-      setDesc(true);
-      setAI(false);
-    } else if (windowName == "a") {
-      setAI(true);
-      setDesc(false);
-    }}
+    setWindow(windowName)
+  }
 
   // try {
 
@@ -74,9 +79,12 @@ function Description(props) {
       <div className="descButtonContainer">
         <button className="descToggleButtons" onClick={() => toggle("d")}>Desc</button>
         <button className="descToggleButtons" onClick={() => toggle("a")}>AI</button>
+        <button className="descToggleButtons" onClick={()=> toggle('c')}>
+          Collab
+        </button>
       </div>
 
-      {showDesc && (
+      {window == 'd' && (
         <div className="descTab">
           <h1>{qname}</h1>
           <p>{props.solved ? <SiTicktick color="lightgreen"/> : "unsolved"}</p>
@@ -87,7 +95,7 @@ function Description(props) {
         </div>
       )}
 
-      {showAI && (
+      {window == 'a' && (
         <div className="aiTab">
           <h1>AI</h1>
           <button className="aibutton" onClick={() => askai()}>Ask AI</button>
@@ -96,6 +104,12 @@ function Description(props) {
           </Markdown>
         </div>
       )}
+
+      {
+        window == 'c' && <Collab 
+        code = {props.value}
+        />
+      }
     </div>
   );
 }

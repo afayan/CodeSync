@@ -319,3 +319,14 @@ height: 200px;
     margin: 10px;
     width: 200px;
 }
+
+.collabSearch{
+    background-color: black;
+    overflow-y: scroll;
+    height: 200px;
+}
+
+.collabSearch div{
+    padding: 6px;
+    margin: 4px;
+}

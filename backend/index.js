@@ -5,6 +5,9 @@ import mysql2 from 'mysql2'
 import {GoogleGenerativeAI} from '@google/generative-ai'
 import jwt from 'jsonwebtoken'
 import OpenAI from "openai";
+import { Server } from 'socket.io'
+import { createServer } from 'http'
+import { error } from 'console'
 
 // const openai = new OpenAI();
 
@@ -43,9 +46,42 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const app = express()
 const port = 5000
 const baseURLGlobal = "https://emkc.org/api/v2/piston/execute"
+const httpServer = createServer(app)
+const io = new Server(httpServer, {
+    cors:'*'
+})
 
 app.use(bodyparser)
 
+//code starts here
+
+
+
+//socket connections here
+
+io.on('connection', (socket)=>{
+    // console.log("new user connected with id as ",socket.id);
+
+    socket.on('message', (message)=>{
+        io.emit('reply', message)
+    })
+})
+
+
+//normal requests here
+
+app.post('/api/getfriends', authenticateUser, (req, res)=>{
+    console.log(req.user.userid, " wants to get friend with query",req.body.query);
+
+    const s = '%' + req.body.query + '%'
+
+    db.query('select username, userid from users where username like ? and userid != ? ;', [s, req.user.userid], (err, resp)=>{
+        if ( err ) return console.log(err);
+        
+        console.log(resp);
+        res.json(resp)
+    })
+})
 
 app.post('/api/aihelp',(req, res)=>{
 
@@ -192,7 +228,7 @@ app.post('/api/submitquestion', (req, res)=>{
 // +-------------+--------------+------+-----+---------+----------------+
 
         const testcases = questionData.testcases
-        console.log(testcases);
+        // console.log(testcases);
         
         
         res.json({resp : "submitted question"})
@@ -205,7 +241,7 @@ app.post('/api/submitquestion', (req, res)=>{
 
 app.get('/api/getProblemList/:type' , (req, res)=>{
     const type = req.params.type
-    console.log(type);
+    // console.log(type);
     
     let q = "select q_id, qname, qtype from questions where qtype = ?;"
 
@@ -219,7 +255,7 @@ app.get('/api/getProblemList/:type' , (req, res)=>{
             throw err
         }
 
-        console.log(resp);
+        // console.log(resp);
         res.json(resp)  
     })
 })
@@ -229,7 +265,7 @@ app.get('/api/getprobleminfo/:qid', (req, res)=>{
 
     const qid = req.params.qid
 
-    console.log(qid);
+    // console.log(qid);
 
     const q = "select * from questions where q_id = ? ;"
 
@@ -238,7 +274,7 @@ app.get('/api/getprobleminfo/:qid', (req, res)=>{
             throw err
         }
 
-        console.log(result);
+        // console.log(result);
         res.json(result)
     })
     
@@ -247,7 +283,7 @@ app.get('/api/getprobleminfo/:qid', (req, res)=>{
 
 app.post('/api/checktc', async (req, res) => {
 
-    console.log(req.body.usercode);
+    // console.log(req.body.usercode);
 
     let error = ''
     let wrong_input = ''
@@ -265,7 +301,7 @@ app.post('/api/checktc', async (req, res) => {
             });
         });
 
-        console.log(result);
+        // console.log(result);
 
         const baseURL = "https://emkc.org/api/v2/piston/execute"; // post
 
@@ -297,16 +333,16 @@ app.post('/api/checktc', async (req, res) => {
 
             const data = await response.json();
             // console.log('\n' + usercode + testc.runnercode);
-            console.log(data);
+            // console.log(data);
 
-            console.log("code op "+data.run.stdout);
-            console.log("\ndesired "+testc.op);
+            // console.log("code op "+data.run.stdout);
+            // console.log("\ndesired "+testc.op);
             
             
 
             if (data.run.stderr) {
                 //error aaya
-                console.log(data.run.stderr);
+                // console.log(data.run.stderr);
                 error = data.run.stderr;
                 
                 status = false;
@@ -343,7 +379,7 @@ app.post('/api/checktc', async (req, res) => {
 
 
 app.post('/api/tcvalid',async (req, res)=>{
-    console.log(req.body);
+    // console.log(req.body);
 
     const response = await fetch(baseURLGlobal, {
         method: "POST",
@@ -381,7 +417,7 @@ app.post('/api/tcvalid',async (req, res)=>{
         remark.status = 'valid'
     }
 
-    console.log(data);
+    // console.log(data);
     
 
     res.json(remark)
@@ -420,7 +456,7 @@ app.post('/api/checksolved' , authenticateUser, (req, res)=>{
     const userid = req.user.userid
     const qid = req.body.qid
 
-    console.log(req.body);
+    // console.log(req.body);
     
 
     db.query("select * from solved where q_id = ? and user_id = ? ;", [qid, userid], (err, result)=>{
@@ -438,7 +474,7 @@ app.post('/api/checksolved' , authenticateUser, (req, res)=>{
 })
 
 app.post('/api/checkbyai',(req, res)=>{
-    console.log(req.body);
+    // console.log(req.body);
 
     const desc = req.body.desc
     const code = req.body.code
@@ -460,7 +496,7 @@ try{
         const response = await result.response;
         const text = response.text();
 
-        console.log(text);
+        // console.log(text);
 
 
         if (text.includes('pass')) {
@@ -491,7 +527,7 @@ try{
 app.post('/api/getSolvedProblems',authenticateUser, async (req , res)=>{
 
     const userid =  req.user.userid
-    console.log(userid);
+    // console.log(userid);
 
     
     db.query('select * from solved where user_id = ?', [userid], (err , result)=>{
@@ -499,7 +535,7 @@ app.post('/api/getSolvedProblems',authenticateUser, async (req , res)=>{
             res.json({error : err})
         }
 
-        console.log(result);
+        // console.log(result);
         
         const finalQids = []
 
@@ -508,7 +544,7 @@ app.post('/api/getSolvedProblems',authenticateUser, async (req , res)=>{
             
         })
 
-        console.log(finalQids);
+        // console.log(finalQids);
         
         res.json({quids : finalQids})
         
@@ -519,7 +555,7 @@ app.post('/api/getSolvedProblems',authenticateUser, async (req , res)=>{
 
 app.post('/api/signup', (req, res)=>{
 
-    console.log(req.body);
+    // console.log(req.body);
     
     let data = [req.body.name , req.body.email , req.body.password]
 
@@ -532,7 +568,7 @@ app.post('/api/signup', (req, res)=>{
             res.json({"message":"failure"})
         }
 
-        console.log(response);
+        // console.log(response);
         res.json({"message": "success"})
         
     })
@@ -542,7 +578,7 @@ app.post('/api/login', async (req, res)=>{
 
     let data = [req.body.email , req.body.password]
 
-    console.log(req.body);
+    // console.log(req.body);
     
 
     //check database
@@ -576,7 +612,7 @@ app.post('/api/login', async (req, res)=>{
                 role : role  
             }
             
-            console.log(tokenData);
+            // console.log(tokenData);
 
             const accessToken =  jwt.sign(tokenData, 'aanv')
             
@@ -597,7 +633,7 @@ app.get('/api/getleaders', authenticateUser, (req, res)=>{
         const data = {}
         data.leaders = response
         data.me = req.user.userid
-        console.log(data);
+        // console.log(data);
         
         res.json(data)
         
@@ -641,14 +677,14 @@ app.post('/api/searchUser', (req, res)=>{
         const newArray = result.filter((person)=>{
             return person.userid!=userid
         })
-        console.log(newArray);
+        // console.log(newArray);
         res.json(newArray)
     })    
 })
 
 app.post('/api/makeAdmin',authenticateUser, (req, res)=>{
-    console.log("admin");
-    console.log(req.body.id);
+    // console.log("admin");
+    // console.log(req.body.id);
     
     db.query("update users set role = ? where userid = ?", ["admin", req.body.id], (err, result)=>{
         if (err) return res.json({staus : false})
@@ -671,7 +707,7 @@ app.get('/api/getprofileInfo', authenticateUser, (req, res)=>{
 
     db.query(q, [req.user.userid, req.user.userid], (err, result)=>{
         if (err) return res.status(500)
-            console.log(result);
+            // console.log(result);
             
         res.json(result)
     })
@@ -730,6 +766,10 @@ GROUP BY COALESCE(subquery.qtype, total.qtype), total.qcount;`
     })
 })
 
-app.listen(port, ()=>{
-    console.log("App is listening at port "+port);
+// app.listen(port, ()=>{
+//     console.log("App is listening at port "+port);
+// })
+
+httpServer.listen(port, (req, res)=>{
+    console.log("http server up at ",port);
 })
