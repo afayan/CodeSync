@@ -6,16 +6,17 @@ import { SiTicktick  } from "react-icons/si";
 import { FaArrowAltCircleDown } from "react-icons/fa";
 import Collab from "./Collab";
 import { io } from "socket.io-client";
+import { Link } from "react-router-dom";
 
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000");
 
 
 function Description(props) {
   // const [window, setWindow] = useState('d')   // options : d = description, a = AI chatbox
 
-  socket.on('connect', ()=>{
-    console.log(socket.id);
-  })
+  // socket.on('connect', ()=>{
+  //   console.log(socket.id);
+  // })
 
   const [showDesc, setDesc] = useState(true);
   const [showAI, setAI] = useState(false);
@@ -34,6 +35,14 @@ function Description(props) {
       props.setDesc1(arr.description);
     }
   });
+
+  // useEffect(()=>{
+  //   socket.on('updated', (ucode)=>{
+  //     console.log(ucode);
+  //     props.setValue(ucode)
+  //   })
+    
+  // },[socket])
 
   function toggle(windowName) {
     //toggle the AI window and Desc window
@@ -76,6 +85,7 @@ function Description(props) {
 
   return (
     <div className="descriptionBox">
+      <Link className="backButton" to={'/problems/all'}>Problems</Link>
       <div className="descButtonContainer">
         <button className="descToggleButtons" onClick={() => toggle("d")}>Desc</button>
         <button className="descToggleButtons" onClick={() => toggle("a")}>AI</button>
@@ -108,6 +118,8 @@ function Description(props) {
       {
         window == 'c' && <Collab 
         code = {props.value}
+        // socket={socket}
+        setValue = {props.setValue}
         />
       }
     </div>

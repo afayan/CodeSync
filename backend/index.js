@@ -60,10 +60,18 @@ app.use(bodyparser)
 //socket connections here
 
 io.on('connection', (socket)=>{
-    // console.log("new user connected with id as ",socket.id);
+    console.log("new user connected with id as ",socket.id);
 
     socket.on('message', (message)=>{
         io.emit('reply', message)
+    })
+
+    socket.on('join', (room)=>{
+        socket.join(room)
+    })
+
+    socket.on('collab', (code, room)=>{
+        socket.to(room).emit('updated', code)
     })
 })
 

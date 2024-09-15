@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SiTicktick } from "react-icons/si";
 import { CircleCheckBig } from "lucide-react";
+import Navbar from "../components/Navbar/Navbar";
 
 function ProblemList() {
   const type = useParams().type;
@@ -72,6 +73,7 @@ function ProblemList() {
 
   return (
     <div>
+      <Navbar/>
       {!isLogged && <p className="warning">Please login to start coding!</p> }
       <h1>Problem List</h1>
       {problist.map((problem) => {

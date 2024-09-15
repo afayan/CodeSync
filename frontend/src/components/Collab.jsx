@@ -1,47 +1,58 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
 function Collab(props) {
+  const [query, searchQuery] = useState("");
+  const [searchResults, setSR] = useState([]);
 
-    const [query, searchQuery] = useState('')
-    const [searchResults, setSR] = useState([])
+  async function searchFriend() {
+    const res = await fetch("/api/getfriends", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + localStorage.getItem("auth"),
+      },
+      body: JSON.stringify({
+        query: query,
+      }),
+    });
 
-    async function searchFriend() {
-        const res = await fetch('/api/getfriends', {
-            method: 'post',
-            headers:{
-                "Content-Type": "application/json",
-                authorization: "Bearer " + localStorage.getItem("auth"),
-            },
-            body: JSON.stringify({
-                query: query
-            })
-        })
+    const data = await res.json();
+    setSR(data);
+  }
 
-        const data = await res.json()
-        setSR(data)
-    }
+  // function createRoom() {
+  //     console.log(props.code);
+  //     props.socket.emit('join', query)
+  // }
 
-    function createRoom() {
-        console.log(props.code);  
-    }
+  // function sendMessage() {
+  //     props.socket.emit('collab', props.code, query)
+  // }
 
-    function updateCode(params) {
-        console.log("im updating lol");
-    }
+  // function updateCode() {
+  //     console.log("im updating lol");
+  // }
 
-    useEffect(()=>{
-        updateCode()
-    }, [props.code])
+  // useEffect(()=>{
+  //     sendMessage()
+  // }, [props.code])
+
+  async function generateRoom() {
+    
+  }
+
 
   return (
     <div>
       <h1>Collaborate</h1>
-      <input type="text" name="" id="" placeholder='enter room id' onChange={(e)=>searchQuery(e.target.value)} />
-      {/* <button onClick={()=>searchFriend()}>Join Room</button> */}
-      <br />
-      <button onClick={()=>createRoom()}>create room</button>
+      <div className="collabButtonList">
+        <button className="collabButtons" onClick={()=>generateRoom()}> Generate roomid </button>
+        <button className="collabButtons"> Join room </button>
+        <button className="collabButtons"> Disconnect </button>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Collab
+export default Collab;

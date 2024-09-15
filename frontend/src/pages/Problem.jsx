@@ -3,6 +3,8 @@ import Editor from "@monaco-editor/react";
 import Output from "../components/Output";
 import Description from "../components/Description";
 import { useNavigate, useParams } from "react-router-dom";
+import Navbar from '../components/Navbar/Navbar'
+import { Link } from "react-router-dom";
 
 
 function Problem() {
@@ -95,10 +97,12 @@ function Problem() {
 
   // console.log(value);
   return (
+
+    <>
     <div className="problemContainer">
       <div className="editorBox">
         <Editor
-          height="80vh"
+          height="70vh"
           width={"106vh"}
           defaultLanguage="c"
           defaultValue={defValue}
@@ -127,6 +131,7 @@ function Problem() {
         setValue={setValue}
       />
     </div>
+    </>
   );
 }
 

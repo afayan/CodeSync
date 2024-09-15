@@ -33,6 +33,10 @@ body{
     position: absolute;
 }
 
+.problemContainer{
+    width: 100%;
+}
+
 .outputBox{
     padding-left: 20px;
     position: absolute;
@@ -329,4 +333,22 @@ height: 200px;
 .collabSearch div{
     padding: 6px;
     margin: 4px;
+}
+
+.backButton{
+    padding: 10px;
+    background-color: rgb(59, 59, 59);
+    color: white;
+    border-radius: 10px;
+}
+
+@media screen and (max-width : 800px) {
+    .descriptionBox{
+        width: 20%;
+    }
+
+    .editorBox{
+        overflow-x: scroll;
+        width: 70%;
+    }
 }
