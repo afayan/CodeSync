@@ -2,14 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import "../../src/App.css";
 import React from "react";
 import Markdown from "react-markdown";
-import { SiTicktick  } from "react-icons/si";
+import { SiTicktick } from "react-icons/si";
 import { FaArrowAltCircleDown } from "react-icons/fa";
 import Collab from "./Collab";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 
 // const socket = io("http://localhost:5000");
-
 
 function Description(props) {
   // const [window, setWindow] = useState('d')   // options : d = description, a = AI chatbox
@@ -20,10 +19,13 @@ function Description(props) {
 
   const [showDesc, setDesc] = useState(true);
   const [showAI, setAI] = useState(false);
-  const [responseFromAI, setRFA] = useState("Use AI to help yourself with your code");
+  const [responseFromAI, setRFA] = useState(
+    "Use AI to help yourself with your code"
+  );
   const [qname, setQname] = useState("loading...");
   const [description, setDescription] = useState("");
-  const [window, setWindow] = useState('d')
+  const [window, setWindow] = useState("d");
+  // const [socket, setSocket] = useState(null)
 
   useEffect(() => {
     if (props.problemData[0]) {
@@ -41,12 +43,12 @@ function Description(props) {
   //     console.log(ucode);
   //     props.setValue(ucode)
   //   })
-    
+
   // },[socket])
 
   function toggle(windowName) {
     //toggle the AI window and Desc window
-    setWindow(windowName)
+    setWindow(windowName);
   }
 
   // try {
@@ -55,11 +57,11 @@ function Description(props) {
     //get code
     //fetch
     console.log(props.value);
-    setRFA("Generating response...")
+    setRFA("Generating response...");
 
     const dataToSendToAI = {
       code: props.value,
-      description : description
+      description: description,
     };
 
     const res = await fetch("/api/aihelp", {
@@ -76,7 +78,6 @@ function Description(props) {
     setRFA(aiMessage.response);
 
     console.log(responseFromAI);
-    
   }
 
   // } catch (error) {
@@ -85,19 +86,25 @@ function Description(props) {
 
   return (
     <div className="descriptionBox">
-      <Link className="backButton" to={'/problems/all'}>Problems</Link>
+      <Link className="backButton" to={"/problems/all"}>
+        Problems
+      </Link>
       <div className="descButtonContainer">
-        <button className="descToggleButtons" onClick={() => toggle("d")}>Desc</button>
-        <button className="descToggleButtons" onClick={() => toggle("a")}>AI</button>
-        <button className="descToggleButtons" onClick={()=> toggle('c')}>
-          Collab
+        <button className="descToggleButtons" onClick={() => toggle("d")}>
+          Desc
         </button>
+        <button className="descToggleButtons" onClick={() => toggle("a")}>
+          AI
+        </button>
+        {/* <button className="descToggleButtons" onClick={() => toggle("c")}>
+          Collab
+        </button> */}
       </div>
 
-      {window == 'd' && (
+      {window == "d" && (
         <div className="descTab">
           <h1>{qname}</h1>
-          <p>{props.solved ? <SiTicktick color="lightgreen"/> : "unsolved"}</p>
+          <p>{props.solved ? <SiTicktick color="lightgreen" /> : "unsolved"}</p>
           <Markdown>{description}</Markdown>
           {/* <p>{description}</p> */}
 
@@ -105,23 +112,27 @@ function Description(props) {
         </div>
       )}
 
-      {window == 'a' && (
+      {window == "a" && (
         <div className="aiTab">
           <h1>AI</h1>
-          <button className="aibutton" onClick={() => askai()}>Ask AI</button>
-          <Markdown className="airesponseTab">
-            {responseFromAI}
-          </Markdown>
+          <button className="aibutton" onClick={() => askai()}>
+            Ask AI
+          </button>
+          <Markdown className="airesponseTab">{responseFromAI}</Markdown>
         </div>
       )}
 
-      {
-        window == 'c' && <Collab 
-        code = {props.value}
-        // socket={socket}
-        setValue = {props.setValue}
+      {window == "c" && (
+        <Collab
+          socket={props.socket}
+          setSocket={props.setSocket}
+          setValue={props.setValue}
+          live={props.live}
+          setLive={props.setLive}
+          username={props.username}
+          setUname={props.setUname}
         />
-      }
+      )}
     </div>
   );
 }

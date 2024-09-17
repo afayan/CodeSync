@@ -59,6 +59,8 @@ app.use(bodyparser)
 
 //socket connections here
 
+const rooms = {}
+
 io.on('connection', (socket)=>{
     console.log("new user connected with id as ",socket.id);
 
@@ -66,14 +68,52 @@ io.on('connection', (socket)=>{
         io.emit('reply', message)
     })
 
-    socket.on('join', (room)=>{
-        socket.join(room)
+    socket.on('join', (room, username)=>{
+        console.log(username+ " joined room "+room);
+        
+        socket.join(room)  
+
+        if (!rooms[room]) {
+            rooms[room] = []
+        }
+
+        rooms[room].push(username)
+        // console.log(rooms.room);
+        console.log(rooms[room]);
+        io.in(room).emit('joined', rooms[room])
     })
 
     socket.on('collab', (code, room)=>{
         socket.to(room).emit('updated', code)
     })
+
+    socket.on('leave', ({ username, room }) => {
+        console.log(username+" wants to leave");
+        
+    
+        if (rooms[room]) {
+            // Remove the user from the room's members list
+            rooms[room] = rooms[room].filter(person => person != username);
+    
+            console.log("Updated members list for room:", rooms[room]);
+    
+            if (rooms[room].length > 0) {
+                // If there are still members in the room, emit the updated member list
+                io.in(room).emit('joined', rooms[room]);
+            } else {
+                // If the room is empty, delete it and emit an empty list
+                delete rooms[room];
+                io.in(room).emit('joined', []);
+            }
+        }
+    });
+
+    socket.on('disconnect', ()=>{
+        console.log("user "+socket.id+" disconnected");
+    })
 })
+
+
 
 
 //normal requests here

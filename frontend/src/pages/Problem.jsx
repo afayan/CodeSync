@@ -39,6 +39,10 @@ function Problem() {
   const [userid, setUserId] = useState(0);
   const [desc1, setDesc1] = useState("");
   const [logged, islogged] = useState(true);
+  const [socket, setSocket] = useState(null)
+  const [live, setLive] = useState(false)
+  const [people, setPeople] = useState([])
+  const [username, setUname] = useState('')
   const navigate = useNavigate();
 
   // const [q_id, setQid] = useState(-1)
@@ -129,6 +133,12 @@ function Problem() {
         value={value}
         problemData={problemData}
         setValue={setValue}
+        socket={socket}
+        setSocket={setSocket}
+        live={live}
+        setLive={setLive}
+        username={username}
+        setUname={setUname}
       />
     </div>
     </>
