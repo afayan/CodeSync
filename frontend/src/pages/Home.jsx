@@ -100,7 +100,7 @@ async function getDetails() {
         <h1>{username}</h1>
         {!islogged && <p>Pls login to start coding!</p> }
 
-       {!islogged && <button onClick={()=>navigate('/logsign')}>Sign in</button>}
+       {!islogged && <button onClick={()=>navigate('/registration')}>Sign in</button>}
 
         {islogged && <Statsdiv chartInfo = {chartInfo}/>}
 

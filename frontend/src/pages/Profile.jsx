@@ -43,7 +43,7 @@ function Profile() {
   
           else{
               setLogged(false)
-              navigate('/logsign')
+              navigate('/registration')
           }
       }
 
