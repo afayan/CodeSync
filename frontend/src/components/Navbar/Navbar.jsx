@@ -51,7 +51,7 @@ const Navbar = () => {
                 <Link to={"/home"}>Dashboard</Link>
               </li>
               <li className="navli">
-                <a href="#">About Us</a>
+                <a href="#obj">About Us</a>
               </li>
               <li className="navli">
                 <a href="#contact">Contact Us</a>
@@ -60,12 +60,12 @@ const Navbar = () => {
           </div>
           <div className="auth-buttons hideonPhone">
             {!islogged && (
-              <Link to={"/logsign"}>
+              <Link to={"/Registration"}>
                 <button className="button">Login</button>
               </Link>
             )}
             {!islogged && (
-              <Link to={"/logsign"}>
+              <Link to={"/Registration"}>
                 <button className="button">SignUp</button>
               </Link>
             )}

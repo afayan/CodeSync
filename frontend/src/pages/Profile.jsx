@@ -67,7 +67,7 @@ function Profile() {
 
   function LogOut() {
     localStorage.removeItem('auth')
-    navigate('/logsign')
+    navigate('/Registration')
   }
 
   async function searchUser() {

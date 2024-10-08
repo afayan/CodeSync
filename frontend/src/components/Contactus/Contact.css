@@ -75,14 +75,14 @@
 }
 
 .sub-button {
-    --color: #ffffff; /* Primary button color */
+    --color: #ffffff; 
     padding: 0.8em 1.7em;
     background-color: transparent;
     border-radius: .3em;
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    transition: .5s; /* Reduced transition effect */
+    transition: .5s; 
     font-weight: 500;
     font-size: 17px;
     border: 1px solid var(--color);
@@ -98,7 +98,6 @@
 .sub-button::before, .sub-button::after {
     content: '';
     display: block;
-    width: 50px;
     height: 50px;
     transform: translate(-50%, -50%);
     position: absolute;

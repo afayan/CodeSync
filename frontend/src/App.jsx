@@ -10,6 +10,8 @@ import LeaderBoard from "./pages/LeaderBoard";
 import { Loginsignup } from "./pages/Loginsignup";
 import LandingPage from "./pages/LandingPage";
 import Profile from "./pages/Profile";
+import Registration from "./pages/Registration";
+
 
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
         <Route path="/leaderboard" element={<LeaderBoard/>}/>
         <Route path="/logsign" element={<Loginsignup/>}></Route>
         <Route path="/" element={<LandingPage/>}></Route>
+        <Route path="/Registration" element={<Registration/>}></Route>
       </Routes>
     </>
   );

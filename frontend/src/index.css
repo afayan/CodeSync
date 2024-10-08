@@ -2,9 +2,8 @@
     font-family: system-ui , Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-  
     color-scheme: light dark;
-    background-color: #302e2e88;
+    background-color: rgb(59, 59, 59);
   
     font-synthesis: none;
     text-rendering: optimizeLegibility;
