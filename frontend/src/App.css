@@ -325,7 +325,7 @@ body{
 }
 
 .userchart {
-    background-color: azure;
+    background-color: rgb(156, 156, 156);
     color: black;
     position: fixed;
     height: 300px;
@@ -338,8 +338,6 @@ body{
     align-items: center;
     text-align: center;
     font-size: 2em;
-
-
     border: 10px solid;
     border-radius: 50%;
 }
@@ -384,6 +382,28 @@ body{
 .collabSearch div{
     padding: 6px;
     margin: 4px;
+}
+
+#leaderbutton{
+    border: 4px solid #ffe840;
+    margin: 10px;
+}
+
+#probbutton{
+    border: 4px solid plum;
+    width: 300px;
+    margin: 10px;
+}
+
+#profbutton{
+    margin: 10px;
+}
+
+.uselessroll{
+    margin-top: 40px;
+    background-color: gray;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .backButton{

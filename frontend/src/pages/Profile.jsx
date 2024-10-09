@@ -149,8 +149,8 @@ function Profile() {
           })}
         </div>
 
+        <div className='uselessroll'>
         <h2>Inactive users</h2>
-        <div>
           {useless.map((element)=>{
             return <div className='resultBars' key={element.username}>{element.username}</div>
           })}

@@ -7,7 +7,7 @@ function Home() {
   const [islogged, setLogged] = useState(false);
   const [chartInfo, setChartInfo] = useState([]);
   const [profileInfo, setprofileInfo] = useState([])
-  const [bcolor, setbcolor] = useState('yellow')
+  const [bcolor, setbcolor] = useState('#ffe840')
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,13 +79,17 @@ function Home() {
           setprofileInfo(data)
           console.log(profileInfo);
 
-          const p = Math.round((profileInfo[0].solved/profileInfo[0].total)*100)
-          if (p == 0) {
-            setbcolor('red')
+          if (profileInfo[0]) {
+            const p = Math.round((profileInfo[0].solved/profileInfo[0].total)*100)
+            if (p == 0) {
+              setbcolor('#ff4545')
+            }
+            else if (p == 100) {
+              setbcolor('lightgreen')
+            }
+            
           }
-          else if (p == 100) {
-            setbcolor('green')
-          }
+
           
     }
 
@@ -116,13 +120,13 @@ function Home() {
 
       <div>
         <div className="dashboardtop">
-          <Link className="homepagebuttons" to={"/profile"}>
+          <Link className="homepagebuttons" id="profbutton" to={"/profile"}>
             Profile
           </Link>
-          <Link className="homepagebuttons" to={"/problems/all"}>
+          <Link className="homepagebuttons" id="probbutton" to={"/problems/all"}>
             Problems
           </Link>
-          <Link className="homepagebuttons" to={"/leaderboard"}>
+          <Link className="homepagebuttons" id="leaderbutton" to={"/leaderboard"}>
             LeaderBoard
           </Link>
         </div>
@@ -188,13 +192,13 @@ function Stats({solType}) {
     const number = Math.round((solType.usercount/solType.qcount)*100)
     useEffect(()=>{
         if (number < 33) {
-            setcolor('red')
+            setcolor('#ff4545')
         }
         else if (number < 66) {
             setcolor('yellow')
         }
         else{
-            setcolor('green')
+            setcolor('lightgreen')
         }
     }, [])
 
