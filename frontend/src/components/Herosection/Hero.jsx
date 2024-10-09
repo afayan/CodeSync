@@ -17,7 +17,7 @@ const Hero = () => {
       </div>
       <div className="image-container">
         <div className="image-placeholder">
-          <img src="./ImplementationImage.png" alt="Coding Illustration" className="hero-image" />
+          <img src="./Syllabus5.jpg" alt="Syllabus" className="hero-image" />
         </div>
       </div>
     </div>

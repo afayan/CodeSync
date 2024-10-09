@@ -9,8 +9,8 @@ const Contact = () => {
     e.preventDefault();
 
     emailjs
-      .sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, {
-        publicKey: 'YOUR_PUBLIC_KEY',
+      .sendForm('service_rxxc84c', 'template_qsn8fiq', form.current, {
+        publicKey: 'vCAXLffxEkxeLhDia',
       })
       .then(
         () => {
@@ -34,7 +34,7 @@ const Contact = () => {
         <form ref={form} onSubmit={sendEmail}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
-            <input type="text" id="name" name="user_name" placeholder="Your Name" required />
+            <input type="text" id="name" name="to_name" placeholder="Your Name" required />
           </div>
           <div className="form-group">
             <label htmlFor="email">Email</label>
