@@ -814,6 +814,18 @@ GROUP BY COALESCE(subquery.qtype, total.qtype), total.qcount;`
     })
 })
 
+app.get('/api/getuseless', (req, res)=>{
+    const q = 'select u.username from users u left join solved s on u.userid = s.user_id where s.q_id is null;'
+
+    db.query(q, [], (err, result)=>{
+        if (err) {
+            console.log(err);
+        }
+
+        res.json(result)
+    })
+})
+
 // app.listen(port, ()=>{
 //     console.log("App is listening at port "+port);
 // })

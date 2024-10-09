@@ -12,6 +12,7 @@ function Profile() {
   const [searchResults, setSearchResults] = useState([])
   const [currentTab, setCurrentTab] = useState('p')  //profile info, admin settings, logout 
   const [profileInfo, setProfileInfo] = useState({})
+  const [useless, setUseless] = useState([])
   const navigate = useNavigate()
 
  
@@ -60,10 +61,16 @@ function Profile() {
 
       checkLogged()
       getProfileInfo()
+      getUseless()
     }
   ,[])
 
-  
+  async function getUseless() {
+    const resp = await fetch('/api/getuseless')
+    const data = await resp.json()
+    console.log("data is ",data);
+    setUseless(data)
+  }
 
   function LogOut() {
     localStorage.removeItem('auth')
@@ -126,9 +133,9 @@ function Profile() {
 
         <h2>Add problem</h2>
         <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
-        <h2>Make admin</h2>
+        {/* <h2>Make admin</h2>
         <input type="text" placeholder='enter username' onChange={(e)=>setSearch(e.target.value)} />
-        <button onClick={searchUser}>Search</button>
+        <button onClick={searchUser}>Search</button> */}
 
         <div className="namesearchresults">
           {searchResults.map((element)=>{
@@ -139,6 +146,13 @@ function Profile() {
             <button onClick={()=>makeAdmin(element.userid)}>Make admin</button>
           }
             </div>
+          })}
+        </div>
+
+        <h2>Inactive users</h2>
+        <div>
+          {useless.map((element)=>{
+            return <div className='resultBars' key={element.username}>{element.username}</div>
           })}
         </div>
       </div>}
