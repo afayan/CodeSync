@@ -188,8 +188,21 @@ body{
     padding: 10px;
     background-color: gray;
     display: inline;
-    width: 140px;
     margin: 2px;
+    border-radius: 10px;
+}
+
+.dashboardtop{
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboardtop a{
+    background-color: rgb(93, 93, 93);
+    color: white;
+    font-size: 1em;
+    height: 100px;
+    width: 130px;
 }
 
 .warning{
@@ -296,6 +309,10 @@ body{
     
 }
 
+.statsspan{
+    background-color: greenyellow;
+}
+
 .dtypeButtons{
     color: black;
     padding: 10px;
@@ -303,24 +320,35 @@ body{
     height: 100px;
     width: 100px;
     margin: 10px;
+    border-radius: 10px;
 }
 
-.typrButtonRoll{
-height: 200px;
+.typeButtonRoll{
+   display: flex;
 }
 
-.chartSection{
-    position: absolute;
+.chartSection{    
     right: 10px;
     width: 50%;
     top: 80px;
 }
 
-.chartSection div{
-    background-color: antiquewhite;
-    color: black;
-    margin: 10px;
+.chartSection{
     width: 200px;
+    padding: 10px;
+}
+
+.chartdiv{
+    display: flex;
+}
+
+.statinfo{
+   color: black;
+   background-color: rgb(194, 139, 191);
+   padding: 10px;
+   margin: 10px;
+   width: 200px;
+   border-radius: 10px;
 }
 
 .collabSearch{

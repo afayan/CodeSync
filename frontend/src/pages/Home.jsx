@@ -3,150 +3,178 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 
 function Home() {
+  const [username, setUserName] = useState("nobody");
+  const [islogged, setLogged] = useState(false);
+  const [chartInfo, setChartInfo] = useState([]);
+  const navigate = useNavigate();
 
-    const [username, setUserName] = useState('nobody')
-    const [islogged, setLogged] = useState(false)
-    const [chartInfo, setChartInfo] = useState([])
-    const navigate = useNavigate()
+  useEffect(() => {
+    if (localStorage.getItem("auth")) {
+      setLogged(true);
+    } else {
+      setLogged(false);
+    }
+  }, []);
 
-
-    useEffect(()=>{
-        if (localStorage.getItem('auth')) {
-            setLogged(true)
-        }
-        else{
-            setLogged(false)
-        }
-    },[])
-
-
-    useEffect(()=>{
-
+  useEffect(() => {
     function checkLogged() {
-            if(localStorage.getItem('auth')){
-            
-              return true
-            }
-      
-            else{
-              return false
-            }
-          }
-
-async function getDetails() {
-            
-        console.log(localStorage.getItem('auth'));
-        
-        const resp = await fetch('/api/getUserInfo', {
-            method: 'post',
-            headers: {
-                'Content-type' : 'application/json',
-                'authorization' : "Bearer "+localStorage.getItem("auth")
-            },
-            body : JSON.stringify(
-                {
-                    authToken: localStorage.getItem("auth")
-                }
-            )
-        })
-
-
-        const data = await resp.json()
-        console.log(data);
-        setUserName( data.data.username + "'s dashboard")
+      if (localStorage.getItem("auth")) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
-    if (checkLogged()) {  
-        getDetails()
-        getChartInfo()
+    async function getDetails() {
+      console.log(localStorage.getItem("auth"));
+
+      const resp = await fetch("/api/getUserInfo", {
+        method: "post",
+        headers: {
+          "Content-type": "application/json",
+          authorization: "Bearer " + localStorage.getItem("auth"),
+        },
+        body: JSON.stringify({
+          authToken: localStorage.getItem("auth"),
+        }),
+      });
+
+      const data = await resp.json();
+      console.log(data);
+      setUserName(data.data.username + "'s dashboard");
     }
 
-    else{
-        setUserName('Welcome to CodeSync!')
+    if (checkLogged()) {
+      getDetails();
+      getChartInfo();
+    } else {
+      setUserName("Welcome to CodeSync!");
     }
 
     async function getChartInfo() {
-        console.log("lets get chart info");
-        const res = await fetch('/api/getchartinfo', {
-            headers: {
-                'Content-type' : 'application/json',
-                'authorization' : "Bearer "+localStorage.getItem("auth")
-            },
-        })
+      console.log("lets get chart info");
+      const res = await fetch("/api/getchartinfo", {
+        headers: {
+          "Content-type": "application/json",
+          authorization: "Bearer " + localStorage.getItem("auth"),
+        },
+      });
 
-        const data = await res.json()
-        console.log(data);
-        setChartInfo(data)
-        
+      const data = await res.json();
+      console.log(data);
+      setChartInfo(data);
     }
+  }, [islogged]);
 
-    }, [islogged])
+  function logout() {
+    localStorage.removeItem("auth");
+    console.log("Imma logout");
+    setLogged(false);
+  }
 
-    
+  //info needed for dashboard:
+  //solved, total, solved by each category
 
-    function logout() {        
-        localStorage.removeItem('auth')
-        console.log("Imma logout");
-        setLogged(false)
-    }
+  return (
+    <>
+      <Navbar />
+      <h1>{username}</h1>
+      {!islogged && <p>Pls login to start coding!</p>}
 
-    //info needed for dashboard:
-    //solved, total, solved by each category 
-    
+      {!islogged && (
+        <button onClick={() => navigate("/registration")}>Sign in</button>
+      )}
 
-    return(
-        <>
-        <Navbar/>
-        <h1>{username}</h1>
-        {!islogged && <p>Pls login to start coding!</p> }
+      <div>
+        <div className="dashboardtop">
+          <Link className="homepagebuttons" to={"/profile"}>
+            Profile
+          </Link>
+          <Link className="homepagebuttons" to={"/problems/all"}>
+            Problems
+          </Link>
+          <Link className="homepagebuttons" to={"/leaderboard"}>
+            LeaderBoard
+          </Link>
+        </div>
 
-       {!islogged && <button onClick={()=>navigate('/registration')}>Sign in</button>}
-
-        {islogged && <Statsdiv chartInfo = {chartInfo}/>}
-
-        <div style={{display:"flex", flexDirection:"column", color:"white"}}>
-        <Link className="homepagebuttons" to={'/profile'}>Profile</Link>
-        <Link className="homepagebuttons" to={'/problems/all'} >Problems</Link>
-        <Link className="homepagebuttons" to={'/leaderboard'}>LeaderBoard</Link>
-
+        {islogged && <Statsdiv chartInfo={chartInfo} />}
         <h1>Problems</h1>
-        <div className="typrButtonRoll">
-
-        <Link className="dtypeButtons" to={'/problems/array'}>Array</Link>
-        <Link className="dtypeButtons" to={'/problems/stack'}>Stack</Link>
-        <Link className="dtypeButtons" to={'/problems/queue'}>Queue</Link>
-        <Link className="dtypeButtons" to={'/problems/linkedlist'}>Linked List</Link>
-        <Link className="dtypeButtons" to={'/problems/tree'}>Tree</Link>
-        <Link className="dtypeButtons" to={'/problems/graph'}>Graph</Link>
-        <Link className="dtypeButtons" to={'/problems/algorithm'}>Algorithm</Link>
-
+        <div className="typeButtonRoll">
+          <Link className="dtypeButtons" to={"/problems/array"}>
+            Array
+          </Link>
+          <Link className="dtypeButtons" to={"/problems/stack"}>
+            Stack
+          </Link>
+          <Link className="dtypeButtons" to={"/problems/queue"}>
+            Queue
+          </Link>
+          <Link className="dtypeButtons" to={"/problems/linkedlist"}>
+            Linked List
+          </Link>
+          <Link className="dtypeButtons" to={"/problems/tree"}>
+            Tree
+          </Link>
+          <Link className="dtypeButtons" to={"/problems/graph"}>
+            Graph
+          </Link>
+          <Link className="dtypeButtons" to={"/problems/algorithm"}>
+            Algorithm
+          </Link>
         </div>
-        </div>
-        </>
-    );
+      </div>
+    </>
+  );
 }
 
-export default Home
-
+export default Home;
 
 function Statsdiv(props) {
+  // console.log(props);
 
-    // console.log(props);
+  return (
+    <div className="chartSection">
+      <h1>My stats</h1>
+      <div className="chartdiv">
+        {props.chartInfo.map((solType) => {
+          return (
+            <Stats key={solType.qtype} solType = {solType}>
+              <p>{solType.qtype}</p>
+              <p>
+                solved : {solType.usercount}/{solType.qcount}{" "} 
+              </p>
+            </Stats>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
-        
-        return(
-            <div className="chartSection">
-            <h1>My stats</h1>
-            <div>
-            {props.chartInfo.map((solType)=>{
-                return <div key={solType.qtype}>
-                    <p>{solType.qtype}</p>
-                    <p>solved : {solType.usercount}/{solType.qcount} </p>
-                </div> 
-            })}
 
-            </div>
-            </div>
-        )
-    }
+function Stats({solType}) {
 
+    const [color, setcolor] = useState('white')
+
+    
+    const number = Math.round((solType.usercount/solType.qcount)*100)
+    useEffect(()=>{
+        if (number < 33) {
+            setcolor('red')
+        }
+        else if (number < 66) {
+            setcolor('yellow')
+        }
+        else{
+            setcolor('green')
+        }
+    }, [])
+
+    return <div className="statinfo">
+        <h4>{solType.qtype}</h4>
+        <span style={{color: color}}>
+        {number}%
+        </span>
+    </div>
+}
