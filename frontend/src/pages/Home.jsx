@@ -6,6 +6,8 @@ function Home() {
   const [username, setUserName] = useState("nobody");
   const [islogged, setLogged] = useState(false);
   const [chartInfo, setChartInfo] = useState([]);
+  const [profileInfo, setprofileInfo] = useState([])
+  const [bcolor, setbcolor] = useState('yellow')
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,6 +49,7 @@ function Home() {
     if (checkLogged()) {
       getDetails();
       getChartInfo();
+      getUserDetails()
     } else {
       setUserName("Welcome to CodeSync!");
     }
@@ -64,6 +67,28 @@ function Home() {
       console.log(data);
       setChartInfo(data);
     }
+
+    async function getUserDetails() {
+        const resp = await fetch('/api/getprofileInfo', {
+            headers:{
+              'authorization' : "Bearer "+localStorage.getItem("auth")
+            }
+          })
+          const data = await resp.json()
+          console.log("Profile data is", data); 
+          setprofileInfo(data)
+          console.log(profileInfo);
+
+          const p = Math.round((profileInfo[0].solved/profileInfo[0].total)*100)
+          if (p == 0) {
+            setbcolor('red')
+          }
+          else if (p == 100) {
+            setbcolor('green')
+          }
+          
+    }
+
   }, [islogged]);
 
   function logout() {
@@ -84,6 +109,10 @@ function Home() {
       {!islogged && (
         <button onClick={() => navigate("/registration")}>Sign in</button>
       )}
+
+      {profileInfo[0] &&<div className="userchart" style={{borderColor: bcolor}} >
+        <p>{Math.round((profileInfo[0].solved/profileInfo[0].total)*100)}% completed</p>
+      </div>}
 
       <div>
         <div className="dashboardtop">
@@ -156,8 +185,6 @@ function Statsdiv(props) {
 function Stats({solType}) {
 
     const [color, setcolor] = useState('white')
-
-    
     const number = Math.round((solType.usercount/solType.qcount)*100)
     useEffect(()=>{
         if (number < 33) {
@@ -171,7 +198,7 @@ function Stats({solType}) {
         }
     }, [])
 
-    return <div className="statinfo">
+    return <div className="statinfo" style={{borderColor: color}}>
         <h4>{solType.qtype}</h4>
         <span style={{color: color}}>
         {number}%

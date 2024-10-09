@@ -316,15 +316,38 @@ body{
 .dtypeButtons{
     color: black;
     padding: 10px;
-    background-color: rgb(195, 140, 140);
+    background-color: gray;
     height: 100px;
-    width: 100px;
+    width: 100%;
     margin: 10px;
     border-radius: 10px;
+    font-size: 1.3em;
 }
+
+.userchart {
+    background-color: azure;
+    color: black;
+    position: fixed;
+    height: 300px;
+    width: 300px;
+    border-radius: 50%; 
+    right: 10px;
+    top: 100px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2em;
+
+
+    border: 10px solid;
+    border-radius: 50%;
+}
+
 
 .typeButtonRoll{
    display: flex;
+   justify-content: space-between;
 }
 
 .chartSection{    
@@ -349,6 +372,7 @@ body{
    margin: 10px;
    width: 200px;
    border-radius: 10px;
+   border: solid 3px;
 }
 
 .collabSearch{
