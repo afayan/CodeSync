@@ -88,7 +88,7 @@ function AddQuestion() {
         <option value="queue">Queue</option>
         <option value="linkedlist">Linked List</option>
         <option value="tree">Trees</option>
-        <option value="qraph">Graph</option>
+        <option value="graph">Graph</option>
       </select>
 
         <textarea

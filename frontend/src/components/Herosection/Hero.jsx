@@ -10,7 +10,7 @@ const Hero = () => {
         <div className="cta-buttons">
           <Link to={'/home'}>          <button className="button">Get Started</button>
           </Link>
-          <a href="#learn-more">
+          <a href="#obj">
             <button className="button">Discover More</button>
           </a>
         </div>

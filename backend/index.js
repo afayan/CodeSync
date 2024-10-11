@@ -672,8 +672,18 @@ app.post('/api/login', async (req, res)=>{
 
 
 app.get('/api/getleaders', authenticateUser, (req, res)=>{
+
+    // select u.username, s.user_id, count(distinct s.q_id) as question_count from solved s join users u on s.user_id = u.userid group by u.userid order by question_count desc;
+
     
-    db.query('select u.username, s.user_id, count(distinct s.q_id) as question_count from solved s join users u on s.user_id = u.userid group by u.userid order by question_count desc;', [], (err, response)=>{
+    db.query(`SELECT u.username, 
+       u.userid, 
+       COALESCE(COUNT(DISTINCT s.q_id), 0) AS question_count
+FROM users u
+LEFT JOIN solved s ON u.userid = s.user_id
+GROUP BY u.userid
+ORDER BY question_count DESC;
+`, [], (err, response)=>{
         if(err) return res.status(400)
 
 
