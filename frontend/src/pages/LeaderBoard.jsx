@@ -30,11 +30,7 @@ function LeaderBoard() {
       const data = await resp.json();
       setLeaders(data.leaders);
       setUserId(data.me)
-      
     }
-
-    
-
     checkLogged();
   }, []);
 
@@ -42,7 +38,7 @@ function LeaderBoard() {
     function checkRank() {
       leaders.map((person)=>{
   
-        if (person.user_id == userid) {
+        if (person.userid == userid) {
           setRank(leaders.indexOf(person)+1)  
         }
 

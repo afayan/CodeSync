@@ -202,10 +202,30 @@ function Stats({solType}) {
         }
     }, [])
 
-    return <div className="statinfo" style={{borderColor: color}}>
-        <h4>{solType.qtype}</h4>
-        <span style={{color: color}}>
-        {number}%
-        </span>
-    </div>
+    // return <div className="statinfo" style={{borderColor: color}}>
+    //     <h4>{solType.qtype}</h4>
+    //     <span style={{color: color}}>
+    //     {number}%
+    //     </span>
+    // </div>
+
+    const dos = 590 * (1 - (solType.usercount/solType.qcount)) 
+
+    return (
+      <div className="wrapper">
+        <div className="outer">
+          <div className="inner">
+            <pre className="stat-text">{ solType.qtype +'\n'+ number+'%'}</pre>
+          </div>
+        </div>
+
+        {number ? <svg width={'200px'} height={'200px'}>
+        <circle cx={'100px'} cy={'100px'} r={'95'} style={{strokeDashoffset: dos}}>
+
+        </circle>
+
+        </svg> : ''} 
+
+      </div>
+    );
 }
