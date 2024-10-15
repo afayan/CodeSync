@@ -183,26 +183,23 @@ body{
 }
 
 .homepagebuttons{
-    color: black;
+    color: white;
     text-decoration: none;
     padding: 10px;
     background-color: gray;
     display: inline;
     margin: 2px;
     border-radius: 10px;
+    height: 160px;
+    width: 33%;
+    position: relative;
+    margin-left: 20px;
 }
 
 .dashboardtop{
     display: flex;
     flex-direction: row;
-}
-
-.dashboardtop a{
-    background-color: rgb(93, 93, 93);
-    color: white;
-    font-size: 1em;
-    height: 100px;
-    width: 130px;
+    justify-content: space-between;
 }
 
 .warning{
@@ -384,18 +381,17 @@ body{
 }
 
 #leaderbutton{
-    border: 4px solid #ffe840;
-    margin: 10px;
+  
+   
 }
 
 #probbutton{
-    border: 4px solid plum;
-    width: 300px;
-    margin: 10px;
+ 
+   
 }
 
 #profbutton{
-    margin: 10px;
+   
 }
 
 .uselessroll{
@@ -460,7 +456,6 @@ circle{
 }
 
 .progressbarContainer{
-    position: relative;
     height: 70px;
     border: none;
     border-radius: 20px;
@@ -493,6 +488,10 @@ circle{
     position: absolute;
     width: 20px;
     height: inherit;
+}
+
+.dashboardheader{
+    margin-left: 20px;
 }
 
 @media screen and (max-width : 800px) {

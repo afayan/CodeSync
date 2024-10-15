@@ -101,12 +101,12 @@ function Home() {
   //info needed for dashboard:
   //solved, total, solved by each category
 
-  const progressbarwidth = 400
+  const progressbarwidth = 400;
 
   return (
     <>
       <Navbar />
-      <h1>{username}</h1>
+      <h1 className="dashboardheader">{username}</h1>
       {!islogged && <p>Pls login to start coding!</p>}
 
       {!islogged && (
@@ -133,6 +133,32 @@ function Home() {
             to={"/problems/all"}
           >
             Problems
+            {profileInfo[0] && (
+            <div className="progressbarContainer">
+              <div
+                className="innerpb"
+                style={{ width: progressbarwidth + "px" }}
+              >
+                <div
+                  className="outerpb"
+                  style={{
+                    width: Math.round(
+                      (profileInfo[0].solved / profileInfo[0].total) *
+                        progressbarwidth
+                    ),
+                  }}
+                >
+                  <p>
+                    {Math.round(
+                      (profileInfo[0].solved / profileInfo[0].total) * 100
+                    )}
+                    % solved
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+          
           </Link>
           <Link
             className="homepagebuttons"
@@ -142,19 +168,11 @@ function Home() {
             LeaderBoard
           </Link>
 
-        {profileInfo[0] &&     <div className="progressbarContainer" >
-            <div className="innerpb" style={{width:progressbarwidth+'px'}}>
-              <div className="outerpb" style={{width:Math.round((profileInfo[0].solved / profileInfo[0].total) * progressbarwidth)}}>
-                <p>{Math.round((profileInfo[0].solved / profileInfo[0].total)*100)}% solved</p>
-              </div>
-            </div>
-          </div>}
-
-      
+          
         </div>
 
         {islogged && <Statsdiv chartInfo={chartInfo} />}
-        <h1>Problems</h1>
+        <h1 className="dashboardheader">Problems</h1>
         <div className="typeButtonRoll">
           <Link className="dtypeButtons" to={"/problems/array"}>
             Array
@@ -188,16 +206,16 @@ export default Home;
 function Statsdiv(props) {
   // console.log(props);
 
+  //circle charts are here
+
   return (
     <div className="chartSection">
-      <h1>My stats</h1>
+      <h1 className="dashboardheader">My stats</h1>
       <div className="chartdiv">
         {props.chartInfo.map((solType) => {
           return (
-            <Link to={'/problems/'+solType.qtype}>
-            <Stats key={solType.qtype} solType={solType}>
-           
-            </Stats>
+            <Link to={"/problems/" + solType.qtype}>
+              <Stats key={solType.qtype} solType={solType}></Stats>
             </Link>
           );
         })}
@@ -207,6 +225,8 @@ function Statsdiv(props) {
 }
 
 function Stats({ solType }) {
+
+  //circle chart
   const [color, setcolor] = useState("white");
   const number = Math.round((solType.usercount / solType.qcount) * 100);
   useEffect(() => {
