@@ -75,7 +75,7 @@ function ProblemList() {
     <div>
       <Navbar/>
       {!isLogged && <p className="warning">Please login to start coding!</p> }
-      <h1>Problem List</h1>
+      <h1 className="dashboardheader">Problem List</h1>
       {problist.map((problem) => {
         //to continue
         return (

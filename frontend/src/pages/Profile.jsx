@@ -121,7 +121,7 @@ function Profile() {
   return (
 
     <>
-    <h1>Profile</h1>
+    <h1 className="dashboardheader">Profile</h1>
     <div className='profilepage'>
       <div className="profile-sidebar">
         <button onClick={()=>setCurrentTab('p')}>Profile</button>

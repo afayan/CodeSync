@@ -157,16 +157,16 @@ function Home() {
       <div>
         <div className="dashboardtop">
           <Link className="homepagebuttons" id="profbutton" to={"/profile"}>
-            Profile
+          <span className="hpbtext">Profile</span> 
           </Link>
           <Link
             className="homepagebuttons"
             id="probbutton"
             to={"/problems/all"}
           >
-            Problems
+            <span className="hpbtext">Problems</span> 
             {profileInfo[0] && (
-              <div className="progressbarContainer">
+              <div className="progressbarContainer hideOnMobile">
                 <div
                   className="innerpb"
                   style={{ width: progressbarwidth + "px" }}
@@ -196,7 +196,7 @@ function Home() {
             id="leaderbutton"
             to={"/leaderboard"}
           >
-            LeaderBoard
+            <span className="hpbtext">LeaderBoard</span> 
             <span className="smallrank">Rank</span>
             <p className="ranktext"> {myRank}</p>
           </Link>
