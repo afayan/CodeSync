@@ -380,19 +380,6 @@ body{
     margin: 4px;
 }
 
-#leaderbutton{
-  
-   
-}
-
-#probbutton{
- 
-   
-}
-
-#profbutton{
-   
-}
 
 .uselessroll{
     margin-top: 40px;
@@ -492,6 +479,19 @@ circle{
 
 .dashboardheader{
     margin-left: 20px;
+}
+
+.smallrank{
+    position: absolute;
+    transform: translate(-40px, 40px);
+    font-size: 2em;
+}
+
+.ranktext{
+    position: absolute;
+    transform: translate(170px, -20px);
+    font-size: 6em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 @media screen and (max-width : 800px) {

@@ -8,6 +8,8 @@ function Home() {
   const [chartInfo, setChartInfo] = useState([]);
   const [profileInfo, setprofileInfo] = useState([]);
   const [bcolor, setbcolor] = useState("#ffe840");
+  const [myRank, setMyrank] = useState("...");
+  const [leaders, setLdrs] = useState([])
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,13 +45,14 @@ function Home() {
 
       const data = await resp.json();
       console.log(data);
-      setUserName(data.data.username + "'s dashboard");
+      setUserName(data.data.username);
     }
 
     if (checkLogged()) {
       getDetails();
       getChartInfo();
       getUserDetails();
+      getRank();
     } else {
       setUserName("Welcome to CodeSync!");
     }
@@ -92,10 +95,39 @@ function Home() {
     }
   }, [islogged]);
 
+
+  useEffect(()=>{
+      leaders.map((p)=>{
+      if (p.username == username) {
+        setMyrank(leaders.indexOf(p)+1)
+      }
+    })
+  }, [leaders])
+
   function logout() {
     localStorage.removeItem("auth");
     console.log("Imma logout");
     setLogged(false);
+  }
+
+  async function getRank() {
+    const resp = await fetch("/api/getleaders", {
+      headers: {
+        "Content-type": "application/json",
+        authorization: "Bearer " + localStorage.getItem("auth"),
+      },
+    });
+
+    const data = await resp.json();
+    // data.leaders.map((p)=>{
+    //   if (p.username == username) {
+    //     setMyrank(leaders.indexOf(person)+1)
+    //   }
+    // })
+
+    console.log("leaders ", data);
+    setLdrs(data.leaders)
+    console.log(username);
   }
 
   //info needed for dashboard:
@@ -106,7 +138,7 @@ function Home() {
   return (
     <>
       <Navbar />
-      <h1 className="dashboardheader">{username}</h1>
+      <h1 className="dashboardheader">{islogged ? username+"'s dashboard": "Welcome to codesync"}</h1>
       {!islogged && <p>Pls login to start coding!</p>}
 
       {!islogged && (
@@ -134,31 +166,30 @@ function Home() {
           >
             Problems
             {profileInfo[0] && (
-            <div className="progressbarContainer">
-              <div
-                className="innerpb"
-                style={{ width: progressbarwidth + "px" }}
-              >
+              <div className="progressbarContainer">
                 <div
-                  className="outerpb"
-                  style={{
-                    width: Math.round(
-                      (profileInfo[0].solved / profileInfo[0].total) *
-                        progressbarwidth
-                    ),
-                  }}
+                  className="innerpb"
+                  style={{ width: progressbarwidth + "px" }}
                 >
-                  <p>
-                    {Math.round(
-                      (profileInfo[0].solved / profileInfo[0].total) * 100
-                    )}
-                    % solved
-                  </p>
+                  <div
+                    className="outerpb"
+                    style={{
+                      width: Math.round(
+                        (profileInfo[0].solved / profileInfo[0].total) *
+                          progressbarwidth
+                      ),
+                    }}
+                  >
+                    <p>
+                      {Math.round(
+                        (profileInfo[0].solved / profileInfo[0].total) * 100
+                      )}
+                      % solved
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-          
+            )}
           </Link>
           <Link
             className="homepagebuttons"
@@ -166,9 +197,9 @@ function Home() {
             to={"/leaderboard"}
           >
             LeaderBoard
+            <span className="smallrank">Rank</span>
+            <p className="ranktext"> {myRank}</p>
           </Link>
-
-          
         </div>
 
         {islogged && <Statsdiv chartInfo={chartInfo} />}
@@ -225,7 +256,6 @@ function Statsdiv(props) {
 }
 
 function Stats({ solType }) {
-
   //circle chart
   const [color, setcolor] = useState("white");
   const number = Math.round((solType.usercount / solType.qcount) * 100);
