@@ -22,7 +22,8 @@ a{
 }
 
 .executeButton{
-    border: solid 1px rgb(255, 255, 255);
+    border: solid 2px rgb(255, 255, 255);
+    border-radius: 10px;
     padding: 14px;
     margin: 10px;
     cursor: pointer;
@@ -32,13 +33,15 @@ a{
 
 .editorBox{
     border: solid 1px;
-    right: 0px;
-    margin: 10px;
+    width: 100%;
     position: absolute;
+    right: 0px;
+    width: 900px;
+    margin: 10px;
 }
 
 .problemContainer{
-    width: 100%;
+    width: 80%;
 }
 
 .outputBox{
@@ -501,6 +504,22 @@ circle{
     transform: translate(170px, -30px);
     font-size: 6em;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.deletebanner{
+    position: absolute;
+    background-color: #a55b5b;
+    padding: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.deletebanner button{
+    display: inline;
+    padding: 10px;
+    width: 80px;
+    margin: 10px;
 }
 
 @media screen and (max-width : 800px) {

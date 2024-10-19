@@ -37,7 +37,7 @@ function Output(props) {
     const data = await response.json()  
     console.log(data.remark);
 
-    data.remark === 'correct' ? setRBC('lightgreen') : setRBC('red')
+    data.remark === 'correct' ? setRBC('lightgreen') : setRBC('#ff2e2e')
 
     if (data.error) {
       setError(data.error)
@@ -112,7 +112,7 @@ function Output(props) {
 
     else{
 
-      setRBC('red')
+      setRBC('#ff2e2e')
       console.log(resultBoxColor);
       
     }

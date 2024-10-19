@@ -836,6 +836,16 @@ app.get('/api/getuseless', (req, res)=>{
     })
 })
 
+
+app.get('/api/deleteproblem/:qid', authenticateUser, (req, res)=>{
+    if (req.user.role === 'admin') {
+        console.log("delete "+req.params.qid);
+
+        res.json({staus: 'success'})
+        //db.query
+    }
+})
+
 // app.listen(port, ()=>{
 //     console.log("App is listening at port "+port);
 // })

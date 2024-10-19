@@ -107,7 +107,7 @@ function Problem() {
       <div className="editorBox">
         <Editor
           height="70vh"
-          width={"106vh"}
+          width={"inherit"}
           defaultLanguage="c"
           defaultValue={defValue}
           value={value}

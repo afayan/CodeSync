@@ -14,6 +14,9 @@ function Profile() {
   const [profileInfo, setProfileInfo] = useState({})
   const [useless, setUseless] = useState([])
   const navigate = useNavigate()
+  const [problems, setProblems] = useState([])
+  const [confirmdelete, setcfdelete] = useState(false)
+  const [q_to_delete, setQTD] = useState(null)
 
  
 
@@ -62,6 +65,7 @@ function Profile() {
       checkLogged()
       getProfileInfo()
       getUseless()
+      getProblemsToDelete()
     }
   ,[])
 
@@ -75,6 +79,15 @@ function Profile() {
   function LogOut() {
     localStorage.removeItem('auth')
     navigate('/Registration')
+  }
+
+  async function getProblemsToDelete() {
+    const resp = await fetch('/api/getProblemList/all')
+    const data = await resp.json()
+    
+    
+    setProblems(data)
+
   }
 
   async function searchUser() {
@@ -94,6 +107,24 @@ function Profile() {
     const data = await resp.json()
     console.log(data);
     setSearchResults(data)
+  }
+
+
+  async function deleteQuestion(qid) {
+    const resp = await fetch('/api/deleteproblem/'+qid , {
+      headers: {
+        'Content-type' : 'application/json',
+        'authorization' : "Bearer "+localStorage.getItem("auth")
+    } 
+    })
+
+
+    const data = await resp.json()
+   if (data.status === 'success') {
+    alert('question deleted successfully')
+    setQTD(null)
+    setcfdelete(false)
+   } 
   }
 
   async function makeAdmin(id) {
@@ -131,6 +162,8 @@ function Profile() {
 
  {currentTab === 'a' && <div className="rightcolumn">
 
+      <h1>Admin settings</h1>
+
         <h2>Add problem</h2>
         <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
         {/* <h2>Make admin</h2>
@@ -155,6 +188,22 @@ function Profile() {
             return <div className='resultBars' key={element.username}>{element.username}</div>
           })}
         </div>
+
+        <div className="uselessroll">
+          <h2>Delete problem</h2>  
+            {problems.map((p)=>{
+              return <div className='resultBars' key={p.q_id}>{p.qname}
+              <button onClick={()=>{setcfdelete(true) ; setQTD(p)}}>Delete</button>
+              </div>
+            })}   
+            
+        </div>
+
+       {confirmdelete && <div className='deletebanner'>
+          <h2>Confirm delete?</h2>
+          <button onClick={()=>deleteQuestion(q_to_delete.q_id)}>Yes</button>
+          <button onClick={()=>{setcfdelete(false) ; setQTD(null)}}>Cancel</button>
+        </div>}
       </div>}
 
       {
