@@ -840,8 +840,24 @@ app.get('/api/getuseless', (req, res)=>{
 app.get('/api/deleteproblem/:qid', authenticateUser, (req, res)=>{
     if (req.user.role === 'admin') {
         console.log("delete "+req.params.qid);
+        const qid = req.params.qid
 
-        res.json({staus: 'success'})
+        try {
+            const q = "delete from questions where q_id = ?"
+
+            db.query(q, [qid], (err, result)=>{
+                if (err) return res.json({status : "error" , message : err})
+
+                return res.json({status: 'success'})
+            })
+
+            
+
+            
+        } catch (error) {
+            res.json({status : "error" , message : err})
+        }
+
         //db.query
     }
 })

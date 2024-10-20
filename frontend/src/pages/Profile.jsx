@@ -124,6 +124,8 @@ function Profile() {
     alert('question deleted successfully')
     setQTD(null)
     setcfdelete(false)
+
+    getProblemsToDelete()
    } 
   }
 
@@ -192,7 +194,7 @@ function Profile() {
         <div className="uselessroll">
           <h2>Delete problem</h2>  
             {problems.map((p)=>{
-              return <div className='resultBars' key={p.q_id}>{p.qname}
+              return <div className='deleteQuestionContainers' key={p.q_id}>{p.qname}
               <button onClick={()=>{setcfdelete(true) ; setQTD(p)}}>Delete</button>
               </div>
             })}   
@@ -200,10 +202,13 @@ function Profile() {
         </div>
 
        {confirmdelete && <div className='deletebanner'>
-          <h2>Confirm delete?</h2>
+          <h2>delete {q_to_delete.qname}?</h2>
           <button onClick={()=>deleteQuestion(q_to_delete.q_id)}>Yes</button>
           <button onClick={()=>{setcfdelete(false) ; setQTD(null)}}>Cancel</button>
         </div>}
+
+
+        {confirmdelete && <div className='blurbox'></div>}
       </div>}
 
       {
