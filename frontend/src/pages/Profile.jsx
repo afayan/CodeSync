@@ -209,7 +209,7 @@ function Profile() {
         </div>
 
        {confirmdelete && <div className='deletebanner'>
-          <h2>delete {q_to_delete.qname}?</h2>
+          <h2><GoAlert style={{marginRight:'14px'}} size={30}/>delete {q_to_delete.qname}?</h2>
           <button onClick={()=>deleteQuestion(q_to_delete.q_id)}>Yes</button>
           <button onClick={()=>{setcfdelete(false) ; setQTD(null)}}>Cancel</button>
         </div>}

@@ -20,6 +20,13 @@ function Output(props) {
   async function check() {
     //function to check if the code is correct or not
 
+    setEOP('processing...')
+    setWrongIp('processing...')
+    setYIP('processing...')
+    setRBC('yellow')
+    setTR('R')
+
+
     setError('')
     const checkData = {}
     checkData.usercode = props.code
@@ -45,7 +52,7 @@ function Output(props) {
     }
     
     setStatus(s => data.remark)
-    setTR('R')
+    
 
     setEOP(data.expected_output)
     setWrongIp(data.input)
@@ -82,6 +89,9 @@ function Output(props) {
   async function checkByAI() {
     //function to check problem with AI
 
+    setAIcheckRemark('AI is checking your code...')
+    setRBC('yellow')
+    setTR('R')
 
     console.log(props.desc1);
 
@@ -122,7 +132,7 @@ function Output(props) {
       
     }
 
-    setTR('R')
+    
   }
 
   async function exec() {
