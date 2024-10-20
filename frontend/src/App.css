@@ -47,10 +47,10 @@ a{
 .outputBox{
     padding-left: 20px;
     position: absolute;
-    z-index: 9;
+    z-index: 999;
     background-color: rgb(59, 59, 59);
     height: max-content;
-    width: 56%;
+    width: 60%;
     right: 0px;
     bottom: 0px;
     color: white;
@@ -357,7 +357,7 @@ a{
     right: 10px;
     width: 50%;
     top: 80px;
-    width: 200px;
+    width: 100%;
     padding: 10px;
     
 }
@@ -365,6 +365,8 @@ a{
 .chartdiv{
     display: flex;
     flex-direction: row;
+    overflow-x: scroll;
+    
 }
 
 .statinfo{
@@ -545,6 +547,12 @@ circle{
     display: inline;
     padding: 10px;
     width: 80px;
+    margin: 10px;
+}
+
+.radioButtonSpan{
+    border: 3px solid;
+    padding: 10px;
     margin: 10px;
 }
 

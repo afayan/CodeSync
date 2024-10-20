@@ -14,6 +14,7 @@ function Output(props) {
   const [output2, setOP2] = useState('Your output here')
 
   const a = [1,2,11,55]
+  const red = '#f7564a'
 
 
   async function check() {
@@ -37,7 +38,7 @@ function Output(props) {
     const data = await response.json()  
     console.log(data.remark);
 
-    data.remark === 'correct' ? setRBC('lightgreen') : setRBC('#ff2e2e')
+    data.remark === 'correct' ? setRBC('lightgreen') : setRBC(red)
 
     if (data.error) {
       setError(data.error)
@@ -52,6 +53,10 @@ function Output(props) {
 
     if (data.remark == 'correct') {
       props.setSolved(true)
+
+      setEOP('all passed')
+      setWrongIp('all passed')
+      setYIP('all passed')
 
 
       const resp = await fetch('/api/solved', {
@@ -112,7 +117,7 @@ function Output(props) {
 
     else{
 
-      setRBC('#ff2e2e')
+      setRBC(red)
       console.log(resultBoxColor);
       
     }

@@ -132,7 +132,7 @@ function AddQuestion() {
         
         <button className="submitQuestion" onClick={saveQuestion}>Submit question</button>
 
-        {tc && <span> <h4>Enter the name of the function</h4>  <input type="text" placeholder="Enter the function name" onChange={(e)=>{setFuncName(e.target.value)}}></input>  </span>  }
+        {tc && <span> <h4>Enter the name of the function</h4>  <input style={{width: "400px"}} type="text" placeholder="Enter the function name" onChange={(e)=>{setFuncName(e.target.value)}}></input>  </span>  }
         {tc && <AddTestCase tcIndex = {tcIndex} setTCIndex = {setTCIndex} funcName={funcName} answerCode = {answerCode} setTestcases={setTestcases} />}
 
         {tc && 
