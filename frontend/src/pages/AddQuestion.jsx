@@ -9,6 +9,8 @@ function AddQuestion() {
   const [funcName , setFuncName] = useState() //function name
   const [answerCode , setAnsCode] = useState('//enter your solution code here \n #include<stdio.h>') //solution
 
+  
+
   //form inputs
   const qname = useRef(0)
   const desc = useRef(0)
@@ -120,7 +122,7 @@ function AddQuestion() {
         <h4>Checking method</h4>
         <div className="selectCheckType">
           <span className="radioButtonSpan">
-            <label>check Using AI</label>
+            <label>check Using AI (default) </label>
             <input type="radio" name="chackingType" id="" onClick={()=>{showTC(false)}} />
           </span>
 
@@ -181,6 +183,7 @@ function AddTestCase(props) {
     const ip = useRef(0)
     const ipType = useRef(0)
     const [remark , setRemark] = useState('')
+    const [status, setStatus] = useState('')
     var testCaseInfo = {};
 
         function savetestCase() {
@@ -213,6 +216,7 @@ function AddTestCase(props) {
           const fcode = props.answerCode + "\n" + code
           console.log(fcode);
           setRemark('...')
+          setStatus('...')
 
           var c = {}
           c.op = op.current.value
@@ -232,12 +236,13 @@ function AddTestCase(props) {
           const data = await res.json()
 
           if (data.error) {
+            setStatus('invalid')
             setRemark(data.error)
           }
 
           else{
 
-            setRemark(r=>data.status)
+            setStatus(r=>data.status)
           }
           console.log(data); 
         }
@@ -274,10 +279,15 @@ function AddTestCase(props) {
                 value={code}
                 onChange={(value, e) => setCode((e1) => value)}
             />
-            <button onClick={checkTcValidity}>check testcase</button>
-            <button onClick={savetestCase}>save</button>
-            <p>Output</p>
-            <p>{remark}</p>
+            <button className="testcasecheckbutton" onClick={checkTcValidity}>check testcase</button>
+            <button className="testcasecheckbutton" onClick={savetestCase}>save</button>
+            <p>Admin's terminal</p>
+            <div className="terminal">
+            <p>{status}</p>
+             <pre>
+             {remark}
+             </pre>
+            </div>
             </div>
         );
 }

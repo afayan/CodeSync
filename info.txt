@@ -83,3 +83,5 @@ CREATE TABLE users (
     role VARCHAR(100) DEFAULT 'user',
     PRIMARY KEY (userid)
 );
+
+red color code = #f7564a

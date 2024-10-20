@@ -457,13 +457,21 @@ app.post('/api/tcvalid',async (req, res)=>{
     const remark = {}
     remark.status = 'invalid'
 
-    if (data.run.stderr) {
-        remark.error = data.run.stderr
-    }
+    // if (data.run.stderr) {
+    //     remark.error = data.run.stderr
+    // }
 
-    else if (data.run.stdout == req.body.op) {
-        remark.status = 'valid'
-    }
+    // else if (data.run.stdout == req.body.op) {
+    //     remark.status = 'valid'
+    // }
+
+   if (data.run.stdout == req.body.op) {
+    remark.status = 'valid'
+   }
+
+   else{
+    remark.error = data.run.stderr || "Your output:\n"+ data.run.stdout
+   }
 
     // console.log(data);
     

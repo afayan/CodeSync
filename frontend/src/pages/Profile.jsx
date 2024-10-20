@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { GoAlert } from "react-icons/go";
+import { IoIosAddCircleOutline } from "react-icons/io";
+
+
 
 function Profile() {
 
@@ -167,7 +171,9 @@ function Profile() {
       <h1>Admin settings</h1>
 
         <h2>Add problem</h2>
-        <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
+        <Link style={{top:'10px' , backgroundColor: 'black'}} className="homepagebuttons" to={'/Add'}>
+        <IoIosAddCircleOutline style={{transform: 'translate(-3px,2px)'}}/>Add problem 
+        </Link>
         {/* <h2>Make admin</h2>
         <input type="text" placeholder='enter username' onChange={(e)=>setSearch(e.target.value)} />
         <button onClick={searchUser}>Search</button> */}
@@ -191,8 +197,9 @@ function Profile() {
           })}
         </div>
 
-        <div className="uselessroll">
-          <h2>Delete problem</h2>  
+        <div className="uselessroll" style={{backgroundColor: 'black'}}>
+          <h2 style={{color: '#f7564a'}} >Delete problem <GoAlert />
+          </h2>  
             {problems.map((p)=>{
               return <div className='deleteQuestionContainers' key={p.q_id}>{p.qname}
               <button onClick={()=>{setcfdelete(true) ; setQTD(p)}}>Delete</button>
