@@ -312,10 +312,12 @@ button{
     padding: 6px;
 }
 
-.rank{
-    width: 100px;
-    
+.rank {
+    width: 100%;
+    padding-top: 20px;
+    text-align: center; 
 }
+
 
 .statsspan{
     background-color: greenyellow;
@@ -521,12 +523,17 @@ circle{
 
 .deletebanner{
     position: absolute;
-    background-color: #a55b5b;
+    background-color: #ff0000;
     padding: 30px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 999;
+}
+
+.deletebanner button{
+    background-color: black;
+    border: none;
 }
 
 .deleteQuestionContainers{

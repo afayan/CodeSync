@@ -36,6 +36,10 @@ function AddQuestion() {
     //name, description, checkBy, testcases (array)
     //create JSON and send it to backend
 
+    if (!qtype.current.value || !qname.current.value) {
+      return alert("Pls fill all details")
+    }
+
     questionData.desc = desc.current.value
     questionData.qname = qname.current.value
     questionData.defaultCode = defaultCode
