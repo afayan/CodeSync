@@ -15,6 +15,9 @@ a{
     color: white;
 }
 
+button{
+    cursor: pointer;
+}
 
 .problemPage{
     background-color: aqua;
@@ -22,7 +25,8 @@ a{
 }
 
 .executeButton{
-    border: solid 1px rgb(255, 255, 255);
+    border: solid 2px rgb(255, 255, 255);
+    border-radius: 10px;
     padding: 14px;
     margin: 10px;
     cursor: pointer;
@@ -32,22 +36,24 @@ a{
 
 .editorBox{
     border: solid 1px;
-    right: 0px;
-    margin: 10px;
+    width: 100%;
     position: absolute;
+    right: 0px;
+    width: 900px;
+    margin: 10px;
 }
 
 .problemContainer{
-    width: 100%;
+    width: 80%;
 }
 
 .outputBox{
     padding-left: 20px;
     position: absolute;
-    z-index: 9;
+    z-index: 999;
     background-color: rgb(59, 59, 59);
     height: max-content;
-    width: 56%;
+    width: 60%;
     right: 0px;
     bottom: 0px;
     color: white;
@@ -306,10 +312,12 @@ a{
     padding: 6px;
 }
 
-.rank{
-    width: 100px;
-    
+.rank {
+    width: 100%;
+    padding-top: 20px;
+    text-align: center; 
 }
+
 
 .statsspan{
     background-color: greenyellow;
@@ -354,7 +362,7 @@ a{
     right: 10px;
     width: 50%;
     top: 80px;
-    width: 200px;
+    width: 100%;
     padding: 10px;
     
 }
@@ -362,6 +370,8 @@ a{
 .chartdiv{
     display: flex;
     flex-direction: row;
+    overflow-x: scroll;
+    
 }
 
 .statinfo{
@@ -385,10 +395,18 @@ a{
     margin: 4px;
 }
 
+.testcasecheckbutton{
+    padding: 10px;
+    width: 200px;
+    margin: 10px;
+    background-color: #f7564a;
+    border: none;
+    cursor: pointer;
+}
 
 .uselessroll{
     margin-top: 40px;
-    background-color: gray;
+    background-color: rgb(0, 0, 0);
     border-radius: 5px;
     padding: 10px;
 }
@@ -501,6 +519,60 @@ circle{
     transform: translate(170px, -30px);
     font-size: 6em;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.deletebanner{
+    position: absolute;
+    background-color: #ff0000;
+    padding: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+.deletebanner button{
+    background-color: black;
+    border: none;
+}
+
+.deleteQuestionContainers{
+    display: grid;
+    grid-template-columns: 500px 100px;
+    margin: 10px;
+}
+
+.deleteQuestionContainers button{
+    background-color: #f7564a;
+    border: none;
+}
+
+.blurbox {
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    z-index: 998;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(2px); 
+    -webkit-backdrop-filter: blur(2px); 
+    background: rgba(255, 255, 255, 0.1); 
+}
+
+
+.deletebanner button{
+    display: inline;
+    padding: 10px;
+    width: 80px;
+    margin: 10px;
+}
+
+.radioButtonSpan{
+    border: 3px solid;
+    padding: 10px;
+    margin: 10px;
 }
 
 @media screen and (max-width : 800px) {

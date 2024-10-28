@@ -457,13 +457,21 @@ app.post('/api/tcvalid',async (req, res)=>{
     const remark = {}
     remark.status = 'invalid'
 
-    if (data.run.stderr) {
-        remark.error = data.run.stderr
-    }
+    // if (data.run.stderr) {
+    //     remark.error = data.run.stderr
+    // }
 
-    else if (data.run.stdout == req.body.op) {
-        remark.status = 'valid'
-    }
+    // else if (data.run.stdout == req.body.op) {
+    //     remark.status = 'valid'
+    // }
+
+   if (data.run.stdout == req.body.op) {
+    remark.status = 'valid'
+   }
+
+   else{
+    remark.error = data.run.stderr || "Your output:\n"+ data.run.stdout
+   }
 
     // console.log(data);
     
@@ -834,6 +842,32 @@ app.get('/api/getuseless', (req, res)=>{
 
         res.json(result)
     })
+})
+
+
+app.get('/api/deleteproblem/:qid', authenticateUser, (req, res)=>{
+    if (req.user.role === 'admin') {
+        console.log("delete "+req.params.qid);
+        const qid = req.params.qid
+
+        try {
+            const q = "delete from questions where q_id = ?"
+
+            db.query(q, [qid], (err, result)=>{
+                if (err) return res.json({status : "error" , message : err})
+
+                return res.json({status: 'success'})
+            })
+
+            
+
+            
+        } catch (error) {
+            res.json({status : "error" , message : err})
+        }
+
+        //db.query
+    }
 })
 
 // app.listen(port, ()=>{

@@ -14,10 +14,18 @@ function Output(props) {
   const [output2, setOP2] = useState('Your output here')
 
   const a = [1,2,11,55]
+  const red = '#f7564a'
 
 
   async function check() {
     //function to check if the code is correct or not
+
+    setEOP('processing...')
+    setWrongIp('processing...')
+    setYIP('processing...')
+    setRBC('yellow')
+    setTR('R')
+
 
     setError('')
     const checkData = {}
@@ -37,14 +45,14 @@ function Output(props) {
     const data = await response.json()  
     console.log(data.remark);
 
-    data.remark === 'correct' ? setRBC('lightgreen') : setRBC('red')
+    data.remark === 'correct' ? setRBC('lightgreen') : setRBC(red)
 
     if (data.error) {
       setError(data.error)
     }
     
     setStatus(s => data.remark)
-    setTR('R')
+    
 
     setEOP(data.expected_output)
     setWrongIp(data.input)
@@ -52,6 +60,10 @@ function Output(props) {
 
     if (data.remark == 'correct') {
       props.setSolved(true)
+
+      setEOP('all passed')
+      setWrongIp('all passed')
+      setYIP('all passed')
 
 
       const resp = await fetch('/api/solved', {
@@ -77,6 +89,9 @@ function Output(props) {
   async function checkByAI() {
     //function to check problem with AI
 
+    setAIcheckRemark('AI is checking your code...')
+    setRBC('yellow')
+    setTR('R')
 
     console.log(props.desc1);
 
@@ -112,12 +127,12 @@ function Output(props) {
 
     else{
 
-      setRBC('red')
+      setRBC(red)
       console.log(resultBoxColor);
       
     }
 
-    setTR('R')
+    
   }
 
   async function exec() {

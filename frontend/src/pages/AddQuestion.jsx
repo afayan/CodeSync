@@ -9,6 +9,8 @@ function AddQuestion() {
   const [funcName , setFuncName] = useState() //function name
   const [answerCode , setAnsCode] = useState('//enter your solution code here \n #include<stdio.h>') //solution
 
+  
+
   //form inputs
   const qname = useRef(0)
   const desc = useRef(0)
@@ -33,6 +35,10 @@ function AddQuestion() {
 
     //name, description, checkBy, testcases (array)
     //create JSON and send it to backend
+
+    if (!qtype.current.value || !qname.current.value) {
+      return alert("Pls fill all details")
+    }
 
     questionData.desc = desc.current.value
     questionData.qname = qname.current.value
@@ -120,7 +126,7 @@ function AddQuestion() {
         <h4>Checking method</h4>
         <div className="selectCheckType">
           <span className="radioButtonSpan">
-            <label>check Using AI</label>
+            <label>check Using AI (default) </label>
             <input type="radio" name="chackingType" id="" onClick={()=>{showTC(false)}} />
           </span>
 
@@ -132,7 +138,7 @@ function AddQuestion() {
         
         <button className="submitQuestion" onClick={saveQuestion}>Submit question</button>
 
-        {tc && <span> <h4>Enter the name of the function</h4>  <input type="text" placeholder="Enter the function name" onChange={(e)=>{setFuncName(e.target.value)}}></input>  </span>  }
+        {tc && <span> <h4>Enter the name of the function</h4>  <input style={{width: "400px"}} type="text" placeholder="Enter the function name" onChange={(e)=>{setFuncName(e.target.value)}}></input>  </span>  }
         {tc && <AddTestCase tcIndex = {tcIndex} setTCIndex = {setTCIndex} funcName={funcName} answerCode = {answerCode} setTestcases={setTestcases} />}
 
         {tc && 
@@ -181,6 +187,7 @@ function AddTestCase(props) {
     const ip = useRef(0)
     const ipType = useRef(0)
     const [remark , setRemark] = useState('')
+    const [status, setStatus] = useState('')
     var testCaseInfo = {};
 
         function savetestCase() {
@@ -213,6 +220,7 @@ function AddTestCase(props) {
           const fcode = props.answerCode + "\n" + code
           console.log(fcode);
           setRemark('...')
+          setStatus('...')
 
           var c = {}
           c.op = op.current.value
@@ -232,12 +240,13 @@ function AddTestCase(props) {
           const data = await res.json()
 
           if (data.error) {
+            setStatus('invalid')
             setRemark(data.error)
           }
 
           else{
 
-            setRemark(r=>data.status)
+            setStatus(r=>data.status)
           }
           console.log(data); 
         }
@@ -274,10 +283,15 @@ function AddTestCase(props) {
                 value={code}
                 onChange={(value, e) => setCode((e1) => value)}
             />
-            <button onClick={checkTcValidity}>check testcase</button>
-            <button onClick={savetestCase}>save</button>
-            <p>Output</p>
-            <p>{remark}</p>
+            <button className="testcasecheckbutton" onClick={checkTcValidity}>check testcase</button>
+            <button className="testcasecheckbutton" onClick={savetestCase}>save</button>
+            <p>Admin's terminal</p>
+            <div className="terminal">
+            <p>{status}</p>
+             <pre>
+             {remark}
+             </pre>
+            </div>
             </div>
         );
 }

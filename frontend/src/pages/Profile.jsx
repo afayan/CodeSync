@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { GoAlert } from "react-icons/go";
+import { IoIosAddCircleOutline } from "react-icons/io";
+
+
 
 function Profile() {
 
@@ -14,6 +18,9 @@ function Profile() {
   const [profileInfo, setProfileInfo] = useState({})
   const [useless, setUseless] = useState([])
   const navigate = useNavigate()
+  const [problems, setProblems] = useState([])
+  const [confirmdelete, setcfdelete] = useState(false)
+  const [q_to_delete, setQTD] = useState(null)
 
  
 
@@ -62,6 +69,7 @@ function Profile() {
       checkLogged()
       getProfileInfo()
       getUseless()
+      getProblemsToDelete()
     }
   ,[])
 
@@ -75,6 +83,15 @@ function Profile() {
   function LogOut() {
     localStorage.removeItem('auth')
     navigate('/Registration')
+  }
+
+  async function getProblemsToDelete() {
+    const resp = await fetch('/api/getProblemList/all')
+    const data = await resp.json()
+    
+    
+    setProblems(data)
+
   }
 
   async function searchUser() {
@@ -94,6 +111,26 @@ function Profile() {
     const data = await resp.json()
     console.log(data);
     setSearchResults(data)
+  }
+
+
+  async function deleteQuestion(qid) {
+    const resp = await fetch('/api/deleteproblem/'+qid , {
+      headers: {
+        'Content-type' : 'application/json',
+        'authorization' : "Bearer "+localStorage.getItem("auth")
+    } 
+    })
+
+
+    const data = await resp.json()
+   if (data.status === 'success') {
+    alert('question deleted successfully')
+    setQTD(null)
+    setcfdelete(false)
+
+    getProblemsToDelete()
+   } 
   }
 
   async function makeAdmin(id) {
@@ -131,8 +168,12 @@ function Profile() {
 
  {currentTab === 'a' && <div className="rightcolumn">
 
+      <h1>Admin settings</h1>
+
         <h2>Add problem</h2>
-        <Link className="homepagebuttons" to={'/Add'}>Add problem</Link>
+        <Link style={{top:'10px' , backgroundColor: 'black'}} className="homepagebuttons" to={'/Add'}>
+        <IoIosAddCircleOutline style={{transform: 'translate(-3px,2px)'}}/>Add problem 
+        </Link>
         {/* <h2>Make admin</h2>
         <input type="text" placeholder='enter username' onChange={(e)=>setSearch(e.target.value)} />
         <button onClick={searchUser}>Search</button> */}
@@ -155,6 +196,26 @@ function Profile() {
             return <div className='resultBars' key={element.username}>{element.username}</div>
           })}
         </div>
+
+        <div className="uselessroll" style={{backgroundColor: 'black'}}>
+          <h2 style={{color: '#f7564a'}} >Delete problem <GoAlert />
+          </h2>  
+            {problems.map((p)=>{
+              return <div className='deleteQuestionContainers' key={p.q_id}>{p.qname}
+              <button onClick={()=>{setcfdelete(true) ; setQTD(p)}}>Delete</button>
+              </div>
+            })}   
+            
+        </div>
+
+       {confirmdelete && <div className='deletebanner'>
+          <h2><GoAlert style={{marginRight:'14px'}} size={30}/>delete {q_to_delete.qname}?</h2>
+          <button onClick={()=>deleteQuestion(q_to_delete.q_id)}>Yes</button>
+          <button onClick={()=>{setcfdelete(false) ; setQTD(null)}}>Cancel</button>
+        </div>}
+
+
+        {confirmdelete && <div className='blurbox'></div>}
       </div>}
 
       {
