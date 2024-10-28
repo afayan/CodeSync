@@ -110,6 +110,9 @@ Solve Problem
 ![IMG-20241028-WA0001](https://github.com/user-attachments/assets/65e9faf7-444b-464e-972f-a5d2f7e218d7)
 
 Wrong Code submitted
+![IMG-20241028-WA0003](https://github.com/user-attachments/assets/e2e92d3c-32cb-43a5-94d0-f79c50df4496)
+
+Ask AI for help
 ![IMG-20241028-WA0004](https://github.com/user-attachments/assets/049a2af1-7a13-41bf-9887-089c8c8ee0d1)
 
 Admin Panel
